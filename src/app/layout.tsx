@@ -85,7 +85,7 @@ export default function RootLayout({
                     src="/assets/img/a_cappella_treble_clef_transparent.png"
                     alt="Treble Clef Logo"
                   />
-                  <Heading size="2xl" as="h1" textAlign="center">
+                  <Heading size="2xl" as="h1" textAlign="center" mt="-1">
                     Stanford A Cappella
                   </Heading>
                   {/* <Text fontSize="lg">Learn more about a cappella groups at Stanford University.</Text> */}
