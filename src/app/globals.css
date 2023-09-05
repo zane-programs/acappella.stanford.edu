@@ -1,0 +1,12 @@
+@keyframes fadeOnce {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeOnce {
+  animation: fadeOnce 375ms ease;
+}

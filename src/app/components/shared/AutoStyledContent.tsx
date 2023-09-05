@@ -6,8 +6,9 @@ export default function AutoStyledContent({ sx, ...props }: BoxProps) {
     <Box
       sx={{
         "& .chakra-text": { mt: 0, mb: 4 },
-        "& section": { mt: 3, mb: 4 },
-        "& .chakra-link": { fontWeight: "600", textDecoration: "underline" },
+        "& .chakra-heading": { mb: "0.2em" },
+        "& section": { mt: 3, mb: 5 },
+        "& .chakra-link, & a": { fontWeight: "600", textDecoration: "underline" },
         ...sx,
       }}
       {...props}
