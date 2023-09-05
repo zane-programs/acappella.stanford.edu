@@ -1,95 +1,60 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+// next.js stuff
+import type { Metadata } from "next";
+
+import { SimpleGrid } from "./components/chakra";
+import GROUPS from "./groups";
+
+import GroupTile from "./components/groups/GroupTile";
+
+// page metadata
+export const metadata: Metadata = {
+  title: "Stanford A Cappella",
+  description:
+    "Learn more about auditions, shows, and events for a cappella groups at Stanford University!",
+  keywords: [
+    "stanford a cappella",
+    "stanford acapella",
+    "audition",
+    "a cappella",
+    "a cappella audition",
+    "acapella audition",
+    "a cappella groups",
+    "acapella",
+    "acapella groups",
+    "stanford university",
+    "mendicants",
+    "counterpoint",
+    "counter point",
+    "talisman",
+    "mixed co",
+    "mixed company",
+    "raagapella",
+    "everyday people",
+    "ep",
+    "testimony",
+    "o-tone",
+    "otone",
+    "fleet street",
+    "harmonics",
+    "harmz",
+  ],
+};
+
+// Sort groups alphabetically for viewing
+const sortedGroups = Object.entries(GROUPS).sort(([_a, a], [_b, b]) =>
+  a.name.localeCompare(b.name, "en")
+);
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    <SimpleGrid
+      columns={{ base: 1, smPlus: 2, mdPlus: 3, lg: 4 }}
+      spacingX={4}
+      spacingY={8}
+    >
+      {sortedGroups.map(([slug, group]) => (
+        <GroupTile key={slug} slug={slug} group={group} />
+      ))}
+    </SimpleGrid>
+  );
 }
