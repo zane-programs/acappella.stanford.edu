@@ -5,6 +5,7 @@ import AutoStyledContent from "@/app/components/shared/AutoStyledContent";
 import type { BoxProps, ButtonProps } from "@chakra-ui/react";
 
 import GROUPS, { type ACappellaGroup } from "@/app/groups";
+import { notFound } from "next/navigation";
 
 // or Dynamic metadata
 export function generateMetadata({
@@ -13,6 +14,11 @@ export function generateMetadata({
   params: { slug: string };
 }): Metadata {
   const group = GROUPS[slug];
+
+  if (!group) {
+    notFound();
+  }
+
   const groupNameLowercase = group.name.toLowerCase();
 
   return {
