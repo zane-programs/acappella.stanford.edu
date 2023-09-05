@@ -7,7 +7,6 @@ import PosterImage from "../components/shared/PosterImage";
 import GROUPS from "@/app/groups";
 import { notFound } from "next/navigation";
 
-// or Dynamic metadata
 export function generateMetadata({
   params: { slug },
 }: {
@@ -32,6 +31,8 @@ export function generateMetadata({
       "audition for " + groupNameLowercase,
       groupNameLowercase + " audition",
       groupNameLowercase + " auditions",
+      // Add `extraKeywords` to SEO keywords if provided
+      ...(group.extraKeywords || []),
     ],
   };
 }
@@ -52,7 +53,7 @@ export default function GroupPage({
         <Flex
           direction="column"
           gap="4"
-          w={{ base: "auto", md: "270px", mdPlus: "315px" }}
+          w={{ base: "auto", md: "270px", mdPlus: "315px", lg: "345px" }}
         >
           <PosterImage group={group} />
           <Flex direction="column" w="100%" gap="1">
@@ -62,7 +63,7 @@ export default function GroupPage({
               </Button>
             )}
             <Button colorScheme="blue" {...linkButton(group.siteLink)}>
-              Group Website
+              {group.name} Website
             </Button>
           </Flex>
         </Flex>

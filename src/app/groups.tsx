@@ -8,8 +8,10 @@ export interface ACappellaGroup {
   description: React.ReactNode;
   imgUrl: string;
   siteLink: string;
-  // ADD THIS once your group
+  // ADD THIS once your group has a live audition link
   auditionLink?: string;
+  // Optional: extra keywords for SEO
+  extraKeywords?: string[];
 }
 
 const GROUPS: { [slug: string]: ACappellaGroup } = {
@@ -41,6 +43,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmonics.jpg",
     siteLink: "https://www.stanfordharmonics.com/",
+    extraKeywords: ["harmz", "stanford harmz"],
   },
   raagapella: {
     name: "Raagapella",
@@ -55,6 +58,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: "Something about O-Tone here",
     imgUrl: "/assets/img/o-tone.jpg",
     siteLink: "https://stanfordotone.com/",
+    extraKeywords: ["otone", "stanford otone"],
   },
   "everyday-people": {
     name: "Everyday People",
@@ -62,6 +66,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: "Something about EP here",
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
+    extraKeywords: ["ep", "stanford ep"],
   },
   testimony: {
     name: "Testimony",
@@ -84,6 +89,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: "Something about Mixed Co here",
     imgUrl: "/assets/img/mixed-company.jpg",
     siteLink: "https://www.mixedco.com/",
+    extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
   },
 };
 
