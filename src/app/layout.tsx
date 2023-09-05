@@ -31,16 +31,20 @@ export default function RootLayout({
       <html lang="en">
         <head>
           {/* Google tag (gtag.js) */}
-          <Script src="https://www.googletagmanager.com/gtag/js?id=G-EWZRGZZY5Y"></Script>
-          <Script id="google-analytics">
-            {`
+          {process.env.NODE_ENV === "production" && (
+            <>
+              <Script src="https://www.googletagmanager.com/gtag/js?id=G-EWZRGZZY5Y"></Script>
+              <Script id="google-analytics">
+                {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
             gtag('config', 'G-EWZRGZZY5Y');
           `}
-          </Script>
+              </Script>
+            </>
+          )}
         </head>
         <body className={sourceSans3.className}>
           <Providers>
