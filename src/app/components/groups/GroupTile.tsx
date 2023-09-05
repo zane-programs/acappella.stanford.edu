@@ -18,8 +18,6 @@ export default function GroupTile({
       href={"/" + slug}
       textAlign="center"
       sx={{
-        // Remove ugly gray tap box on mobile Safari (just for these components)
-        WebkitTapHighlightColor: "transparent",
         "& .posterImage": {
           transform: "scale(1)",
           transition: "transform 200ms ease",
