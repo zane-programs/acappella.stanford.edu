@@ -35,7 +35,15 @@ export default function GroupTile({
         position="relative"
         backgroundColor="#bbb"
         overflow="hidden"
-        sx={{ "& img.posterImage": { objectFit: "cover", height: "100%" } }}
+        sx={{
+          "& img.posterImage": {
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            pointerEvents: "none",
+          },
+        }}
       >
         <Flex
           w="100%"
