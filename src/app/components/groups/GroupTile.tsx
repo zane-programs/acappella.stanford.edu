@@ -1,5 +1,4 @@
 import NextLink from "next/link";
-import Image from "next/image";
 import type { ACappellaGroup } from "@/app/groups";
 import { Box, Flex, Text } from "@/app/components/chakra";
 
