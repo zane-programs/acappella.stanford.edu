@@ -1,10 +1,10 @@
-import Image from "next/image";
 import type { Metadata } from "next";
-import { Box, Button, Flex, Heading } from "@/app/components/chakra";
+import { Button, Flex, Heading } from "@/app/components/chakra";
 import AutoStyledContent from "@/app/components/shared/AutoStyledContent";
-import type { BoxProps, ButtonProps } from "@chakra-ui/react";
+import { type ButtonProps } from "@chakra-ui/react";
+import PosterImage from "../components/shared/PosterImage";
 
-import GROUPS, { type ACappellaGroup } from "@/app/groups";
+import GROUPS from "@/app/groups";
 import { notFound } from "next/navigation";
 
 // or Dynamic metadata
@@ -71,23 +71,6 @@ export default function GroupPage({
         </AutoStyledContent>
       </Flex>
     </>
-  );
-}
-
-function PosterImage({
-  group,
-  ...props
-}: BoxProps & { group: ACappellaGroup }) {
-  return (
-    <Box w="100%" aspectRatio="3 / 2" position="relative" {...props}>
-      <Image
-        className="posterImage"
-        src={group.imgUrl}
-        alt={"Picture for " + group.name}
-        layout="fill"
-        objectFit="cover"
-      />
-    </Box>
   );
 }
 

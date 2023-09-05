@@ -22,6 +22,7 @@ export {
   Checkbox,
   Grid,
   GridItem,
+  Spinner,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";
