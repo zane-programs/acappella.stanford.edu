@@ -35,6 +35,7 @@ export default function GroupTile({
         position="relative"
         backgroundColor="#bbb"
         overflow="hidden"
+        sx={{ "& img.posterImage": { objectFit: "cover", height: "100%" } }}
       >
         <Flex
           w="100%"
@@ -55,13 +56,8 @@ export default function GroupTile({
             {name}
           </Text>
         </Flex>
-        <Image
-          className="posterImage"
-          src={imgUrl}
-          alt={"Picture for " + name}
-          layout="fill"
-          objectFit="cover"
-        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="posterImage" src={imgUrl} alt={"Picture for " + name} />
       </Box>
       <Text lineHeight="1.22em" fontWeight="600">
         {tagline}
