@@ -1,5 +1,6 @@
 // Group Pages
 import FleetStreet from "./components/group-pages/FleetStreet";
+import Harmonics from "./components/group-pages/Harmonics";
 
 export interface ACappellaGroup {
   name: string;
@@ -37,7 +38,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   harmonics: {
     name: "Harmonics",
     tagline: "Stanford's rock/experimental a cappella group",
-    description: "Something about Harmonics here",
+    description: <Harmonics />,
     imgUrl: "/assets/img/harmonics.jpg",
     siteLink: "https://www.stanfordharmonics.com/",
   },

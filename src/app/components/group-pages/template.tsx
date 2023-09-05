@@ -1,6 +1,6 @@
 import { Text, Link } from "@/app/components/chakra";
 
-export default function FleetStreet() {
+export default function Template() {
   return (
     <>
       <Text>
