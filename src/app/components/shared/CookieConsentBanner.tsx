@@ -46,8 +46,8 @@ function CookieConsentBannerContent({
       w="100%"
       backgroundColor="#000a"
       color="#fff"
-      height="70px"
-      px="4"
+      minHeight="70px"
+      p="4"
       alignItems="center"
       className="fadeOnce"
     >
