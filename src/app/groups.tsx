@@ -63,7 +63,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
         "https://music.apple.com/us/artist/the-stanford-mendicants/845314849",
       instagram: "https://www.instagram.com/the_mendicants/",
       tiktok: "https://www.tiktok.com/@the_mendicants",
-      youtube: "https://www.youtube.com/@StanfordMendicants",
+      youtube: "https://www.youtube.com/user/StanfordMendicants",
       facebook: "https://www.facebook.com/mendicants/",
     },
   },
@@ -104,7 +104,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
-      youtube: "https://www.youtube.com/c/StanfordRaagapella",
+      youtube: "https://www.youtube.com/@StanfordRaagapella",
       spotify: "https://open.spotify.com/artist/7biaLUJ0zBroX0Wj4hfiU9",
       facebook: "https://www.facebook.com/StanfordRaagapella/",
       appleMusic:

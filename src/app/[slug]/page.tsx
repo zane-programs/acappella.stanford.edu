@@ -91,12 +91,15 @@ export default function GroupPage({
             {group.description}
           </AutoStyledContent>
           {/* Spotify Preview (for groups with listed Spotify) */}
-          {group.socialLinks?.spotify && (
+          {(group.socialLinks?.spotify || group.socialLinks?.youtube) && (
             <>
               <Heading size="md" as="h3" my="2">
                 Listen
               </Heading>
-              <SpotifyArtistEmbed spotifyUrl={group.socialLinks.spotify} />
+              <ArtistEmbed
+                spotify={group.socialLinks.spotify}
+                youtube={group.socialLinks.youtube}
+              />
             </>
           )}
         </Box>
@@ -105,13 +108,17 @@ export default function GroupPage({
   );
 }
 
-function SpotifyArtistEmbed({ spotifyUrl }: { spotifyUrl: string }) {
-  const pathname = useMemo(() => new URL(spotifyUrl).pathname, [spotifyUrl]);
-
-  return (
+function ArtistEmbed({
+  spotify,
+  youtube,
+}: {
+  spotify: string | undefined;
+  youtube: string | undefined;
+}) {
+  return spotify ? (
     <iframe
       style={{ borderRadius: "12px" }}
-      src={"https://open.spotify.com/embed" + pathname}
+      src={"https://open.spotify.com/embed" + new URL(spotify).pathname}
       width="100%"
       height="152"
       frameBorder={0}
@@ -119,6 +126,36 @@ function SpotifyArtistEmbed({ spotifyUrl }: { spotifyUrl: string }) {
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
     ></iframe>
+  ) : (
+    <YoutubeChannelEmbed url={youtube!} />
+  );
+}
+
+function YoutubeChannelEmbed({ url }: { url: string }) {
+  const channelId = useMemo(
+    () => url.split("/").slice(-1)[0].replace("@", ""),
+    [url]
+  );
+  return (
+    <Flex w="100%" justifyContent={{ base: "center", md: "left" }}>
+      <Box
+        w="100%"
+        maxW={{ base: undefined, md: "400px" }}
+        aspectRatio="16 / 9"
+      >
+        <iframe
+          width="100%"
+          height="100%"
+          src={
+            /^UC[\w-]{21}[AQgw]$/.test(channelId)
+              ? "https://www.youtube.com/embed/?listType=user_uploads&list=UU" +
+                channelId.substring(2)
+              : "https://www.youtube.com/embed/?listType=user_uploads&list=" +
+                channelId
+          }
+        ></iframe>
+      </Box>
+    </Flex>
   );
 }
 
