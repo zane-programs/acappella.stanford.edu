@@ -42,19 +42,13 @@ export default function GroupPage({
       <Heading size="xl" mb="4">
         {group.name}
       </Heading>
-      <PosterImage
-        group={group}
-        mt="2"
-        mb="6"
-        display={{ base: "block", md: "none" }}
-      />
-      <Flex direction={{ base: "column-reverse", md: "row" }} gap="6">
+      <Flex direction={{ base: "column", md: "row" }} gap="6">
         <Flex
           direction="column"
           gap="4"
           w={{ base: "auto", md: "270px", mdPlus: "315px" }}
         >
-          <PosterImage group={group} display={{ base: "none", md: "block" }} />
+          <PosterImage group={group} />
           <Flex direction="column" w="100%" gap="1">
             {group.auditionLink && (
               <Button colorScheme="red" {...linkButton(group.auditionLink)}>
