@@ -1,6 +1,8 @@
 // Group Pages
 import FleetStreet from "./components/group-pages/FleetStreet";
 import Harmonics from "./components/group-pages/Harmonics";
+import Counterpoint from "./components/group-pages/Counterpoint";
+import EverydayPeople from "./components/group-pages/EverydayPeople";
 
 export interface ACappellaGroup {
   name: string;
@@ -33,7 +35,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   counterpoint: {
     name: "Counterpoint",
     tagline: "Stanford's only soprano/alto a cappella group",
-    description: "Something about Counterpoint here",
+    description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
     siteLink: "https://counterpointacappella.com/",
   },
@@ -63,7 +65,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   "everyday-people": {
     name: "Everyday People",
     tagline: "Stanford's only hip-hop, Motown, R&B, and soul a cappella group",
-    description: "Something about EP here",
+    description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
     extraKeywords: ["ep", "stanford ep"],

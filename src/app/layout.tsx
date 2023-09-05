@@ -1,5 +1,6 @@
 import Script from "next/script";
 import { headers } from "next/headers";
+import Image from "next/image";
 
 // components & setup
 import { Providers } from "./providers";
@@ -78,6 +79,12 @@ export default function RootLayout({
                   justifyContent="center"
                   gap="4"
                 >
+                  <Image
+                    width={60}
+                    height={60}
+                    src="/assets/img/a_cappella_treble_clef_transparent.png"
+                    alt="Treble Clef Logo"
+                  />
                   <Heading size="2xl" as="h1" textAlign="center">
                     Stanford A Cappella
                   </Heading>

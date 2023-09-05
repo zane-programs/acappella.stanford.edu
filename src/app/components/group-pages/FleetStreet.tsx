@@ -12,14 +12,15 @@ export default function FleetStreet() {
         experience for audiences with original sketch comedy and short films
         during its shows.
       </Text>
-      <Text>
+      {/* TODO: Think about bringing this paragraph back? Or condensing the whole thing? */}
+      {/* <Text>
         Examining our repertoire, you will find an arsenal the size of Nebraska
         of jazz classics and sentimental serenades across our 13 published
         albums. Only one song of the 13 albums is a song that we didn&apos;t
         write or arrange ourselves, and we only sing it around Christmas time.
         We pioneered the production of the first major college a cappella album
         comprised entirely of songs written by the performing group in 2004.
-      </Text>
+      </Text> */}
       <Text>
         Fleet Street is rooted in the Stanford tradition: bedecked in
         cardinal-red bowties and socks, we remain the only group on campus
