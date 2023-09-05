@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { headers } from "next/headers";
 
 // components & setup
 import { Providers } from "./providers";
@@ -8,8 +9,13 @@ import Footer from "./components/shared/Footer";
 import ScrollRestorer from "./utils/ScrollRestorer";
 import CookieConsentBanner from "./components/shared/CookieConsentBanner";
 
+import GROUPS from "./groups";
+
 // fonts
 import { Source_Sans_3 } from "next/font/google";
+
+// styles
+import "./globals.css";
 
 // font setup
 const sourceSans3 = Source_Sans_3({
@@ -18,18 +24,27 @@ const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
 });
 
-// styles
-import "./globals.css";
+// Get image URLs
+const groupImgUrls = Object.values(GROUPS).map((group) => group.imgUrl);
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const rawUrl = headers().get("x-url");
+  const pathname = rawUrl ? new URL(rawUrl).pathname : "";
+
   return (
     <>
       <html lang="en">
         <head>
+          {/* Preload images for group grid (pathname === "/") */}
+          {pathname === "/"
+            ? groupImgUrls.map((url) => (
+                <link key={url} rel="preload" href={url} as="image" />
+              ))
+            : null}
           {/* Google tag (gtag.js) */}
           {process.env.NODE_ENV === "production" && (
             <>

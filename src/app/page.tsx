@@ -1,7 +1,7 @@
 // next.js stuff
 import type { Metadata } from "next";
 
-import { SimpleGrid } from "./components/chakra";
+import { Box, SimpleGrid } from "./components/chakra";
 import GROUPS from "./groups";
 
 import GroupTile from "./components/groups/GroupTile";
@@ -47,14 +47,16 @@ const sortedGroups = Object.entries(GROUPS).sort(([_a, a], [_b, b]) =>
 
 export default function Home() {
   return (
-    <SimpleGrid
-      columns={{ base: 1, smPlus: 2, mdPlus: 3, lg: 4 }}
-      spacingX={4}
-      spacingY={8}
-    >
-      {sortedGroups.map(([slug, group]) => (
-        <GroupTile key={slug} slug={slug} group={group} />
-      ))}
-    </SimpleGrid>
+    <Box>
+      <SimpleGrid
+        columns={{ base: 1, smPlus: 2, mdPlus: 3, lg: 4 }}
+        spacingX={4}
+        spacingY={8}
+      >
+        {sortedGroups.map(([slug, group]) => (
+          <GroupTile key={slug} slug={slug} group={group} />
+        ))}
+      </SimpleGrid>
+    </Box>
   );
 }
