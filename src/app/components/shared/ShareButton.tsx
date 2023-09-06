@@ -15,7 +15,11 @@ export default function ShareButton() {
         navigator
           .share({
             title: document.title,
-            text: "The Digital Home of A Cappella at Stanford University",
+            text:
+              document
+                .querySelector(`meta[name="description"]`)
+                ?.getAttribute("content") ??
+              "StanfordACappella.com - The Digital Home of A Cappella at Stanford University",
             url: window.location.origin + window.location.pathname,
           })
           .then(() => console.log("Success"))
