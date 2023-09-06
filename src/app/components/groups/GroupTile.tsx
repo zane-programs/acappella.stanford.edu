@@ -1,6 +1,9 @@
+"use client";
+
 import NextLink from "next/link";
 import type { ACappellaGroup } from "@/app/groups";
-import { Box, Flex, Text } from "@/app/components/chakra";
+import { Box, Flex, Spinner, Text } from "@/app/components/chakra";
+import { useState } from "react";
 
 export default function GroupTile({
   slug,
@@ -9,6 +12,8 @@ export default function GroupTile({
   slug: string;
   group: ACappellaGroup;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <Flex
       as={NextLink}
@@ -17,12 +22,15 @@ export default function GroupTile({
       href={"/" + slug}
       textAlign="center"
       sx={{
+        WebkitTapHighlightColor: "transparent",
         "& .posterImage": {
           transform: "scale(1)",
           transition: "transform 200ms ease",
         },
         "&:hover .posterImage": { transform: "scale(1.1)" },
       }}
+      // Show spinner once clicked
+      onClick={() => setIsLoading(true)}
     >
       <Box
         w="100%"
@@ -59,12 +67,30 @@ export default function GroupTile({
             fontSize="1.74rem"
             color="#fff"
             lineHeight="1.15em"
+            opacity={isLoading ? 0 : 1}
+            transition="opacity 150ms ease"
           >
             {name}
           </Text>
         </Flex>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="posterImage" src={imgUrl} alt={"Picture for " + name} />
+        <Flex
+          position="absolute"
+          w="100%"
+          h="100%"
+          justifyContent="center"
+          alignItems="center"
+          pointerEvents="none"
+          zIndex="3"
+          background="#fff5"
+          aria-hidden={!isLoading}
+          role="progressbar"
+          opacity={isLoading ? 1 : 0}
+          transition="opacity 150ms ease"
+        >
+          <Spinner size="lg" color="#fff" thickness="3px" position="absolute" />
+        </Flex>
       </Box>
       <Text lineHeight="1.22em" fontWeight="600">
         {tagline}
