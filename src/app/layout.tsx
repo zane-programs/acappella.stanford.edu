@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Script from "next/script";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -27,6 +28,10 @@ const sourceSans3 = Source_Sans_3({
 
 // Get image URLs
 const groupImgUrls = Object.values(GROUPS).map((group) => group.imgUrl);
+
+export const metadata: Metadata = {
+  viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
+};
 
 export default function RootLayout({
   children,
@@ -67,7 +72,7 @@ export default function RootLayout({
             <CookieConsentBanner />
             <Flex
               direction="column"
-              minH="calc(100vh - env(safe-area-inset-bottom))"
+              minH="calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top))"
               gap="6"
             >
               <Box px="8" py="7" w="100%" maxW="72em" margin="0 auto" flex={1}>

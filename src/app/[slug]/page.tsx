@@ -1,15 +1,18 @@
+import { useMemo } from "react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
 import { Box, Button, Flex, Heading, Link } from "@/app/components/chakra";
 import AutoStyledContent from "@/app/components/shared/AutoStyledContent";
 import { type ButtonProps } from "@chakra-ui/react";
 import type { IconType } from "react-icons";
 import PosterImage from "../components/shared/PosterImage";
+import ShareButton from "../components/shared/ShareButton";
 
 import GROUPS, {
   type ACappellaGroup,
   type GroupSocialLinks,
 } from "@/app/groups";
-import { notFound } from "next/navigation";
 
 // icons
 import {
@@ -21,13 +24,12 @@ import {
   SiTwitter,
   SiFacebook,
 } from "react-icons/si";
-import { useMemo } from "react";
 
-export function generateMetadata({
+export async function generateMetadata({
   params: { slug },
 }: {
   params: { slug: string };
-}): Metadata {
+}): Promise<Metadata> {
   const group = GROUPS[slug];
 
   if (!group) {
@@ -38,7 +40,15 @@ export function generateMetadata({
 
   return {
     title: group.name + " - Stanford A Cappella",
-    description: `Learn more about ${group.name}, ${group.tagline}!`,
+    description:
+      group.seoDescription ??
+      `Learn more about ${group.name}, ${group.tagline}!`,
+    openGraph: {
+      title: group.name,
+      siteName: "Stanford A Cappella",
+      description: `Learn more about ${group.name}, ${group.tagline}!`,
+      images: [group.imgUrl],
+    },
     keywords: [
       groupNameLowercase,
       "stanford " + groupNameLowercase,
@@ -84,6 +94,7 @@ export default function GroupPage({
             <Button colorScheme="blue" {...linkButton(group.siteLink)}>
               {group.name} Website
             </Button>
+            <ShareButton />
           </Flex>
         </Flex>
         <Box flex={{ base: undefined, md: 1 }}>

@@ -32,6 +32,8 @@ export interface ACappellaGroup {
   extraKeywords?: string[];
   // Social media links
   socialLinks?: Partial<GroupSocialLinks>;
+  // Optional: replaces meta description
+  seoDescription?: string;
 }
 
 const GROUPS: { [slug: string]: ACappellaGroup } = {
