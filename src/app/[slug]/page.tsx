@@ -164,6 +164,7 @@ function YoutubeChannelEmbed({ url }: { url: string }) {
               : "https://www.youtube-nocookie.com/embed/?listType=user_uploads&list=" +
                 channelId
           }
+          allowFullScreen
         ></iframe>
       </Box>
     </Flex>
