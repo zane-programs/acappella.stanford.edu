@@ -159,7 +159,7 @@ function YoutubeChannelEmbed({ url }: { url: string }) {
           height="100%"
           src={
             /^UC[\w-]{21}[AQgw]$/.test(channelId)
-              ? "https://www.youtube-nocookie.com/embed/?listType=user_uploads&list=UU" +
+              ? "https://www.youtube-nocookie.com/embed/videoseries?list=UU" +
                 channelId.substring(2)
               : "https://www.youtube-nocookie.com/embed/?listType=user_uploads&list=" +
                 channelId
