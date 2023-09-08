@@ -210,9 +210,6 @@ function SocialLinks({
             href={socialLinks![key as keyof GroupSocialLinks]!}
             target="_blank"
             rel="noopener noreferrer"
-            title={
-              name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
-            }
             color="#821b"
             transition="color 200ms ease"
             sx={{
@@ -220,7 +217,11 @@ function SocialLinks({
               "&:hover": { color: "#821e" },
             }}
           >
-            <IconComponent />
+            <IconComponent
+              title={
+                name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
+              }
+            />
           </Link>
         ))}
     </Flex>
