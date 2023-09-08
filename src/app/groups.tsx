@@ -43,7 +43,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street.jpg",
     siteLink: "https://www.fleetstreet.com/",
-    auditionLink: "https://www.fleetstreet.com/audition",
+    // auditionLink: "https://www.fleetstreet.com/audition",
     socialLinks: {
       youtube: "https://www.youtube.com/user/FleetStreetSingers",
       appleMusic:
