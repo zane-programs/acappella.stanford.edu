@@ -216,12 +216,11 @@ function SocialLinks({
               "& svg": { fontSize: "1.75rem" },
               "&:hover": { color: "#821e" },
             }}
+            title={
+              name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
+            }
           >
-            <IconComponent
-              title={
-                name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
-              }
-            />
+            <IconComponent />
           </Link>
         ))}
     </Flex>
