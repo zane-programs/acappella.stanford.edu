@@ -8,7 +8,7 @@ const BRANDING_OG_OPTIONS: {
   fizz_auditions_v1: {
     component: <Home />,
     metadata: {
-      title: "Click to learn about a cappella auditions at Stanford!",
+      title: "Stanford A Cappella",
       description:
         "Want to audition for a cappella? Look no further! Visit StanfordACappella.com to find audition information for your favorite a cappella groups.",
       openGraph: {
