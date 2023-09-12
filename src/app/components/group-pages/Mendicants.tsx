@@ -4,20 +4,22 @@ export default function Mendicants() {
   return (
     <>
       <Text>
-        The Mendicants are a group of singers devoted to performing the best
-        songs of today, yesterday and several decades ago. We pride ourselves on
-        our wide range of styles, from gospel and barbershop to original
-        compositions, jazz standards and contemporary pop. You can see us on
-        stage, serenading in stairwells, or even just breaking out into song
-        around campus.
+        5-Time ICCA Semi-Finalist, The Mendicants, are Stanford University's
+        Original A-Cappella Group founded in 1963. Boasting a discography of 30
+        studio albums, they rank as the second most streamed college a capella
+        group in the nation.
       </Text>
+
       <Text>
-        They say that the group originally rehearsed only one song that they
-        performed for the first time one lunchtime in Branner Hall. As they
-        sang, the hall rang with beautiful music and soon there wasn&apos;t a
-        dry eye in the house. When they finished, there was a tumultuous
-        explosion of applause as undergrads threw themselves at the stunned
-        Mendicants, clamoring for more. The rest, as they say, is history.
+        Dedicated to delivering the finest tunes spanning generations, the
+        Mendicants perform a wide range of styles from soulful gospel to radio
+        pop. They&apos;ve performed around the world, yet it all began with an
+        impromptu gathering at Branner Hall. With just one song rehearsed, they
+        broke bread and sang, filling the hall with enchanting melodies. Before
+        long, there wasn&apos;t a dry eye in the house. When the final note
+        reverberated, the room erupted into a thunderous applause.
+        Undergraduates swarmed the astonished Mendicants, yearning for an
+        encore. The rest, as they say, is history.
       </Text>
     </>
   );

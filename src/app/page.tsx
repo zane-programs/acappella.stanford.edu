@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 
 import { Box, SimpleGrid } from "./components/chakra";
-import GROUPS from "./groups";
+import GROUPS from "./config/groups";
 
 import GroupTile from "./components/groups/GroupTile";
 

@@ -1,14 +1,14 @@
 // Group Pages
-import FleetStreet from "./components/group-pages/FleetStreet";
-import Harmonics from "./components/group-pages/Harmonics";
-import Counterpoint from "./components/group-pages/Counterpoint";
-import EverydayPeople from "./components/group-pages/EverydayPeople";
-import Mendicants from "./components/group-pages/Mendicants";
-import Raagapella from "./components/group-pages/Raagapella";
-import OTone from "./components/group-pages/OTone";
-import Testimony from "./components/group-pages/Testimony";
-import Talisman from "./components/group-pages/Talisman";
-import MixedCompany from "./components/group-pages/MixedCompany";
+import FleetStreet from "../components/group-pages/FleetStreet";
+import Harmonics from "../components/group-pages/Harmonics";
+import Counterpoint from "../components/group-pages/Counterpoint";
+import EverydayPeople from "../components/group-pages/EverydayPeople";
+import Mendicants from "../components/group-pages/Mendicants";
+import Raagapella from "../components/group-pages/Raagapella";
+import OTone from "../components/group-pages/OTone";
+import Testimony from "../components/group-pages/Testimony";
+import Talisman from "../components/group-pages/Talisman";
+import MixedCompany from "../components/group-pages/MixedCompany";
 
 export interface GroupSocialLinks {
   instagram: string;
@@ -34,6 +34,8 @@ export interface ACappellaGroup {
   socialLinks?: Partial<GroupSocialLinks>;
   // Optional: replaces meta description
   seoDescription?: string;
+  // Optional: Alternate image for description page
+  descriptionImgUrl?: string;
 }
 
 const GROUPS: { [slug: string]: ACappellaGroup } = {
@@ -57,8 +59,10 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     name: "Mendicants",
     tagline: "Stanford's oldest a cappella group",
     description: <Mendicants />,
-    imgUrl: "/assets/img/mendicants.jpg",
+    imgUrl: "/assets/img/mendicants_new.jpg",
+    descriptionImgUrl: "/assets/img/mendicants_new_inside.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
+    auditionLink: "https://www.stanfordmendicants.com/auditions/",
     socialLinks: {
       spotify: "https://open.spotify.com/artist/3ZBvLOZu5A9jtKO5XjHDTl",
       appleMusic:

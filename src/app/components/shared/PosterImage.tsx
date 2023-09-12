@@ -5,13 +5,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { Flex, Spinner } from "@/app/components/chakra";
 
-import type { ACappellaGroup } from "@/app/groups";
+import type { ACappellaGroup } from "@/app/config/groups";
 import type { FlexProps } from "@chakra-ui/react";
 
 export default function PosterImage({
   group,
+  isDescription,
   ...props
-}: FlexProps & { group: ACappellaGroup }) {
+}: FlexProps & { group: ACappellaGroup; isDescription?: boolean }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
@@ -26,7 +27,9 @@ export default function PosterImage({
       {!isLoaded && <Spinner color="#888" size="lg" thickness="3px" />}
       <Image
         className="posterImage"
-        src={group.imgUrl}
+        src={
+          isDescription ? group.descriptionImgUrl ?? group.imgUrl : group.imgUrl
+        }
         alt={"Picture for " + group.name}
         layout="fill"
         objectFit="cover"

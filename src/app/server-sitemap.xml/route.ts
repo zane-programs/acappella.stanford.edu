@@ -1,6 +1,6 @@
 import { getServerSideSitemap } from "next-sitemap";
 
-import GROUPS from "../groups";
+import GROUPS from "../config/groups";
 
 export async function GET(request: Request) {
   // Method to source urls from cms

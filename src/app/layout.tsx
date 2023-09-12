@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { headers } from "next/headers";
 import Image from "next/image";
 
 // components & setup
@@ -24,9 +23,11 @@ const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
-};
+export function generateMetadata(): Metadata {
+  return {
+    viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
+  };
+}
 
 export default function RootLayout({
   children,

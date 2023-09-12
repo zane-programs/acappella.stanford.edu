@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import GROUPS from "@/app/groups";
+import GROUPS from "@/app/config/groups";
 
 export default function AuditionRedirect({
   params: { slug },

@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import type { ACappellaGroup } from "@/app/groups";
+import type { ACappellaGroup } from "@/app/config/groups";
 import { Box, Flex, Spinner, Text } from "@/app/components/chakra";
 import { useState } from "react";
 

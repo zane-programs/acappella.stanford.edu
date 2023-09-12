@@ -12,7 +12,7 @@ import ShareButton from "../components/shared/ShareButton";
 import GROUPS, {
   type ACappellaGroup,
   type GroupSocialLinks,
-} from "@/app/groups";
+} from "@/app/config/groups";
 
 // icons
 import {
@@ -25,11 +25,11 @@ import {
   SiFacebook,
 } from "react-icons/si";
 
-export async function generateMetadata({
+export function generateMetadata({
   params: { slug },
 }: {
   params: { slug: string };
-}): Promise<Metadata> {
+}): Metadata {
   const group = GROUPS[slug];
 
   if (!group) {
@@ -81,7 +81,7 @@ export default function GroupPage({
           gap="4"
           w={{ base: "auto", md: "270px", mdPlus: "315px", lg: "345px" }}
         >
-          <PosterImage group={group} />
+          <PosterImage group={group} isDescription />
           {group.socialLinks && Object.keys(group.socialLinks).length > 0 && (
             <SocialLinks group={group} />
           )}
