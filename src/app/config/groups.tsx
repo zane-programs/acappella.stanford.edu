@@ -57,7 +57,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   mendicants: {
     name: "Mendicants",
-    tagline: "Stanford's oldest a cappella group",
+    tagline: "Stanford's original a cappella group",
     description: <Mendicants />,
     imgUrl: "/assets/img/mendicants_new.jpg",
     descriptionImgUrl: "/assets/img/mendicants_new_inside.jpg",
