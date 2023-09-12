@@ -6,7 +6,7 @@ export default function Mendicants() {
       <Text>
         5-Time ICCA Semi-Finalist, The Mendicants, are Stanford University&apos;s
         Original A-Cappella Group founded in 1963. Boasting a discography of 30
-        studio albums, they rank as the second most streamed college a capella
+        studio albums, they rank as the second most streamed college a cappella
         group in the nation.
       </Text>
 
