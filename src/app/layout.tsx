@@ -23,11 +23,9 @@ const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
 });
 
-export function generateMetadata(): Metadata {
-  return {
-    viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
-  };
-}
+export const metadata: Metadata = {
+  viewport: "width=device-width, initial-scale=1.0, viewport-fit=cover",
+};
 
 export default function RootLayout({
   children,
