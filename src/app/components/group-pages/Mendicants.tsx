@@ -4,7 +4,7 @@ export default function Mendicants() {
   return (
     <>
       <Text>
-        5-Time ICCA Semi-Finalist, The Mendicants, are Stanford University's
+        5-Time ICCA Semi-Finalist, The Mendicants, are Stanford University&apos;s
         Original A-Cappella Group founded in 1963. Boasting a discography of 30
         studio albums, they rank as the second most streamed college a capella
         group in the nation.
