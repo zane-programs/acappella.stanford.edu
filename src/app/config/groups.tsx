@@ -15,9 +15,9 @@ export enum VoicePart {
   Alto = 0b10,
   Tenor = 0b100,
   Bari_Bass = 0b1000,
-  SATB = VoicePart.Soprano &
-    VoicePart.Alto &
-    VoicePart.Tenor &
+  SATB = VoicePart.Soprano |
+    VoicePart.Alto |
+    VoicePart.Tenor |
     VoicePart.Bari_Bass,
 }
 
@@ -70,7 +70,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   mendicants: {
     name: "Mendicants",
-    voiceParts: VoicePart.Tenor & VoicePart.Bari_Bass,
+    voiceParts: VoicePart.Tenor | VoicePart.Bari_Bass,
     tagline: "Stanford's original a cappella group",
     description: <Mendicants />,
     imgUrl: "/assets/img/mendicants_new.jpg",
@@ -89,7 +89,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   counterpoint: {
     name: "Counterpoint",
-    voiceParts: VoicePart.Soprano & VoicePart.Alto,
+    voiceParts: VoicePart.Soprano | VoicePart.Alto,
     tagline: "Stanford's only soprano/alto a cappella group",
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
