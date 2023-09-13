@@ -10,6 +10,17 @@ import Testimony from "../components/group-pages/Testimony";
 import Talisman from "../components/group-pages/Talisman";
 import MixedCompany from "../components/group-pages/MixedCompany";
 
+export enum VoicePart {
+  Soprano = 0b1,
+  Alto = 0b10,
+  Tenor = 0b100,
+  Bari_Bass = 0b1000,
+  SATB = VoicePart.Soprano &
+    VoicePart.Alto &
+    VoicePart.Tenor &
+    VoicePart.Bari_Bass,
+}
+
 export interface GroupSocialLinks {
   instagram: string;
   youtube: string;
@@ -22,6 +33,7 @@ export interface GroupSocialLinks {
 
 export interface ACappellaGroup {
   name: string;
+  voiceParts: VoicePart;
   tagline: string;
   description: React.ReactNode;
   imgUrl: string;
@@ -41,6 +53,7 @@ export interface ACappellaGroup {
 const GROUPS: { [slug: string]: ACappellaGroup } = {
   "fleet-street": {
     name: "Fleet Street",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender, all-original comedy a cappella group",
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street.jpg",
@@ -57,6 +70,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   mendicants: {
     name: "Mendicants",
+    voiceParts: VoicePart.Tenor & VoicePart.Bari_Bass,
     tagline: "Stanford's original a cappella group",
     description: <Mendicants />,
     imgUrl: "/assets/img/mendicants_new.jpg",
@@ -75,6 +89,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   counterpoint: {
     name: "Counterpoint",
+    voiceParts: VoicePart.Soprano & VoicePart.Alto,
     tagline: "Stanford's only soprano/alto a cappella group",
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
@@ -89,6 +104,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   harmonics: {
     name: "Harmonics",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's rock/experimental a cappella group",
     description: <Harmonics />,
     imgUrl: "/assets/img/harmonics.jpg",
@@ -103,6 +119,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   raagapella: {
     name: "Raagapella",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender South Asian Fusion a cappella group",
     description: <Raagapella />,
     imgUrl: "/assets/img/raagapella.jpg",
@@ -119,6 +136,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   "o-tone": {
     name: "O-Tone",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender East Asian a cappella group",
     description: <OTone />,
     imgUrl: "/assets/img/o-tone.jpg",
@@ -133,6 +151,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   "everyday-people": {
     name: "Everyday People",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's only hip-hop, Motown, R&B, and soul a cappella group",
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
@@ -147,6 +166,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   testimony: {
     name: "Testimony",
+    voiceParts: VoicePart.SATB,
     tagline: "Stanford's Christian co-ed a cappella group",
     description: <Testimony />,
     imgUrl: "/assets/img/testimony.jpg",
@@ -160,9 +180,10 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   talisman: {
     name: "Talisman",
-    tagline: "A group of people singing music hailing from around the world",
+    voiceParts: VoicePart.SATB,
+    tagline: "Soul and storytelling through song",
     description: <Talisman />,
-    imgUrl: "/assets/img/talisman.jpg",
+    imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
@@ -174,6 +195,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
   "mixed-company": {
     name: "Mixed Company",
+    voiceParts: VoicePart.SATB,
     tagline:
       "Stanford University's oldest all-gender, all-genre a cappella group",
     description: <MixedCompany />,

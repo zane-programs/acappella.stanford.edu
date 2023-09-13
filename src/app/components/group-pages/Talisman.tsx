@@ -6,24 +6,14 @@ export default function Talisman() {
       <Text>
         We are Stanford Talisman, a group of singers on Stanford&apos;s campus
         who since our origins have sung music stemming from Black liberation
-        struggles across the world. Our alumni and current group came together
-        to create a virtual choir of Lift Every Voice and Sing, the Black
-        National Anthem in America. We&apos;ve also been raising funds for
-        organizations contributing to the movement for Black lives in America.
-        You check out{" "}
-        <Link
-          href="https://www.pb-resources.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          pb-resources.com
-        </Link>{" "}
-        for a list of further resources compiled by Alexis Williams, a
-        19-year-old Computer Science major at New York University. She is an
-        African American and Latina coder committed to seeing change through
-        action. Her website is a comprehensive source featuring educational
-        resources, petitions to sign, a list of organizations seeking donations,
-        and more.
+        struggles across the world. We&apos;ve performed all over the globe, be
+        it Hawai&apos;i, South Africa, or Thailand, and in all kinds of
+        settings, from White Plaza to the White House. We appreciate the great
+        challenge of responsibly engaging with the genuine roots of the songs we
+        sing, in their varied languages and cultural contexts, and are committed
+        to bringing these songs to life as best as our abilities allow. With us,
+        you will find not only music in all its rich history, but also a
+        life-long community.
       </Text>
     </>
   );
