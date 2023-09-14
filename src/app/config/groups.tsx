@@ -94,6 +94,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
     siteLink: "https://counterpointacappella.com/",
+    auditionLink:
+      "https://www.signupgenius.com/go/10C0C4CAEA828A4FCC25-counterpoint",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
