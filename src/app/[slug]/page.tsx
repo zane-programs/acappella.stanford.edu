@@ -46,7 +46,7 @@ export function generateMetadata({
     openGraph: {
       title: group.name,
       siteName: "Stanford A Cappella",
-      description: `Learn more about ${group.name}, ${group.tagline}!`,
+      description: `Learn more about ${group.name} - ${group.tagline}!`,
       images: [group.imgUrl],
     },
     keywords: [
