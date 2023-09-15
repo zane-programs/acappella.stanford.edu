@@ -111,6 +111,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmonics.jpg",
     siteLink: "https://www.stanfordharmonics.com/",
+    auditionLink: "https://www.stanfordharmonics.com/auditions",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
