@@ -201,8 +201,10 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     tagline:
       "Stanford University's oldest all-gender, all-genre a cappella group",
     description: <MixedCompany />,
-    imgUrl: "/assets/img/mixed-company.jpg",
+    imgUrl: "/assets/img/mixedco_new.jpg",
+    descriptionImgUrl: "/assets/img/mixedco_new_inside.jpg",
     siteLink: "https://www.mixedco.com/",
+    auditionLink: "https://forms.gle/T2th5U12iGxBTZgWA",
     extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",

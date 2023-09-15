@@ -42,7 +42,7 @@ export function generateMetadata({
     title: group.name + " - Stanford A Cappella",
     description:
       group.seoDescription ??
-      `Learn more about ${group.name}, ${group.tagline}!`,
+      `Learn more about ${group.name} - ${group.tagline}!`,
     openGraph: {
       title: group.name,
       siteName: "Stanford A Cappella",
