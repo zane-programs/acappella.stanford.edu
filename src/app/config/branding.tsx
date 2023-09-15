@@ -3,7 +3,7 @@ import type { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 const BRANDING_OG_OPTIONS: {
   [brandingKey: string]: { openGraph: OpenGraph };
 } = {
-  fizz_auditions_v1: {
+  auditions_v1: {
     openGraph: {
       title: "Click to learn about a cappella auditions at Stanford!",
       description:
