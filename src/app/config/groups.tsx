@@ -188,6 +188,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
+    auditionLink: "https://talisman23.carrd.co/",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
