@@ -5,7 +5,7 @@ export default function Testimony() {
     <>
       <Text>
         Testimony Christian A Cappella is Stanford University&apos;s
-        award-winning Christian a cappella group. Now celebrating thirty-one
+        award-winning Christian a cappella group. Now celebrating thirty-two
         years of God-inspired song and its upcoming sixth album release,
         Testimony is the original collegiate Christian a cappella group on the
         west coast, comprised of Stanford students dedicated to sharing their
