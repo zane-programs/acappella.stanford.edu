@@ -172,7 +172,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's Christian co-ed a cappella group",
     description: <Testimony />,
-    imgUrl: "/assets/img/testimony.jpg",
+    imgUrl: "/assets/img/testimony_new.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
