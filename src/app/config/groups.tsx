@@ -127,7 +127,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Raagapella />,
     imgUrl: "/assets/img/raagapella.jpg",
     siteLink: "https://www.raagapella.com/",
-    auditionLink: "https://www.raagapella.com/auditionspage",
+    auditionLink: "https://www.raagapella.com/auditions",
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
