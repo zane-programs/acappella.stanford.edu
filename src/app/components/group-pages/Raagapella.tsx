@@ -4,10 +4,13 @@ export default function Raagapella() {
   return (
     <>
       <Text>
-        Stanford Raagapella is Stanford University&apos;s South Asian focus a
-        cappella group. The group was founded as an all-male group in 2002 and
-        transitioned to an all-gender group in 2017. Stanford Raagapella has
-        released three albums to date, Raags to Riches, Raag Time and Raagstars.
+        Stanford Raagapella is Stanford&apos;s South Asian Fusion A Cappella
+        group. Founded in 2002, Raag sings a wide variety of genres, including
+        contemporary Bollywood, American pop, R&B, and Indian classical music.
+        In addition to performing all across campus, Raag travels to perform at
+        national competitions and live showcases around the country.
+        They&apos;ve also released four albums and 1 EP available on Spotify and
+        Apple Music, with one more coming soon!
       </Text>
     </>
   );
