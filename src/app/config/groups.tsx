@@ -74,7 +74,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     tagline: "Stanford's original a cappella group",
     description: <Mendicants />,
     imgUrl: "/assets/img/mendicants_new.jpg",
-    descriptionImgUrl: "/assets/img/mendicants_new_inside.jpg",
+    descriptionImgUrl: "/assets/img/mendicants_new_inside_v3.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
     auditionLink: "https://www.stanfordmendicants.com/auditions/",
     socialLinks: {
