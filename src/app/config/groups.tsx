@@ -174,7 +174,9 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     tagline: "Stanford's Christian co-ed a cappella group",
     description: <Testimony />,
     imgUrl: "/assets/img/testimony_new.jpg",
+    descriptionImgUrl: "/assets/img/testimony_new_inside.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
+    auditionLink: "https://forms.gle/vE2sbsRdLPrFGGUM9",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
