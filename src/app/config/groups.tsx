@@ -161,6 +161,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
+    auditionLink: "https://calendly.com/rcastane/ep-auditions",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
       instagram: "https://www.instagram.com/stanford_everydaypeople/",
