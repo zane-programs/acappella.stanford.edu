@@ -36,6 +36,7 @@ export default function OTone() {
         >
           https://calendly.com/stanfordotone
         </Link>
+        .
       </Text>
     </>
   );
