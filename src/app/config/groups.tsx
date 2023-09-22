@@ -141,10 +141,11 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   "o-tone": {
     name: "O-Tone",
     voiceParts: VoicePart.SATB,
-    tagline: "Stanford's all-gender East Asian a cappella group",
+    tagline: "Stanford's all-gender East Asian interest a cappella group",
     description: <OTone />,
     imgUrl: "/assets/img/o-tone.jpg",
     siteLink: "https://stanfordotone.com/",
+    auditionLink: "https://calendly.com/stanfordotone",
     extraKeywords: ["otone", "stanford otone"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCalFurLezFrabetPytEvVFQ",
