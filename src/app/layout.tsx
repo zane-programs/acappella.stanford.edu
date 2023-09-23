@@ -15,6 +15,7 @@ import { Source_Sans_3 } from "next/font/google";
 
 // styles
 import "./globals.css";
+import OShowPromo from "./components/shared/OShowPromo";
 
 // font setup
 const sourceSans3 = Source_Sans_3({
@@ -86,6 +87,7 @@ export default function RootLayout({
                   </Flex>
                 </Flex>
                 <Box as="main" mt="6">
+                  <OShowPromo />
                   {children}
                 </Box>
               </Box>

@@ -1,5 +1,6 @@
 "use client";
 export {
+  Collapse,
   Card,
   HStack,
   Icon,
@@ -23,6 +24,7 @@ export {
   Grid,
   GridItem,
   Spinner,
+  IconButton,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";

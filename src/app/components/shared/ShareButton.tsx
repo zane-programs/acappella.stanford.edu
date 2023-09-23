@@ -25,7 +25,7 @@ export default function ShareButton() {
 
         // Log analytics event
         typeof window !== "undefined" &&
-          window?.gtag("event", "shareWithShareButton", {
+          window?.gtag?.("event", "shareWithShareButton", {
             event_category: "groupPage",
             event_label: document.title,
           });
