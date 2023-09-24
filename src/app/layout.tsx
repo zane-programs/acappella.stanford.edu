@@ -87,7 +87,7 @@ export default function RootLayout({
                   </Flex>
                 </Flex>
                 <Box as="main" mt="6">
-                  <OShowPromo />
+                  {/* <OShowPromo /> */}
                   {children}
                 </Box>
               </Box>
