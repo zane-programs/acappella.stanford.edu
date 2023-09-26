@@ -15,15 +15,13 @@ export default function GroupPromoRedirect({
   useEffect(() => {
     if (slug in GROUPS) {
       const group = GROUPS[slug];
-      group.auditionLink && typeof window !== "undefined" && window.gtag
-        ? window?.gtag?.("event", "groupPromo", {
-            event_category: "promo",
-            event_label: slug,
-            event_callback: () => {
-              window.location.replace(group?.auditionLink ?? "/");
-            },
-          })
-        : window.location.replace(group?.auditionLink ?? "/");
+      window.location.replace(group?.auditionLink ?? "/");
+      group.auditionLink &&
+        typeof window !== "undefined" &&
+        window?.gtag?.("event", "groupPromo", {
+          event_category: "promo",
+          event_label: slug,
+        });
     } else {
       window.location.href = "/";
     }
