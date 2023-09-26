@@ -1,3 +1,6 @@
+// Types
+import type { Metadata } from "next";
+
 // Group Pages
 import FleetStreet from "../components/group-pages/FleetStreet";
 import Harmonics from "../components/group-pages/Harmonics";
@@ -31,6 +34,10 @@ export interface GroupSocialLinks {
   facebook: string;
 }
 
+export interface DirectAuditionLinkConfig {
+  metadata: Metadata;
+}
+
 export interface ACappellaGroup {
   name: string;
   voiceParts: VoicePart;
@@ -48,6 +55,7 @@ export interface ACappellaGroup {
   seoDescription?: string;
   // Optional: Alternate image for description page
   descriptionImgUrl?: string;
+  directAuditionLinkConfig?: DirectAuditionLinkConfig;
 }
 
 const GROUPS: { [slug: string]: ACappellaGroup } = {
@@ -66,6 +74,19 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       instagram: "https://www.instagram.com/thefleetstagram/",
       spotify: "https://open.spotify.com/artist/56MfXqkYeRrlMzLhBMg9CG",
       facebook: "https://www.facebook.com/StanfordFleetStreetSingers/",
+    },
+    directAuditionLinkConfig: {
+      metadata: {
+        title: "Click to Audition for Fleet Street!",
+        description:
+          "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
+        openGraph: {
+          title: "Click to Audition for Fleet Street!",
+          description:
+            "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
+          images: ["/assets/img/misc/FS_Poster_Fizz_Small.png"],
+        },
+      },
     },
   },
   mendicants: {
@@ -224,5 +245,9 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     },
   },
 };
+
+GROUPS["mixed-co"] = GROUPS["mixed-company"];
+GROUPS["harmz"] = GROUPS["harmonics"];
+GROUPS["fleetstreet"] = GROUPS["fleet-street"];
 
 export default GROUPS;
