@@ -38,7 +38,7 @@ export default function RootLayout({
       <html lang="en">
         <head>
           {/* Google tag (gtag.js) */}
-          {process.env.NODE_ENV === "production" && (
+          {process.env.NODE_ENV !== "production" && (
             <>
               <Script src="https://www.googletagmanager.com/gtag/js?id=G-EWZRGZZY5Y"></Script>
               <Script id="google-analytics">

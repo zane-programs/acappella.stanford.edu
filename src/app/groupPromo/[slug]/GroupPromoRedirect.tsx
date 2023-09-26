@@ -1,9 +1,13 @@
 "use client";
 
 import { Box, Flex, Heading, Spinner, Text } from "@/app/components/chakra";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import GROUPS from "@/app/config/groups";
+
+function redirectTo(link: string | undefined) {
+  window.location.replace(link ?? "/");
+}
 
 export default function GroupPromoRedirect({
   slug,
@@ -12,16 +16,27 @@ export default function GroupPromoRedirect({
   slug: string;
   groupName: string;
 }) {
+  const ranOnceRef = useRef(false);
+
   useEffect(() => {
     if (slug in GROUPS) {
       const group = GROUPS[slug];
-      window.location.replace(group?.auditionLink ?? "/");
-      group.auditionLink &&
-        typeof window !== "undefined" &&
-        window?.gtag?.("event", "groupPromo", {
-          event_category: "promo",
-          event_label: slug,
-        });
+      if (group.auditionLink && typeof window !== "undefined") {
+        if (window.gtag && !ranOnceRef.current) {
+          ranOnceRef.current = true;
+
+          window.gtag("event", "groupPromo", {
+            event_category: "promo",
+            event_label: slug,
+            event_callback: () => {
+              console.log("analytics hit");
+              redirectTo(group.auditionLink);
+            },
+          });
+        } else {
+          redirectTo(group.auditionLink);
+        }
+      }
     } else {
       window.location.href = "/";
     }
