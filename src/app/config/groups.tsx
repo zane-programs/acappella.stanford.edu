@@ -84,7 +84,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
           title: "Click to Audition for Fleet Street!",
           description:
             "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
-          images: ["/assets/img/misc/FS_Poster_Fizz_Small.png"],
+          images: ["/assets/img/misc/FS_Poster_Fizz_Small_v2.jpg"],
         },
       },
     },
