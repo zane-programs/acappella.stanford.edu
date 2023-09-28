@@ -13,6 +13,7 @@ import GROUPS, {
   type ACappellaGroup,
   type GroupSocialLinks,
 } from "@/app/config/groups";
+import CONFIG from "../config";
 
 // icons
 import {
@@ -86,7 +87,7 @@ export default function GroupPage({
             <SocialLinks group={group} />
           )}
           <Flex direction="column" w="100%" gap="1">
-            {group.auditionLink && (
+            {CONFIG.showAuditionButtons && group.auditionLink && (
               <Button colorScheme="red" {...linkButton(group.auditionLink)}>
                 Audition for {group.name}
               </Button>
