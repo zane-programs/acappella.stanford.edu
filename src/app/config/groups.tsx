@@ -246,8 +246,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
 };
 
-GROUPS["mixed-co"] = GROUPS["mixed-company"];
-GROUPS["harmz"] = GROUPS["harmonics"];
-GROUPS["fleetstreet"] = GROUPS["fleet-street"];
+// GROUPS["mixed-co"] = GROUPS["mixed-company"];
+// GROUPS["harmz"] = GROUPS["harmonics"];
+// GROUPS["fleetstreet"] = GROUPS["fleet-street"];
 
 export default GROUPS;
