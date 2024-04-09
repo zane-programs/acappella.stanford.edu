@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 import { Button, Flex, Link, Text } from "@/app/components/chakra";
 
@@ -8,6 +9,7 @@ export default function CookieConsentBanner() {
   // User hasn't consented yet, but this is set for SSR purposes
   // (User will actually consent once page has rendered on client)
   const [consented, setConsented] = useState(true);
+  const pathname = usePathname();
 
   useEffect(() => {
     function onStorage() {
@@ -27,7 +29,7 @@ export default function CookieConsentBanner() {
     };
   }, []);
 
-  return consented ? null : (
+  return pathname === "/privacy" || consented ? null : (
     <CookieConsentBannerContent setConsented={setConsented} />
   );
 }

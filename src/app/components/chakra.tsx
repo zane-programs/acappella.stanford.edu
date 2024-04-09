@@ -25,6 +25,8 @@ export {
   GridItem,
   Spinner,
   IconButton,
+  ListItem,
+  UnorderedList,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";

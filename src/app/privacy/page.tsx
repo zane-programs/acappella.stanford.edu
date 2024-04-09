@@ -1,4 +1,10 @@
-import { Box, Heading, Text } from "@/app/components/chakra";
+import {
+  Box,
+  Heading,
+  Text,
+  ListItem,
+  UnorderedList,
+} from "@/app/components/chakra";
 import AutoStyledContent from "../components/shared/AutoStyledContent";
 
 export default function Privacy() {
@@ -8,98 +14,116 @@ export default function Privacy() {
         Privacy Policy
       </Heading>
       <Text my="4" fontStyle="italic" fontSize="xl">
-        Updated September 5, 2023
+        Updated April 9, 2024
       </Text>
+
+      <Text fontSize="xl">
+        We value the privacy of all our users and are committed to protecting it
+        through our compliance with this policy.
+      </Text>
+
       <Box as="section">
-        <Text fontSize="xl">
-          By using <strong>StanfordACappella.com</strong> (hereinafter referred
-          as &ldquo;the Site&rdquo;), users agree to the collection and use of
-          their personal information as described in this Privacy Policy.
+        <Heading size="md" as="h2">
+          Information We Collect
+        </Heading>
+
+        <Text>
+          When you use <strong>StanfordACappella.com</strong>, we use
+          third-party services like Google Analytics to collect information
+          about your engagement and behavior. The Information we collect
+          includes but is not limited to:
         </Text>
+        <UnorderedList>
+          <ListItem>Device information</ListItem>
+          <ListItem>Cookies</ListItem>
+          <ListItem>Geographic and demographic information</ListItem>
+          <ListItem>Log information</ListItem>
+        </UnorderedList>
+
+        <Text>
+          This information helps us analyze and understand how you use the site,
+          improve our service, and enhance our users&apos; experiences.
+        </Text>
+
+        <Heading size="md" as="h3">
+          How We Use Your Information
+        </Heading>
+
+        <Text>Your data may be used for the following purposes:</Text>
+        <UnorderedList>
+          <ListItem>
+            To improve your online experience, to understand user behavior, and
+            to gather feedback on our services.
+          </ListItem>
+          <ListItem>
+            To monitor and analyse trends and better understand how users
+            interact with our services.
+          </ListItem>
+        </UnorderedList>
       </Box>
+
       <Box as="section">
         <Heading size="md" as="h3">
-          Information Collection and Use
+          Information Sharing
         </Heading>
+
         <Text>
-          While using the Site, we may ask you to provide us with certain
-          personally identifiable information. This information may include but
-          is not limited to your email address, name, and phone number. We use
-          this information for the purpose of providing and improving the Site
-          and adhering to your requests or inquiries.
+          We do not sell, rent, or otherwise disclose your personal information
+          to third parties for their marketing purposes without your explicit
+          consent.
         </Text>
       </Box>
+
       <Box as="section">
         <Heading size="md" as="h3">
-          Cookies
+          Security
         </Heading>
+
         <Text>
-          We use &ldquo;cookies&rdquo; to collect information in order to
-          improve our Site for you. You have the option to accept or reject
-          these cookies. If you decide to reject our cookies, you may not be
-          able to use some portions of our Site.
+          The safety and security of your information also depends on you. We
+          urge you to be careful about giving out information in public areas of
+          the website.
         </Text>
       </Box>
-      <Box as="section">
-        <Heading size="md" as="h3">
-          Google Analytics
-        </Heading>
-        <Text>
-          The Site uses Google Analytics to measure and evaluate access to and
-          traffic on the Public Area of the Site, and create user navigation
-          reports for our Site administrators. Google operates independently
-          from us and has its own privacy policy which we strongly encourage you
-          to review. Google may use the information collected through Google
-          Analytics to evaluate Users&apos; and Visitors&apos; activity on our
-          Site. For more information, see{" "}
-          <a
-            href="https://www.google.com/policies/privacy/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Google Privacy and Terms
-          </a>
-          .
-        </Text>
-      </Box>
+
       <Box as="section">
         <Heading size="md" as="h3">
           Hosting
         </Heading>
+
         <Text>
-          The Site is hosted by Vercel. Vercel operates independently from us
-          and has its own privacy policy, which we strongly encourage you to
-          review. More information on Vercel can be found at{" "}
-          <a
-            href="https://vercel.com/legal/privacy-policy"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vercel Privacy Policy
-          </a>
-          .
+          Our website is hosted by Vercel. They provide us with the online
+          platform that allows us to provide the Service to you. Your data may
+          be stored through Vercel&apos;s data storage, databases and the
+          general Vercel application. They store your data on secure servers
+          behind a firewall.
         </Text>
       </Box>
-      <Box as="section">
-        <Heading size="md" as="h3">
-          Changes to This Privacy Policy
-        </Heading>
-        <Text>
-          We may update our Privacy Policy from time to time. Therefore, we
-          advise you to review this page periodically for any changes. We will
-          notify you of any changes by posting the new Privacy Policy on this
-          page. These changes are effective immediately, after they are posted
-          on this page.
-        </Text>
-      </Box>
+
       <Box as="section">
         <Heading size="md" as="h3">
           Contact Us
         </Heading>
+
         <Text>
-          If you have any questions or suggestions about our Privacy Policy, do
-          not hesitate to contact us:{" "}
-          <strong>zstjohn [at] stanford [dot] edu</strong>
+          If you have any questions or concerns about this privacy policy or its
+          implementation, you may contact us at{" "}
+          <strong>zstjohn [at] stanford [dot] edu</strong>.
+        </Text>
+      </Box>
+
+      <Box as="section">
+        <Heading size="md" as="h3">
+          Updates to this Privacy Policy
+        </Heading>
+
+        <Text>
+          We may change this privacy policy from time to time. If we make
+          changes, we will notify you by revising the date at the top of this
+          policy and, in some cases, we may provide you with additional notice.
+          We encourage you to review this privacy policy whenever you access our
+          services to stay informed about our information practices and the ways
+          you can help protect your privacy.
         </Text>
       </Box>
     </AutoStyledContent>
