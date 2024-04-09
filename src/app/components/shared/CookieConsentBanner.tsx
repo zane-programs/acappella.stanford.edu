@@ -15,9 +15,6 @@ export default function CookieConsentBanner() {
     function onStorage() {
       const consentedToCookies = localStorage.getItem("sac-cookie-consent");
 
-      // Log analytics event
-      typeof window !== "undefined" && window?.gtag?.("event", "cookieConsent");
-
       setConsented(
         // Parse localStorage if available
         parseLocalStorageValue(consentedToCookies)
@@ -71,6 +68,11 @@ function CookieConsentBannerContent({
         onClick={() => {
           // Consent to cookies on click
           localStorage.setItem("sac-cookie-consent", "true");
+          
+          // Log analytics event
+          typeof window !== "undefined" &&
+            window?.gtag?.("event", "cookieConsent");
+            
           setConsented(true);
         }}
         colorScheme="blue"
