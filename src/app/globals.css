@@ -10,3 +10,11 @@
 .fadeOnce {
   animation: fadeOnce 375ms ease;
 }
+
+@font-face {
+  font-family: Stanford;
+  /* Modified from original: `font-weight: 300;` */
+  font-weight: 400;
+  src: url(/assets/fonts/stanford.woff) format("woff"),
+    url(/assets/fonts/stanford.ttf) format("truetype");
+}

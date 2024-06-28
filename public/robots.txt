@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.stanfordacappella.com
+
+# Sitemaps
+Sitemap: https://www.stanfordacappella.com/sitemap.xml
