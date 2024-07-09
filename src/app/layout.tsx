@@ -142,19 +142,26 @@ function LogoHeading() {
 
 function Masthead() {
   return (
-    <Box width="100%" height="30px" backgroundColor="#8c1515" overflow="hidden">
-      <Box
-        width="calc(100% - 160px)"
-        height="100%"
-        maxWidth="calc(100% - 160px)"
-        margin="0 auto"
-        sx={{ "& img": { height: "71%", marginTop: "5px" } }}
-      >
-        <a href="https://www.stanford.edu">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={MASTHEAD_IMAGE_URI} alt="Stanford University logo" />
-        </a>
-      </Box>
+    <Box
+      width="100%"
+      height="30px"
+      backgroundColor="#8c1515"
+      overflow="hidden"
+      paddingLeft="6.5%"
+      sx={{
+        "& a": {
+          display: "block",
+          height: "70%",
+        },
+        "& img": { height: "100%" },
+      }}
+      display="flex"
+      alignItems="center"
+    >
+      <a href="https://www.stanford.edu">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={MASTHEAD_IMAGE_URI} alt="Stanford University logo" />
+      </a>
     </Box>
   );
 }
