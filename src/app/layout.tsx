@@ -17,6 +17,8 @@ import { Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 // import OShowPromo from "./components/shared/OShowPromo";
 
+const STANFORD_CARDINAL_RED = "#8c1515";
+
 // font setup
 const sourceSans3 = Source_Sans_3({
   weight: ["400", "600", "700"],
@@ -145,7 +147,7 @@ function Masthead() {
     <Box
       width="100%"
       height="30px"
-      backgroundColor="#8c1515"
+      backgroundColor={STANFORD_CARDINAL_RED}
       overflow="hidden"
       paddingLeft="6.5%"
       sx={{

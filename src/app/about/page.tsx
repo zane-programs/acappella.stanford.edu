@@ -19,8 +19,8 @@ export default function About() {
   return (
     <>
       <Text fontSize="xl" mb="4">
-        Welcome to <strong>StanfordACappella.com</strong>, the digital home of
-        Stanford University&apos;s a cappella groups!
+        Welcome to the digital home of Stanford University&apos;s a cappella
+        groups!
       </Text>
       <AutoStyledContent>
         <Box as="section">
@@ -28,9 +28,9 @@ export default function About() {
             For Auditionees
           </Heading>
           <Text>
-            Looking to audition for a cappella at Stanford? You&apos;re in the
-            right place! Check out our <Link href="/">Groups</Link> page to see
-            a full list of a cappella groups.
+            Looking to audition for a cappella at Stanford? You&apos;ve come to
+            the right place! Check out our <Link href="/">Groups</Link> page to
+            see a full list of a cappella groups.
           </Text>
         </Box>
         <Box as="section">

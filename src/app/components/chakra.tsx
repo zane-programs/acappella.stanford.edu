@@ -3,6 +3,7 @@ export {
   Collapse,
   Card,
   HStack,
+  VStack,
   Icon,
   Input,
   InputGroup,
@@ -26,7 +27,9 @@ export {
   Spinner,
   IconButton,
   ListItem,
+  List,
   UnorderedList,
+  VisuallyHidden,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";
