@@ -14,10 +14,10 @@ import {
 } from "@/app/components/chakra";
 import GROUPS from "../config/groups";
 import Link from "next/link";
-import { format as formatDate } from "date-fns";
+import { format as formatDate, parse as parseDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Shows - Stanford A Cappella",
@@ -166,13 +166,21 @@ async function fetchShowsData() {
   const req = await fetch(
     `https://docs.google.com/spreadsheets/d/${
       process.env.SHOWS_SHEET_ID
-    }/gviz/tq?tqx=out:json&tq&${Date.now()}`
+    }/gviz/tq?tqx=out:json&tq&gid=${process.env.SHOWS_SHEET_GID}&${Date.now()}`
   );
   const res = await req.text();
 
   const jsonStart = res.indexOf("{");
   const jsonEnd = res.lastIndexOf("}") + 1;
   const gvizData = JSON.parse(res.substring(jsonStart, jsonEnd));
+
+  // Check if sheet empty, and if so return nothing
+  if (
+    !gvizData.table.cols ||
+    gvizData.table.cols.filter((col: any) => !!col.label).length === 0
+  ) {
+    return [];
+  }
 
   const showsData = gvizData.table.rows.map((row: any) => {
     const rowData: any = {};
@@ -182,23 +190,36 @@ async function fetchShowsData() {
 
       colData = gvizData.table.cols[i];
       key = colData.label;
-      if (colData?.type === "datetime") {
-        // Create date object from datetime
-        val = Reflect.construct(
-          Date,
-          row.c[i].v
-            .slice(5, -1)
-            .split(",")
-            .map((num: string) => parseInt(num))
-        );
-      } else {
-        val = row.c[i].v;
-      }
+
+      // Filter out form response labels
+      if (!key || key === "timestamp" || key === "email") continue;
+
+      val = row.c[i].v;
       rowData[key] = val;
     }
 
+    // Extract date
+    const dateP1 = rowData.date
+      .slice(5, -1)
+      .split(",")
+      .slice(0, 3)
+      .map((num: string) => parseInt(num));
+
+    // Extract time
+    const dateP2 = rowData.time
+      .slice(5, -1)
+      .split(",")
+      .slice(-3)
+      .map((num: string) => parseInt(num));
+
+    // Construct date from the two parts above
+    delete rowData.time;
+    rowData.date = Reflect.construct(Date, [...dateP1, ...dateP2]);
+
     return rowData;
   });
+
+  console.log(showsData);
 
   return (showsData as IShowsDataItem[])
     .filter((show) => show.date.getTime() + 86400000 >= Date.now())
