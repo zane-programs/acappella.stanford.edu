@@ -17,6 +17,8 @@ import Link from "next/link";
 import { format as formatDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Shows - Stanford A Cappella",
   description:
