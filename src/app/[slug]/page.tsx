@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect, RedirectType } from "next/navigation";
 
 import { Box, Button, Flex, Heading, Link } from "@/app/components/chakra";
 import AutoStyledContent from "@/app/components/shared/AutoStyledContent";
@@ -34,7 +34,11 @@ export function generateMetadata({
   const group = GROUPS[slug];
 
   if (!group) {
-    notFound();
+    if (CONFIG.groupAltNameMappings[slug]) {
+      redirect(CONFIG.groupAltNameMappings[slug], RedirectType.replace);
+    } else {
+      notFound();
+    }
   }
 
   const groupNameLowercase = group.name.toLowerCase();
