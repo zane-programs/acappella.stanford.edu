@@ -1,5 +1,6 @@
 "use client";
 export {
+  Badge,
   Collapse,
   Card,
   HStack,
