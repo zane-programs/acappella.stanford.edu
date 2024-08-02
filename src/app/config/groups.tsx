@@ -130,7 +130,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's rock/experimental a cappella group",
     description: <Harmonics />,
-    imgUrl: "/assets/img/harmonics.jpg",
+    imgUrl: "/assets/img/harmz_new_2024.jpg",
     siteLink: "https://www.stanfordharmonics.com/",
     auditionLink: "https://www.stanfordharmonics.com/auditions",
     extraKeywords: ["harmz", "stanford harmz"],
