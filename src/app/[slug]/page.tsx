@@ -215,11 +215,11 @@ function SocialLinks({
             href={socialLinks![key as keyof GroupSocialLinks]!}
             target="_blank"
             rel="noopener noreferrer"
-            color="#bd2828"
+            color="#8c1515"
             transition="color 200ms ease"
             sx={{
               "& svg": { fontSize: "1.75rem" },
-              "&:hover": { color: "#8c1515" },
+              "&:hover": { color: "#bd2828" },
             }}
             title={
               name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
