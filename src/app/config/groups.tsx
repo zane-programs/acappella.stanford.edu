@@ -74,6 +74,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       instagram: "https://www.instagram.com/thefleetstagram/",
       spotify: "https://open.spotify.com/artist/56MfXqkYeRrlMzLhBMg9CG",
       facebook: "https://www.facebook.com/StanfordFleetStreetSingers/",
+      tiktok: "https://www.tiktok.com/@fleetstreetsingers",
     },
     directAuditionLinkConfig: {
       metadata: {
