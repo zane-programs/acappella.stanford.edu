@@ -215,7 +215,7 @@ function SocialLinks({
             href={socialLinks![key as keyof GroupSocialLinks]!}
             target="_blank"
             rel="noopener noreferrer"
-            color="#821b"
+            color="#8c1515"
             transition="color 200ms ease"
             sx={{
               "& svg": { fontSize: "1.75rem" },
