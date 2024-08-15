@@ -4,21 +4,24 @@ export default function Harmonics() {
   return (
     <>
       <Text>
-        The Harmonics are a co-ed a cappella group at Stanford University. Known
-        for their unique sound and award-winning recordings, the Harmonics have
-        garnered international recognition for their performances and have been
-        featured on BOCA, Sing, and Voices Only a cappella compilations. Signal
-        Lost, the Harmonics&apos; most recent album, won the CARA award for Best
-        Rock Album in 2020.
+        Founded in 1991, The Harmonics is Stanford&apos;s award-winning rock and
+        experimental a cappella group. With our innovative sound and unique
+        vocal style, The Harmonics redefine a cappella as you know it.
       </Text>
       <Text>
-        Our alumni network is a tight-knit community; at our 30 year reunion
-        last year, we had members from every single year of the group&apos;s
-        existence in attendance. We save the front row of each of our shows for
-        alums attending from near and far and invite them up to sing an
-        arrangement that has been performed in Harmz since the group&apos;s
-        inception in 1991. We strive to create a caring, supportive, and
-        inclusive environment that stretches far beyond our love of music.
+        As one of the few collegiate a cappella groups to own a wireless sound
+        system, all of our members perform with individual microphones, and our
+        explosive performances come with state of the art live dynamic and
+        effect mixing. We&apos;ve gained international recognition for our
+        inventive take on a diverse array of genres, having been featured on
+        Best of College Acapella, Sing, and Voices Only a capella compilations.
+        Signal Lost, our most recent album, won the Contemporary A Cappella
+        Recording Award for Best Rock Album in 2020.
+      </Text>
+      <Text>
+        Join us as we keep pushing the boundaries of a capella! Auditions open
+        Fall 2024 for all Stanford students. No prior music experience required.
+        Rock on!
       </Text>
     </>
   );
