@@ -10,10 +10,10 @@ import {
   Flex,
   VStack,
   Button,
-  Icon,
 } from "@/app/components/chakra";
 import GROUPS from "../config/groups";
 import Link from "next/link";
+import Image from "next/image";
 import { format as formatDate, parse as parseDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
 
@@ -79,7 +79,8 @@ function ShowCard({ show }: { show: IShowsDataItem }) {
             <img src={groupInfoEntry[1].imgUrl} alt={groupInfoEntry[1].name} />
           ) : (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <Image
+              width={90}
               className="placeholder"
               src="/assets/img/a_cappella_treble_clef_transparent.png"
               alt="Stanford A Cappella logo"
