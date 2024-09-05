@@ -25,6 +25,11 @@ export default function About() {
       <AutoStyledContent>
         <Box as="section">
           <Heading size="lg" as="h2">
+            A Cappella at Stanford
+          </Heading>
+        </Box>
+        <Box as="section">
+          <Heading size="lg" as="h2">
             For Auditionees
           </Heading>
           <Text>
