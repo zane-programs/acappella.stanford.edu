@@ -74,7 +74,7 @@ export default function About() {
           <Text>
             Today, Stanford boasts a vibrant a cappella community with diverse
             groups, including <Link href="/harmonics">Harmonics</Link>,{" "}
-            <Link href="/o-tone">O-Tone</Link>,
+            <Link href="/o-tone">O-Tone</Link>,{" "}
             <Link href="/raagapella">Raagapella</Link>, and{" "}
             <Link href="/testimony">Testimony</Link>, each contributing to the
             rich tapestry of voices and styles that define Stanford A Cappella.
