@@ -49,6 +49,7 @@ export default function GroupTile({
             height: "100%",
             objectFit: "cover",
             pointerEvents: "none",
+            userSelect: "none",
           },
         }}
       >
@@ -88,6 +89,7 @@ export default function GroupTile({
           role="progressbar"
           opacity={isLoading ? 1 : 0}
           transition="opacity 150ms ease"
+          userSelect="none"
         >
           <Spinner size="lg" color="#fff" thickness="3px" position="absolute" />
         </Flex>
