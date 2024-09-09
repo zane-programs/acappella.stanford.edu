@@ -81,6 +81,7 @@ function ShowCard({ show }: { show: IShowsDataItem }) {
             /* eslint-disable-next-line @next/next/no-img-element */
             <Image
               width={90}
+              height={90}
               className="placeholder"
               src="/assets/img/a_cappella_treble_clef_transparent.png"
               alt="Stanford A Cappella logo"

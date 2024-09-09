@@ -39,8 +39,8 @@ export default function About() {
           </Heading>
           <Text>
             Are you a fan of Stanford A Cappella groups? Check out the{" "}
-            <Link href="/shows">Shows</Link> page (coming soon!) for a list of
-            upcoming a cappella shows and events.
+            <Link href="/shows">Shows</Link> page for a list of upcoming a
+            cappella shows and events.
           </Text>
         </Box>
         <Box as="section">

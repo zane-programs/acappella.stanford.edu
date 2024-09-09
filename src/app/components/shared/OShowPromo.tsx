@@ -8,7 +8,9 @@ import {
   IconButton,
   Text,
 } from "@/app/components/chakra";
-import { useCallback, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 // import { Collapse } from "react-collapse";
 
@@ -16,7 +18,8 @@ import { useCallback, useState } from "react";
 import { MdArrowForward, MdClose } from "react-icons/md";
 
 export default function OShowPromo() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleClose = useCallback(() => {
     // Log analytics event
@@ -25,14 +28,29 @@ export default function OShowPromo() {
         event_category: "promo",
         event_label: "oShow",
       });
+    sessionStorage.setItem("dismissed_oshow_2024", "1");
 
     setIsOpen(false);
   }, []);
 
-  const handleMixer = useCallback(() => {
-    // Log analytics event
-    typeof window !== "undefined" &&
-      window?.gtag?.("event", "mixerReferral", {});
+  useEffect(() => {
+    if (
+      !sessionStorage.getItem("dismissed_oshow_2024") &&
+      pathname !== "/shows"
+    ) {
+      setIsOpen(true);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
+    if (pathname === "/shows") {
+      setIsOpen(false);
+    }
+  }, [pathname]);
+
+  const handleLearnMore = useCallback(() => {
+    sessionStorage.setItem("dismissed_oshow_2024", "1");
+    setIsOpen(false);
   }, []);
 
   return (
@@ -61,14 +79,14 @@ export default function OShowPromo() {
           <Heading as="h3" size="lg" mb="1">
             See O-Show!
           </Heading>
-          <Text fontWeight="600" mb="2">
-            A showcase of Stanford&apos;s a cappella groups
+          <Text fontWeight="600" mb="1">
+            The annual showcase of Stanford&apos;s a cappella groups
           </Text>
-          <Text lineHeight="1.27em">
+          {/* <Text lineHeight="1.27em">
             Saturday 9/23, 7:30 PM
             <br />
             Meyer Green
-          </Text>
+          </Text> */}
           <Button
             color="gray.300"
             backgroundColor="transparent !important"
@@ -77,13 +95,11 @@ export default function OShowPromo() {
             borderColor="currentcolor"
             mt="4"
             rightIcon={<MdArrowForward />}
-            as="a"
-            target="_blank"
-            rel="noopener"
-            href="https://mixermeet.com/event/u243744_e4XuDMABoKj"
-            onClick={handleMixer}
+            as={Link}
+            href="/shows"
+            onClick={handleLearnMore}
           >
-            See Event on Mixer
+            Learn More
           </Button>
         </Box>
       </Box>

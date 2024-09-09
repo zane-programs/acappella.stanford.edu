@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { MdShare } from "react-icons/md";
 import { Button } from "@/app/components/chakra";
@@ -9,6 +9,7 @@ const hasShareSupport =
   typeof window !== "undefined" && "share" in window.navigator;
 
 export default function ShareButton() {
+  const [isShowing, setIsShowing] = useState(true);
   const handleShare = useCallback(() => {
     navigator
       .share({
@@ -33,9 +34,21 @@ export default function ShareButton() {
       .catch((e) => console.error(e));
   }, []);
 
-  return hasShareSupport ? (
-    <Button colorScheme="green" leftIcon={<MdShare />} onClick={handleShare}>
+  useEffect(() => {
+    if (!hasShareSupport) {
+      setIsShowing(false);
+    }
+  }, []);
+
+  return (
+    <Button
+      colorScheme="green"
+      leftIcon={<MdShare />}
+      onClick={handleShare}
+      aria-hidden={!isShowing}
+      display={isShowing ? undefined : "none"}
+    >
       Share
     </Button>
-  ) : null;
+  );
 }
