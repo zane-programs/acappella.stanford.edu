@@ -233,7 +233,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mixedco_new.jpg",
     descriptionImgUrl: "/assets/img/mixedco_new_inside.jpg",
     siteLink: "https://www.mixedco.com/",
-    auditionLink: "https://forms.gle/T2th5U12iGxBTZgWA",
+    auditionLink: "https://forms.gle/uu3HBG2P7QGGgFJ9A",
     extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
