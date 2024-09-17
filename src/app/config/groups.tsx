@@ -76,19 +76,19 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       facebook: "https://www.facebook.com/StanfordFleetStreetSingers/",
       tiktok: "https://www.tiktok.com/@fleetstreetsingers",
     },
-    directAuditionLinkConfig: {
-      metadata: {
-        title: "Click to Audition for Fleet Street!",
-        description:
-          "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
-        openGraph: {
-          title: "Click to Audition for Fleet Street!",
-          description:
-            "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
-          images: ["/assets/img/misc/FS_Poster_Fizz_Small_v3.jpg"],
-        },
-      },
-    },
+    // directAuditionLinkConfig: {
+    //   metadata: {
+    //     title: "Click to Audition for Fleet Street!",
+    //     description:
+    //       "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
+    //     openGraph: {
+    //       title: "Click to Audition for Fleet Street!",
+    //       description:
+    //         "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
+    //       images: ["/assets/img/misc/FS_Poster_Fizz_Small_v3.jpg"],
+    //     },
+    //   },
+    // },
   },
   mendicants: {
     name: "Mendicants",
@@ -133,7 +133,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmz_new_2024.jpg",
     siteLink: "https://www.stanfordharmonics.com/",
-    auditionLink: "https://calendly.com/stanfordharmonics/audition",
+    auditionLink:
+      "https://calendly.com/stanfordharmonics/audition?month=2024-09",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
@@ -149,7 +150,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Raagapella />,
     imgUrl: "/assets/img/raagapella.jpg",
     siteLink: "https://www.raagapella.com/",
-    auditionLink: "https://www.raagapella.com/auditions",
+    auditionLink: "https://calendly.com/raagauditions/round1",
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
@@ -246,6 +247,12 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     },
   },
 };
+
+export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
+  "harmonics",
+  "mixed-company",
+  "raagapella",
+];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
 // GROUPS["harmz"] = GROUPS["harmonics"];

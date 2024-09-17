@@ -12,6 +12,7 @@ import ShareButton from "../components/shared/ShareButton";
 import GROUPS, {
   type ACappellaGroup,
   type GroupSocialLinks,
+  GROUPS_WITH_CURRENT_AUDITION_LINKS,
 } from "@/app/config/groups";
 import CONFIG from "../config";
 
@@ -91,11 +92,13 @@ export default function GroupPage({
             <SocialLinks group={group} />
           )}
           <Flex direction="column" w="100%" gap="1">
-            {CONFIG.showAuditionButtons && group.auditionLink && (
-              <Button colorScheme="red" {...linkButton(group.auditionLink)}>
-                Audition for {group.name}
-              </Button>
-            )}
+            {CONFIG.showAuditionButtons &&
+              group.auditionLink &&
+              GROUPS_WITH_CURRENT_AUDITION_LINKS.indexOf(slug) !== -1 && (
+                <Button colorScheme="red" {...linkButton(group.auditionLink)}>
+                  Audition for {group.name}
+                </Button>
+              )}
             <Button colorScheme="blue" {...linkButton(group.siteLink)}>
               {group.name} Website
             </Button>
