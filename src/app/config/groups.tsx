@@ -169,7 +169,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <OTone />,
     imgUrl: "/assets/img/o-tone.jpg",
     siteLink: "https://stanfordotone.com/",
-    auditionLink: "https://calendly.com/stanfordotone",
+    auditionLink: "https://stanfordotone.com/auditions",
     extraKeywords: ["otone", "stanford otone"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCalFurLezFrabetPytEvVFQ",
@@ -254,6 +254,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "mixed-company",
   "raagapella",
   "fleet-street",
+  "o-tone",
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
