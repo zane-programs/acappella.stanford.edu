@@ -30,6 +30,8 @@ export function generateMetadata(): Metadata {
       "a cappella",
       "a cappella audition",
       "acapella audition",
+      "a cappella audition stanford",
+      "acapella audition stanford",
       "a cappella groups",
       "acapella",
       "acapella groups",
