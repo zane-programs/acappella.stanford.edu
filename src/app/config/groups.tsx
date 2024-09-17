@@ -66,7 +66,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street.jpg",
     siteLink: "https://www.fleetstreet.com/",
-    auditionLink: "https://www.fleetstreet.com/audition",
+    auditionLink:
+      "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
     socialLinks: {
       youtube: "https://www.youtube.com/user/FleetStreetSingers",
       appleMusic:
@@ -252,6 +253,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "harmonics",
   "mixed-company",
   "raagapella",
+  "fleet-street",
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
