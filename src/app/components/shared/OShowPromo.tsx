@@ -36,7 +36,8 @@ export default function OShowPromo() {
   useEffect(() => {
     if (
       !sessionStorage.getItem("dismissed_oshow_2024") &&
-      pathname !== "/shows"
+      // pathname !== "/shows"
+      (pathname === "/" || pathname === "/about")
     ) {
       setIsOpen(true);
     }
