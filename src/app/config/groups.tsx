@@ -99,7 +99,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mendicants_new.jpg",
     descriptionImgUrl: "/assets/img/mendicants_new_inside_v3.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
-    auditionLink: "https://www.stanfordmendicants.com/auditions/",
+    auditionLink:
+      "https://calendly.com/stanfordmendicants/mendicants-auditions",
     socialLinks: {
       spotify: "https://open.spotify.com/artist/3ZBvLOZu5A9jtKO5XjHDTl",
       appleMusic:
@@ -217,7 +218,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
-    auditionLink: "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
+    auditionLink:
+      "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
@@ -256,7 +258,8 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "fleet-street",
   "o-tone",
   "counterpoint",
-  "talisman"
+  "talisman",
+  "mendicants",
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
