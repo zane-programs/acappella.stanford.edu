@@ -150,7 +150,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender South Asian Fusion a cappella group",
     description: <Raagapella />,
-    imgUrl: "/assets/img/raagapella.jpg",
+    imgUrl: "/assets/img/raag-16-2024.jpg",
     siteLink: "https://www.raagapella.com/",
     auditionLink: "https://calendly.com/raagauditions/round1",
     socialLinks: {
@@ -243,7 +243,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
       facebook: "https://www.facebook.com/mixedco/",
       twitter: "https://twitter.com/mixedcompany",
-      instagram: "https://www.instagram.com/stanfordmixedco/",
+    instagram: "https://www.instagram.com/stanfordmixedco/",
       appleMusic:
         "https://music.apple.com/us/artist/stanford-mixed-company/4165885",
       spotify: "https://open.spotify.com/artist/2W6zg3XdtRCYc7DStZTFAq",
