@@ -203,7 +203,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/testimony_new.jpg",
     descriptionImgUrl: "/assets/img/testimony_new_inside.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
-    auditionLink: "https://forms.gle/vE2sbsRdLPrFGGUM9",
+    auditionLink: "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
@@ -260,6 +260,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "counterpoint",
   "talisman",
   "mendicants",
+  "testimony",
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
