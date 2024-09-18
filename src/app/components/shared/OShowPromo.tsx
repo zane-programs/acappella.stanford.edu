@@ -34,19 +34,12 @@ export default function OShowPromo() {
   }, []);
 
   useEffect(() => {
-    if (
-      !sessionStorage.getItem("dismissed_oshow_2024") &&
-      // pathname !== "/shows"
-      (pathname === "/" || pathname === "/about")
-    ) {
-      setIsOpen(true);
-    }
-  }, [pathname]);
-
-  useEffect(() => {
-    if (pathname === "/shows") {
-      setIsOpen(false);
-    }
+    setIsOpen(
+      // On homepage or about
+      (pathname === "/" || pathname === "/about") &&
+        // Must comply with user's choice
+        !sessionStorage.getItem("dismissed_oshow_2024")
+    );
   }, [pathname]);
 
   const handleLearnMore = useCallback(() => {
