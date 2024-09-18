@@ -116,9 +116,9 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     tagline: "Stanford's only soprano/alto a cappella group",
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
-    siteLink: "https://counterpointacappella.com/",
+    siteLink: "https://stanfordcounterpoint.com/",
     auditionLink:
-      "https://www.signupgenius.com/go/10C0C4CAEA828A4FCC25-counterpoint",
+      "https://calendly.com/stanfordcounterpoint/first-round-of-auditions",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
@@ -167,7 +167,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender East Asian interest a cappella group",
     description: <OTone />,
-    imgUrl: "/assets/img/o-tone.jpg",
+    imgUrl: "/assets/img/otone_2024.jpg",
     siteLink: "https://stanfordotone.com/",
     auditionLink: "https://stanfordotone.com/auditions",
     extraKeywords: ["otone", "stanford otone"],
@@ -217,7 +217,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
-    auditionLink: "https://talisman23.carrd.co/",
+    auditionLink: "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
@@ -255,6 +255,8 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "raagapella",
   "fleet-street",
   "o-tone",
+  "counterpoint",
+  "talisman"
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];

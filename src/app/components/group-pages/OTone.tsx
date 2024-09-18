@@ -16,7 +16,7 @@ export default function OTone() {
       </Text>
       <Text display="flex" alignItems="center" justifyContent="center">
         <iframe
-          src="https://www.youtube-nocookie.com/embed/fDwUE87bPYM?si=Q2lz-D9J3nb1cb1H"
+          src="https://www.youtube-nocookie.com/embed/wdceVlS9oFM"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
