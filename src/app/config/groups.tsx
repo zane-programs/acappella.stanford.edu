@@ -186,7 +186,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
-    auditionLink: "https://calendly.com/rcastane/ep-auditions",
+    auditionLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLScafrKp7j9kHV8DSvpSVPZbvfbX2esgSbUp0v0Drb-zgC-tOg/viewform?usp=sf_link",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
       instagram: "https://www.instagram.com/stanford_everydaypeople/",
@@ -203,7 +204,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/testimony_new.jpg",
     descriptionImgUrl: "/assets/img/testimony_new_inside.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
-    auditionLink: "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
+    auditionLink:
+      "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
@@ -243,7 +245,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
       facebook: "https://www.facebook.com/mixedco/",
       twitter: "https://twitter.com/mixedcompany",
-    instagram: "https://www.instagram.com/stanfordmixedco/",
+      instagram: "https://www.instagram.com/stanfordmixedco/",
       appleMusic:
         "https://music.apple.com/us/artist/stanford-mixed-company/4165885",
       spotify: "https://open.spotify.com/artist/2W6zg3XdtRCYc7DStZTFAq",
@@ -261,6 +263,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
   "talisman",
   "mendicants",
   "testimony",
+  "everyday-people",
 ];
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
