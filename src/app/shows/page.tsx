@@ -14,7 +14,7 @@ import {
 import GROUPS from "../config/groups";
 import Link from "next/link";
 import Image from "next/image";
-import { format as formatDate, parse as parseDate } from "date-fns";
+import { format as formatDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
 
 export const dynamic = "force-dynamic";
@@ -41,11 +41,15 @@ export default async function Shows() {
       <Heading size="lg" as="h2" mb="2">
         Shows
       </Heading>
-      <VStack gap="3" mt="6">
-        {showsData.map((show) => (
-          <ShowCard key={show.group + ":" + show.title} show={show} />
-        ))}
-      </VStack>
+      {showsData.length > 0 ? (
+        <VStack gap="3" mt="6">
+          {showsData.map((show) => (
+            <ShowCard key={show.group + ":" + show.title} show={show} />
+          ))}
+        </VStack>
+      ) : (
+        <Text>Coming soon&mdash;be on the lookout for a cappella shows and performances!</Text>
+      )}
     </>
   );
 }
