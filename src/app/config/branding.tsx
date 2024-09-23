@@ -11,7 +11,7 @@ const BRANDING_OG_OPTIONS: {
       images: ["/assets/img/branding/StanfordACappella_Promo1.png"],
     },
   },
-  auditions_2024: {
+  aud2024: {
     openGraph: {
       title: "Click to learn about a cappella auditions at Stanford!",
       description:
