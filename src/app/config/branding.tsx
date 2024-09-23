@@ -11,6 +11,14 @@ const BRANDING_OG_OPTIONS: {
       images: ["/assets/img/branding/StanfordACappella_Promo1.png"],
     },
   },
+  auditions_2024: {
+    openGraph: {
+      title: "Click to learn about a cappella auditions at Stanford!",
+      description:
+        "Want to audition for a cappella? Look no further! Visit acappella.stanford.edu to find audition information for your favorite a cappella groups.",
+      images: ["/assets/img/branding/StanfordACappella_Promo_2024.png"],
+    },
+  },
 };
 
 export default BRANDING_OG_OPTIONS;
