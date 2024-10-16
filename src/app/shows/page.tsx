@@ -48,7 +48,10 @@ export default async function Shows() {
           ))}
         </VStack>
       ) : (
-        <Text>Coming soon&mdash;be on the lookout for a cappella shows and performances!</Text>
+        <Text>
+          Coming soon&mdash;be on the lookout for a cappella shows and
+          performances!
+        </Text>
       )}
     </>
   );
@@ -128,7 +131,7 @@ function ShowCard({ show }: { show: IShowsDataItem }) {
                 rel="noopener noreferrer"
                 mt="4"
               >
-                {show.linkTitle ?? "Learn More"}
+                {show.linkText ?? "Learn More"}
               </Button>
             )}
           </CardBody>
@@ -165,7 +168,19 @@ interface IShowsDataItem {
   location: string;
   description: string;
   link?: string | null;
-  linkTitle?: string | null;
+  linkText?: string | null;
+}
+
+function convertKeyToCamelCase(key: string): string {
+  return key
+    .split(" ")
+    .map((item, index) => {
+      if (index === 0) {
+        return item.toLowerCase();
+      }
+      return item[0].toUpperCase() + item.substring(1).toLowerCase();
+    })
+    .join("");
 }
 
 async function fetchShowsData() {
@@ -195,10 +210,10 @@ async function fetchShowsData() {
       if (!row.c[i]) continue;
 
       colData = gvizData.table.cols[i];
-      key = colData.label;
+      key = convertKeyToCamelCase(colData.label);
 
       // Filter out form response labels
-      if (!key || key === "timestamp" || key === "email") continue;
+      if (!key || key === "timestamp" || key === "emailAddress") continue;
 
       val = row.c[i].v;
       rowData[key] = val;
