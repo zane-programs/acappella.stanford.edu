@@ -64,7 +64,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender, all-original comedy a cappella group",
     description: <FleetStreet />,
-    imgUrl: "/assets/img/fleet-street.jpg",
+    imgUrl: "/assets/img/fleet-street-171A3986.jpg",
     siteLink: "https://www.fleetstreet.com/",
     auditionLink:
       "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
@@ -142,7 +142,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
       instagram: "http://instagram.com/stanfordharmonics/",
       youtube: "https://www.youtube.com/user/StanfordHarmonics",
-      facebook: "https://www.facebook.com/theharmonics",
+      // facebook: "https://www.facebook.com/theharmonics",
+      appleMusic: "https://music.apple.com/us/artist/the-harmonics/380399259",
     },
   },
   raagapella: {
