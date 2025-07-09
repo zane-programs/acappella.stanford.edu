@@ -80,9 +80,7 @@ export default function OShowPromo() {
             The annual showcase of Stanford&apos;s a cappella groups
           </Text>
           <Text lineHeight="1.27em">
-            Saturday 9/20, 7:30 PM
-            <br />
-            Meyer Green
+            Saturday 9/20, 7:30 PM at Meyer Green
           </Text>
           <Button
             color="gray.300"
