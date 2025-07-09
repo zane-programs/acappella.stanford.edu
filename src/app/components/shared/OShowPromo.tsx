@@ -17,6 +17,9 @@ import { useCallback, useEffect, useState } from "react";
 // icons
 import { MdArrowForward, MdClose } from "react-icons/md";
 
+const O_SHOW_PROMO_ID = "oshow_2025_r01";
+const DISMISSED_KEY = `dismissed:${O_SHOW_PROMO_ID}`;
+
 export default function OShowPromo() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -28,7 +31,7 @@ export default function OShowPromo() {
         event_category: "promo",
         event_label: "oShow",
       });
-    sessionStorage.setItem("dismissed_oshow_2024", "1");
+    sessionStorage.setItem(DISMISSED_KEY, "1");
 
     setIsOpen(false);
   }, []);
@@ -38,12 +41,12 @@ export default function OShowPromo() {
       // On homepage or about
       (pathname === "/" || pathname === "/about") &&
         // Must comply with user's choice
-        !sessionStorage.getItem("dismissed_oshow_2024")
+        !sessionStorage.getItem(DISMISSED_KEY)
     );
   }, [pathname]);
 
   const handleLearnMore = useCallback(() => {
-    sessionStorage.setItem("dismissed_oshow_2024", "1");
+    sessionStorage.setItem(DISMISSED_KEY, "1");
     setIsOpen(false);
   }, []);
 
@@ -76,11 +79,11 @@ export default function OShowPromo() {
           <Text fontWeight="600" mb="1">
             The annual showcase of Stanford&apos;s a cappella groups
           </Text>
-          {/* <Text lineHeight="1.27em">
-            Saturday 9/23, 7:30 PM
+          <Text lineHeight="1.27em">
+            Saturday 9/20, 7:30 PM
             <br />
             Meyer Green
-          </Text> */}
+          </Text>
           <Button
             color="gray.300"
             backgroundColor="transparent !important"

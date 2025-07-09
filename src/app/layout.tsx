@@ -9,13 +9,13 @@ import NavItem from "./components/shared/NavItem";
 import Footer from "./components/shared/Footer";
 import ScrollRestorer from "./utils/ScrollRestorer";
 import CookieConsentBanner from "./components/shared/CookieConsentBanner";
+import OShowPromo from "./components/shared/OShowPromo";
 
 // fonts
 import { Source_Sans_3 } from "next/font/google";
 
 // styles
 import "./globals.css";
-// import OShowPromo from "./components/shared/OShowPromo";
 
 const STANFORD_CARDINAL_RED = "#8c1515";
 
@@ -98,7 +98,7 @@ export default function RootLayout({
                   </Flex>
                 </Flex>
                 <Box as="main" mt="6">
-                  {/* <OShowPromo /> */}
+                  <OShowPromo />
                   {children}
                 </Box>
               </Box>
