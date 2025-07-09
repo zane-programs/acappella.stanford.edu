@@ -64,7 +64,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender, all-original comedy a cappella group",
     description: <FleetStreet />,
-    imgUrl: "/assets/img/fleet-street-171A3986.jpg",
+    imgUrl: "/assets/img/fleet-street-171A3693.jpg",
     siteLink: "https://www.fleetstreet.com/",
     auditionLink:
       "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
