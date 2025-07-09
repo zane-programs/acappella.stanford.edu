@@ -1,4 +1,7 @@
 "use client";
+
+import { Button, useMenuButton } from "@chakra-ui/react";
+
 export {
   Badge,
   Collapse,
@@ -31,6 +34,22 @@ export {
   List,
   UnorderedList,
   VisuallyHidden,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";
+
+export function ButtonMenuButton({
+  children,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const menuButtonProps = useMenuButton();
+  return (
+    <Button {...props} {...menuButtonProps}>
+      {children}
+    </Button>
+  );
+}

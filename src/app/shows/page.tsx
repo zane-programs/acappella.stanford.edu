@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import {
   Badge,
   Box,
@@ -10,12 +11,18 @@ import {
   Flex,
   VStack,
   Button,
+  HStack,
+  Menu,
+  MenuList,
+  MenuItem,
+  ButtonMenuButton,
 } from "@/app/components/chakra";
 import GROUPS from "../config/groups";
 import Link from "next/link";
 import Image from "next/image";
 import { format as formatDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
+import { google, office365, ics, type CalendarEvent } from "calendar-link";
 
 export const dynamic = "force-dynamic";
 
@@ -34,8 +41,22 @@ export const metadata: Metadata = {
   ],
 };
 
+type Platform = "ios" | "android" | "other";
+
 export default async function Shows() {
   const showsData = await fetchShowsData();
+  const headersList = headers();
+  const userAgent = headersList.get("user-agent") || "";
+
+  let platform: Platform;
+  if (/iphone|ipad|ipod/i.test(userAgent)) {
+    platform = "ios";
+  } else if (/android/i.test(userAgent)) {
+    platform = "android";
+  } else {
+    platform = "other";
+  }
+
   return (
     <>
       <Heading size="lg" as="h2" mb="2">
@@ -44,7 +65,11 @@ export default async function Shows() {
       {showsData.length > 0 ? (
         <VStack gap="3" mt="6">
           {showsData.map((show) => (
-            <ShowCard key={show.group + ":" + show.title} show={show} />
+            <ShowCard
+              key={show.group + ":" + show.title}
+              show={show}
+              platform={platform}
+            />
           ))}
         </VStack>
       ) : (
@@ -57,12 +82,62 @@ export default async function Shows() {
   );
 }
 
-function ShowCard({ show }: { show: IShowsDataItem }) {
+function ShowCard({
+  show,
+  platform,
+}: {
+  show: IShowsDataItem;
+  platform: Platform;
+}) {
   // Find group information
   const groupInfoEntry = Object.entries(GROUPS).find(
     ([_key, group]) =>
       group.name.trim().toLowerCase() === show.group.trim().toLowerCase()
   );
+
+  const event: CalendarEvent = {
+    title: show.title,
+    description: show.description,
+    location: show.location,
+    start: show.startDate,
+    end: show.endDate,
+  };
+
+  // Helper to generate Outlook/Office 365 URL based on platform
+  const getOutlookUrl = () => {
+    if (platform === "other") {
+      return office365(event);
+    }
+
+    // Mobile platforms use a different URL scheme
+    // (The `ms-outlook://` scheme is used for iOS and Android)
+    // Previously, Android used `msoutlook://`, but as far as I can tell,
+    // the `ms-outlook://` scheme works on both iOS and Android.
+    const formatISO = (date: Date) => date.toISOString().slice(0, 19);
+    return `ms-outlook://events/new?title=${encodeURIComponent(
+      event.title
+    )}&start=${formatISO(event.start)}&end=${formatISO(
+      event.end
+    )}&location=${encodeURIComponent(
+      event.location ?? ""
+    )}&description=${encodeURIComponent(event.description ?? "")}`;
+  };
+
+  const eventLinks = [
+    {
+      name: "Apple Calendar",
+      url: ics(event),
+      noNewTab: true,
+    },
+    {
+      name: "Stanford (Office 365)",
+      url: getOutlookUrl(),
+    },
+    {
+      name: "Google Calendar",
+      url: google(event),
+    },
+  ];
 
   return (
     <Card width="100%" overflow="hidden">
@@ -85,7 +160,6 @@ function ShowCard({ show }: { show: IShowsDataItem }) {
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={groupInfoEntry[1].imgUrl} alt={groupInfoEntry[1].name} />
           ) : (
-            /* eslint-disable-next-line @next/next/no-img-element */
             <Image
               width={90}
               height={90}
@@ -115,25 +189,58 @@ function ShowCard({ show }: { show: IShowsDataItem }) {
             </Heading>
             <Box as="ul" fontSize="0.94em" color="#444">
               <InfoRow mdIcon={<MdCalendarMonth />}>
-                {formatDate(show.date, "EEE, MMM d, yyyy 'at' h:mmaaa")}
+                {formatDate(show.startDate, "EEE, MMM d, yyyy")}
+                {show.showEndTime
+                  ? `, ${formatDate(show.startDate, "h:mmaaa")} - ${formatDate(
+                      show.endDate,
+                      "h:mm a"
+                    )}`
+                  : ` at ${formatDate(show.startDate, "h:mmaaa")}`}
               </InfoRow>
               <InfoRow mdIcon={<MdLocationPin />}>{show.location}</InfoRow>
             </Box>
           </CardHeader>
           <CardBody>
             <Text>{show.description}</Text>
-            {show.link && (
-              <Button
-                as="a"
-                colorScheme="blue"
-                href={show.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                mt="4"
-              >
-                {show.linkText ?? "Learn More"}
-              </Button>
-            )}
+            <HStack mt="4">
+              {show.link && (
+                <Button
+                  as="a"
+                  colorScheme="blue"
+                  href={show.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {show.linkText ?? "Learn More"}
+                </Button>
+              )}
+              <Menu placement="bottom">
+                {/* <Button colorScheme="blue" display="flex">
+                  Add to Calendar <MdChevronRight />
+                </Button> */}
+                <ButtonMenuButton
+                  colorScheme="blue"
+                  display="flex"
+                  gap="2"
+                  alignItems="center"
+                >
+                  <MdCalendarMonth /> Add to Calendar
+                </ButtonMenuButton>
+                <MenuList>
+                  {eventLinks.map((link) => (
+                    <MenuItem
+                      key={link.name}
+                      as="a"
+                      href={link.url}
+                      target={link.noNewTab ? "_self" : "_blank"}
+                      rel="noopener noreferrer"
+                    >
+                      {link.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </HStack>
           </CardBody>
         </Box>
       </Flex>
@@ -164,23 +271,67 @@ function InfoRow({
 interface IShowsDataItem {
   group: string;
   title: string;
-  date: Date;
+  startDate: Date;
+  endDate: Date;
   location: string;
   description: string;
+  showEndTime: boolean;
   link?: string | null;
   linkText?: string | null;
 }
 
 function convertKeyToCamelCase(key: string): string {
-  return key
+  // Split the key into words and remove empty strings caused by extra spaces
+  const words = key
+    .trim()
     .split(" ")
-    .map((item, index) => {
-      if (index === 0) {
-        return item.toLowerCase();
-      }
-      return item[0].toUpperCase() + item.substring(1).toLowerCase();
-    })
+    .filter((word) => word.trim() !== "");
+
+  // Skip leading numeric words
+  const firstValidIndex = words.findIndex((word) => !/^\d+$/.test(word));
+
+  if (firstValidIndex === -1) {
+    return ""; // No valid word found
+  }
+
+  const validWords = words
+    .slice(firstValidIndex)
+    .map(
+      (word) => word.replace(/[^a-z0-9]/gi, "") // Keep only alphanumeric characters
+    )
+    .filter((word) => word.length > 0); // Filter out any empty strings after cleaning
+
+  return validWords
+    .map((word, index) =>
+      index === 0
+        ? word.toLowerCase()
+        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    )
     .join("");
+}
+
+function convertGoogleSheetsDateAndTimeToJSDate(
+  dateStr: string,
+  timeStr: string
+): Date {
+  // Extract date component from the date string
+  const datePart = dateStr
+    .slice(5, -1)
+    .split(",")
+    .slice(0, 3)
+    .map((num: string) => parseInt(num));
+
+  // Extract time component from the time string
+  const timePart = timeStr
+    .slice(5, -1)
+    .split(",")
+    .slice(-3)
+    .map((num: string) => parseInt(num));
+
+  console.log("parts", datePart, timePart);
+
+  // Construct and return the Date object
+  return Reflect.construct(Date, [...datePart, ...timePart]);
 }
 
 async function fetchShowsData() {
@@ -211,6 +362,7 @@ async function fetchShowsData() {
 
       colData = gvizData.table.cols[i];
       key = convertKeyToCamelCase(colData.label);
+      console.log("key", key);
 
       // Filter out form response labels
       if (!key || key === "timestamp" || key === "emailAddress") continue;
@@ -219,23 +371,17 @@ async function fetchShowsData() {
       rowData[key] = val;
     }
 
-    // Extract date
-    const dateP1 = rowData.date
-      .slice(5, -1)
-      .split(",")
-      .slice(0, 3)
-      .map((num: string) => parseInt(num));
+    rowData.startDate = convertGoogleSheetsDateAndTimeToJSDate(
+      rowData.date,
+      rowData.startTime
+    );
+    rowData.endDate = convertGoogleSheetsDateAndTimeToJSDate(
+      rowData.date,
+      rowData.endTime
+    );
 
-    // Extract time
-    const dateP2 = rowData.time
-      .slice(5, -1)
-      .split(",")
-      .slice(-3)
-      .map((num: string) => parseInt(num));
-
-    // Construct date from the two parts above
-    delete rowData.time;
-    rowData.date = Reflect.construct(Date, [...dateP1, ...dateP2]);
+    // Show end time iff showEndTime is checked (value will be "Yes")
+    rowData.showEndTime = rowData.showEndTime === "Yes";
 
     return rowData;
   });
@@ -243,6 +389,6 @@ async function fetchShowsData() {
   console.log(showsData);
 
   return (showsData as IShowsDataItem[])
-    .filter((show) => show.date.getTime() + 86400000 >= Date.now())
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
+    .filter((show) => show.startDate.getTime() + 86400000 >= Date.now())
+    .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 }
