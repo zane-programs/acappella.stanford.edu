@@ -99,8 +99,16 @@ function ShowCard({
     title: show.title,
     description: show.description,
     location: show.location,
-    start: show.startDate,
-    end: show.endDate,
+    start: new Date(
+      show.startDate.toLocaleString("en-US", {
+        timeZone: "America/Los_Angeles",
+      })
+    ),
+    end: new Date(
+      show.endDate.toLocaleString("en-US", {
+        timeZone: "America/Los_Angeles",
+      })
+    ),
   };
 
   // Helper to generate Outlook/Office 365 URL based on platform
@@ -328,8 +336,6 @@ function convertGoogleSheetsDateAndTimeToJSDate(
     .slice(-3)
     .map((num: string) => parseInt(num));
 
-  console.log("parts", datePart, timePart);
-
   // Construct and return the Date object
   return Reflect.construct(Date, [...datePart, ...timePart]);
 }
@@ -362,7 +368,6 @@ async function fetchShowsData() {
 
       colData = gvizData.table.cols[i];
       key = convertKeyToCamelCase(colData.label);
-      console.log("key", key);
 
       // Filter out form response labels
       if (!key || key === "timestamp" || key === "emailAddress") continue;
@@ -385,8 +390,6 @@ async function fetchShowsData() {
 
     return rowData;
   });
-
-  console.log(showsData);
 
   return (showsData as IShowsDataItem[])
     .filter((show) => show.startDate.getTime() + 86400000 >= Date.now())
