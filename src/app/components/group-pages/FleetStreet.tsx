@@ -16,8 +16,8 @@ export default function FleetStreet() {
         Fleet Street is rooted in the Stanford tradition: bedecked in
         cardinal-red bowties and socks, we remain the only group on campus
         devoted to the preservation of Stanford&apos;s rich history of music. In
-        fact, the university recently tapped Fleet Street to be its musical
-        ambassadors and to an entire album of classic fight songs in honor of
+        fact, the university tapped Fleet Street to be its musical ambassadors
+        and to an entire album of classic fight songs in honor of
         Stanford&apos;s centennial.
       </Text>
       <Text>
