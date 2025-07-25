@@ -27,10 +27,12 @@ export default function GroupTile({
       className="staggerFadeIn"
       role="gridcell"
       aria-label={`${name} - ${tagline}`}
-      sx={{
-        WebkitTapHighlightColor: "transparent",
+      style={{
         // CSS animation with staggered delay
         animation: `fadeInUp 0.6s ease-out ${animationDelay} both`,
+      }}
+      sx={{
+        WebkitTapHighlightColor: "transparent",
         "@keyframes fadeInUp": {
           "0%": {
             opacity: 0,
