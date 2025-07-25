@@ -241,7 +241,8 @@ function SocialLinks({
     <Flex 
       alignItems="center" 
       justifyContent="center" 
-      gap="4"
+      gap={{ base: "2", sm: "3" }}
+      wrap="wrap"
       className="card-modern"
       p="4"
       borderRadius="16px"
@@ -257,14 +258,14 @@ function SocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             color="brand.700"
-            p="3"
+            p={{ base: "2", sm: "3" }}
             borderRadius="12px"
             background="rgba(140, 21, 21, 0.1)"
             transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             role="listitem"
             aria-label={`Visit ${name} on ${SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]} (opens in new tab)`}
             sx={{
-              "& svg": { fontSize: "1.5rem" },
+              "& svg": { fontSize: { base: "1.25rem", sm: "1.5rem" } },
               "&:hover": { 
                 color: "white",
                 background: "brand.700",
