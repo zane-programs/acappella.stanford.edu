@@ -2,15 +2,15 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 
-import { Box, SimpleGrid } from "./components/chakra";
+import { Box, SimpleGrid, Heading } from "./components/chakra";
 import GROUPS from "./config/groups";
 
 import GroupTile from "./components/groups/GroupTile";
 import BRANDING_OG_OPTIONS from "./config/branding";
 
 // page metadata
-export function generateMetadata(): Metadata {
-  const requestHeaders = headers();
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
 
   const brandingKey = requestHeaders.get("x-branding-key");
 
@@ -63,13 +63,26 @@ const sortedGroups = Object.entries(GROUPS).sort(([_a, a], [_b, b]) =>
 export default function Home() {
   return (
     <Box>
+      <Heading
+        as="h2"
+        size="xl"
+        mb="8"
+        textAlign="center"
+        className="gradient-text"
+        fontWeight="700"
+        srOnly
+      >
+        Stanford A Cappella Groups
+      </Heading>
       <SimpleGrid
         columns={{ base: 1, smPlus: 2, mdPlus: 3, lg: 4 }}
-        spacingX={4}
-        spacingY={8}
+        spacingX={6}
+        spacingY={10}
+        role="grid"
+        aria-label="A cappella groups at Stanford University"
       >
-        {sortedGroups.map(([slug, group]) => (
-          <GroupTile key={slug} slug={slug} group={group} />
+        {sortedGroups.map(([slug, group], index) => (
+          <GroupTile key={slug} slug={slug} group={group} index={index} />
         ))}
       </SimpleGrid>
     </Box>

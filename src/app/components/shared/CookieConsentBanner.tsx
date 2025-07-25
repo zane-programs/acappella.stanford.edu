@@ -53,6 +53,8 @@ function CookieConsentBannerContent({
       p="4"
       alignItems="center"
       className="fadeOnce"
+      role="banner"
+      aria-label="Cookie consent notice"
     >
       <Text flex={1}>
         We use cookies to improve your experience on our website. For more
@@ -76,6 +78,7 @@ function CookieConsentBannerContent({
           setConsented(true);
         }}
         colorScheme="blue"
+        aria-label="Accept cookies and close banner"
       >
         Got it
       </Button>

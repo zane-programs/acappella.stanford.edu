@@ -4,7 +4,7 @@ import Image from "next/image";
 
 // components & setup
 import { Providers } from "./providers";
-import { Box, Flex, Heading } from "./components/chakra";
+import { Box, Flex, Heading, Link } from "./components/chakra";
 import NavItem from "./components/shared/NavItem";
 import Footer from "./components/shared/Footer";
 import ScrollRestorer from "./utils/ScrollRestorer";
@@ -59,6 +59,7 @@ export default function RootLayout({
           )}
         </head>
         <body className={sourceSans3.className}>
+          <SkipLink />
           <Providers>
             <CookieConsentBanner />
             <Flex
@@ -77,27 +78,45 @@ export default function RootLayout({
               >
                 <Flex
                   as="nav"
+                  role="navigation"
+                  aria-label="Main navigation"
                   direction="column"
                   textAlign="center"
                   alignItems="center"
                   justifyContent="center"
-                  gap="4"
+                  gap="6"
+                  className="slideInUp"
                 >
-                  <Image
-                    width={60}
-                    height={60}
-                    src="/assets/img/a_cappella_treble_clef_transparent.png"
-                    alt="Treble Clef Logo"
-                  />
+                  <Box position="relative">
+                    <Image
+                      width={80}
+                      height={80}
+                      src="/assets/img/a_cappella_treble_clef_transparent.png"
+                      alt="Treble Clef Logo"
+                      style={{
+                        filter: "drop-shadow(0 4px 8px rgba(140, 21, 21, 0.2))",
+                      }}
+                      draggable={false}
+                    />
+                  </Box>
                   <LogoHeading />
-                  {/* <Text fontSize="lg">Learn more about a cappella groups at Stanford University.</Text> */}
-                  <Flex as="ul" gap="5" fontSize="xl">
+                  <Flex
+                    as="ul"
+                    role="menubar"
+                    gap="8"
+                    fontSize="xl"
+                    className="card-modern"
+                    px="8"
+                    py="4"
+                    borderRadius="16px"
+                    sx={{ listStyle: "none" }}
+                  >
                     <NavItem name="Groups" href="/" />
                     <NavItem name="Shows" href="/shows" />
                     <NavItem name="About" href="/about" />
                   </Flex>
                 </Flex>
-                <Box as="main" mt="6">
+                <Box as="main" role="main" id="main-content" mt="6">
                   <OShowPromo />
                   {children}
                 </Box>
@@ -115,13 +134,13 @@ export default function RootLayout({
 function LogoHeading() {
   return (
     <Heading
-      size="2xl"
+      size="3xl"
       as="h1"
       textAlign="center"
       mt="-1"
       display="flex"
       fontWeight="400"
-      gap="2.5"
+      gap="3"
       sx={{ "& span": { alignSelf: "flex-end" } }}
       userSelect="none"
     >
@@ -130,15 +149,54 @@ function LogoHeading() {
         fontWeight="400"
         fontFamily="Stanford"
         marginBottom="-0.1em"
-        color="#8c1515"
+        className="gradient-text"
       >
         Stanford
-      </Box>{" "}
-      <Box aria-hidden="true" borderLeft="1px solid currentcolor"></Box>
-      <Box as="span" fontSize="0.95em">
+      </Box>
+      <Box
+        aria-hidden="true"
+        width="2px"
+        height="40px"
+        background="linear-gradient(135deg, #8c1515 0%, #dc2626 100%)"
+        borderRadius="2px"
+        alignSelf="center"
+      ></Box>
+      <Box
+        as="span"
+        fontSize="0.95em"
+        fontWeight="500"
+        color="gray.700"
+        letterSpacing="-0.01em"
+      >
         A Cappella
       </Box>
     </Heading>
+  );
+}
+
+function SkipLink() {
+  return (
+    <Link
+      href="#main-content"
+      position="absolute"
+      left="-999px"
+      top="0"
+      zIndex="1000"
+      background="white"
+      color="black"
+      padding="8px 16px"
+      textDecoration="none"
+      borderRadius="0 0 4px 4px"
+      fontSize="sm"
+      fontWeight="600"
+      _focus={{
+        left: "0",
+        outline: "2px solid",
+        outlineColor: "brand.600",
+      }}
+    >
+      Skip to main content
+    </Link>
   );
 }
 
@@ -162,7 +220,7 @@ function Masthead() {
     >
       <a href="https://www.stanford.edu">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={MASTHEAD_IMAGE_URI} alt="Stanford University logo" />
+        <img src={MASTHEAD_IMAGE_URI} alt="Stanford University logo" draggable={false} />
       </a>
     </Box>
   );

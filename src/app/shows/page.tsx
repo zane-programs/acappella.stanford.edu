@@ -45,7 +45,7 @@ type Platform = "ios" | "android" | "other";
 
 export default async function Shows() {
   const showsData = await fetchShowsData();
-  const headersList = headers();
+  const headersList = await headers();
   const userAgent = headersList.get("user-agent") || "";
 
   let platform: Platform;
@@ -63,7 +63,7 @@ export default async function Shows() {
         Shows
       </Heading>
       {showsData.length > 0 ? (
-        <VStack gap="3" mt="6">
+        <VStack gap="3" mt="6" role="list" aria-label="Upcoming a cappella shows">
           {showsData.map((show) => (
             <ShowCard
               key={show.group + ":" + show.title}
@@ -148,7 +148,7 @@ function ShowCard({
   ];
 
   return (
-    <Card width="100%" overflow="hidden">
+    <Card width="100%" overflow="hidden" role="listitem">
       <Flex direction={{ base: "column", md: "row" }}>
         <Flex
           width={{ base: "100%", md: "220px" }}
@@ -166,7 +166,7 @@ function ShowCard({
         >
           {groupInfoEntry ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={groupInfoEntry[1].imgUrl} alt={groupInfoEntry[1].name} />
+            <img src={groupInfoEntry[1].imgUrl} alt={`${groupInfoEntry[1].name} group photo`} />
           ) : (
             <Image
               width={90}
@@ -192,10 +192,10 @@ function ShowCard({
                 <Badge colorScheme="blue">{show.group}</Badge>
               )}
             </Box>
-            <Heading size="md" mb="1">
+            <Heading size="md" mb="1" as="h3">
               {show.title}
             </Heading>
-            <Box as="ul" fontSize="0.94em" color="#444">
+            <Box as="ul" fontSize="0.94em" color="#444" sx={{ listStyle: "none" }}>
               <InfoRow mdIcon={<MdCalendarMonth />}>
                 {formatDate(show.startDate, "EEE, MMM d, yyyy")}
                 {show.showEndTime
@@ -218,6 +218,7 @@ function ShowCard({
                   href={show.link}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`${show.linkText ?? "Learn More"} about ${show.title} (opens in new tab)`}
                 >
                   {show.linkText ?? "Learn More"}
                 </Button>
@@ -231,6 +232,7 @@ function ShowCard({
                   display="flex"
                   gap="2"
                   alignItems="center"
+                  aria-label={`Add ${show.title} to calendar`}
                 >
                   <MdCalendarMonth /> Add to Calendar
                 </ButtonMenuButton>
@@ -242,6 +244,7 @@ function ShowCard({
                       href={link.url}
                       target={link.noNewTab ? "_self" : "_blank"}
                       rel="noopener noreferrer"
+                      aria-label={`Add to ${link.name}${link.noNewTab ? "" : " (opens in new tab)"}`}
                     >
                       {link.name}
                     </MenuItem>

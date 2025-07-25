@@ -27,11 +27,12 @@ import {
   SiFacebook,
 } from "react-icons/si";
 
-export function generateMetadata({
-  params: { slug },
+export async function generateMetadata({
+  params,
 }: {
-  params: { slug: string };
-}): Metadata {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
   const group = GROUPS[slug];
 
   if (!group) {
@@ -69,16 +70,25 @@ export function generateMetadata({
   };
 }
 
-export default function GroupPage({
-  params: { slug },
+export default async function GroupPage({
+  params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
   const group = GROUPS[slug];
 
   return (
     <>
-      <Heading as="h2" size="xl" mb="4">
+      <Heading 
+        as="h2" 
+        size="2xl" 
+        mb="6"
+        className="gradient-text slideInUp"
+        fontWeight="800"
+        letterSpacing="-0.02em"
+        textAlign={{ base: "center", md: "left" }}
+      >
         {group.name}
       </Heading>
       <Flex direction={{ base: "column", md: "row" }} gap="8">
@@ -95,12 +105,29 @@ export default function GroupPage({
             {CONFIG.showAuditionButtons &&
               group.auditionLink &&
               GROUPS_WITH_CURRENT_AUDITION_LINKS.indexOf(slug) !== -1 && (
-                <Button colorScheme="red" {...linkButton(group.auditionLink)}>
-                  Audition for {group.name}
+                <Button 
+                  colorScheme="red" 
+                  size="lg"
+                  className="glow"
+                  borderRadius="16px"
+                  fontWeight="700"
+                  fontSize="md"
+                  aria-label={`Audition for ${group.name} (opens in new tab)`}
+                  {...linkButton(group.auditionLink)}
+                >
+                  🎤 Audition for {group.name}
                 </Button>
               )}
-            <Button colorScheme="blue" {...linkButton(group.siteLink)}>
-              {group.name} Website
+            <Button 
+              variant="glass" 
+              size="lg"
+              colorScheme="blue"
+              borderRadius="16px"
+              fontWeight="600"
+              aria-label={`Visit ${group.name} website (opens in new tab)`}
+              {...linkButton(group.siteLink)}
+            >
+              🌐 {group.name} Website
             </Button>
             <ShareButton />
           </Flex>
@@ -144,6 +171,7 @@ function ArtistEmbed({
       allowFullScreen
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
+      title="Spotify music player"
     ></iframe>
   ) : (
     <YoutubeChannelEmbed url={youtube!} />
@@ -173,6 +201,7 @@ function YoutubeChannelEmbed({ url }: { url: string }) {
             "&modestbranding=1"
           }
           allowFullScreen
+          title="YouTube video player"
         ></iframe>
       </Box>
     </Flex>
@@ -209,7 +238,16 @@ function SocialLinks({
   group: ACappellaGroup;
 }) {
   return (
-    <Flex alignItems="center" justifyContent="center" gap="3">
+    <Flex 
+      alignItems="center" 
+      justifyContent="center" 
+      gap="4"
+      className="card-modern"
+      p="4"
+      borderRadius="16px"
+      role="list"
+      aria-label={`Social media links for ${name}`}
+    >
       {Object.entries(SOCIAL_LINK_ICONS)
         .filter(([key]) => !!socialLinks![key as keyof GroupSocialLinks])
         .map(([key, IconComponent]) => (
@@ -218,11 +256,26 @@ function SocialLinks({
             href={socialLinks![key as keyof GroupSocialLinks]!}
             target="_blank"
             rel="noopener noreferrer"
-            color="#8c1515"
-            transition="color 200ms ease"
+            color="brand.700"
+            p="3"
+            borderRadius="12px"
+            background="rgba(140, 21, 21, 0.1)"
+            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+            role="listitem"
+            aria-label={`Visit ${name} on ${SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]} (opens in new tab)`}
             sx={{
-              "& svg": { fontSize: "1.75rem" },
-              "&:hover": { color: "#bd2828" },
+              "& svg": { fontSize: "1.5rem" },
+              "&:hover": { 
+                color: "white",
+                background: "brand.700",
+                transform: "translateY(-4px) scale(1.1)",
+                boxShadow: "0 8px 25px rgba(140, 21, 21, 0.3)",
+              },
+              "&:focus": {
+                outline: "2px solid",
+                outlineColor: "brand.600",
+                outlineOffset: "2px",
+              },
             }}
             title={
               name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]

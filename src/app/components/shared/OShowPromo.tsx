@@ -53,27 +53,34 @@ export default function OShowPromo() {
   return (
     <Collapse in={isOpen}>
       <Box
-        backgroundColor="gray.700"
-        color="gray.200"
-        p="4"
-        mb="6"
-        borderRadius="4"
+        background="linear-gradient(135deg, #8c1515 0%, #b91c1c 100%)"
+        color="white"
+        p="6"
+        mb="8"
+        borderRadius="16px"
         position="relative"
+        border="1px solid rgba(255, 255, 255, 0.2)"
+        boxShadow="0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+        role="banner"
+        aria-labelledby="oshow-heading"
       >
         <IconButton
           position="absolute"
-          top="0.5"
-          right="0.5"
-          size="lg"
+          top="2"
+          right="2"
+          size="sm"
           icon={<MdClose />}
-          aria-label="Close"
-          backgroundColor="transparent !important"
-          color="gray.300"
-          padding="0"
+          aria-label="Close O-Show promotion banner"
+          background="rgba(255, 255, 255, 0.2)"
+          color="white"
+          borderRadius="8px"
+          _hover={{
+            background: "rgba(255, 255, 255, 0.3)",
+          }}
           onClick={handleClose}
         />
         <Box>
-          <Heading as="h3" size="lg" mb="1">
+          <Heading as="h3" size="lg" mb="1" id="oshow-heading">
             See O-Show!
           </Heading>
           <Text fontWeight="600" mb="1">
@@ -83,16 +90,28 @@ export default function OShowPromo() {
             Saturday 9/20, 7:30 PM at Meyer Green
           </Text>
           <Button
-            color="gray.300"
-            backgroundColor="transparent !important"
-            borderWidth="2px"
+            background="rgba(255, 255, 255, 0.2)"
+            color="white"
+            borderWidth="1px"
             borderStyle="solid"
-            borderColor="currentcolor"
+            borderColor="rgba(255, 255, 255, 0.3)"
             mt="4"
             rightIcon={<MdArrowForward />}
             as={Link}
             href="/shows"
             onClick={handleLearnMore}
+            size="md"
+            fontWeight="600"
+            aria-label="Learn more about O-Show and other upcoming performances"
+            _hover={{
+              background: "rgba(255, 255, 255, 0.3)",
+              borderColor: "rgba(255, 255, 255, 0.5)",
+            }}
+            _focus={{
+              outline: "2px solid",
+              outlineColor: "white",
+              outlineOffset: "2px",
+            }}
           >
             Learn More
           </Button>

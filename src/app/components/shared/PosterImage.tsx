@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import Image from "next/image";
-import { Flex, Spinner } from "@/app/components/chakra";
+import { Box, Flex, Spinner } from "@/app/components/chakra";
 
 import type { ACappellaGroup } from "@/app/config/groups";
 import type { FlexProps } from "@chakra-ui/react";
@@ -22,18 +22,38 @@ export default function PosterImage({
       position="relative"
       alignItems="center"
       justifyContent="center"
+      borderRadius="16px"
+      overflow="hidden"
+      className="card-modern"
       {...props}
     >
-      {!isLoaded && <Spinner color="#888" size="lg" thickness="3px" />}
+      {!isLoaded && (
+        <Box
+          position="absolute"
+          inset="0"
+          className="shimmer"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Box className="float">
+            <Spinner color="brand.500" size="xl" thickness="4px" />
+          </Box>
+        </Box>
+      )}
       <Image
         className="posterImage"
         src={
           isDescription ? group.descriptionImgUrl ?? group.imgUrl : group.imgUrl
         }
-        alt={"Picture for " + group.name}
+        alt={`${group.name} group photo`}
         layout="fill"
         objectFit="cover"
         onLoadingComplete={() => setIsLoaded(true)}
+        style={{
+          transition: 'opacity 0.3s ease',
+          opacity: isLoaded ? 1 : 0,
+        }}
       />
     </Flex>
   );
