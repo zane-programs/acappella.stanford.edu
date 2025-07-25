@@ -134,15 +134,19 @@ export default function RootLayout({
 function LogoHeading() {
   return (
     <Heading
-      size="3xl"
+      size={{ base: "xl", md: "2xl", lg: "3xl" }}
       as="h1"
       textAlign="center"
       mt="-1"
       display="flex"
       fontWeight="400"
-      gap="3"
+      gap={{ base: "2", md: "3" }}
       sx={{ "& span": { alignSelf: "flex-end" } }}
       userSelect="none"
+      flexWrap={{ base: "wrap", sm: "nowrap" }}
+      justifyContent="center"
+      alignItems="center"
+      lineHeight="1.2"
     >
       <Box
         as="span"
@@ -150,23 +154,27 @@ function LogoHeading() {
         fontFamily="Stanford"
         marginBottom="-0.1em"
         className="gradient-text"
+        fontSize={{ base: "inherit", md: "inherit" }}
       >
         Stanford
       </Box>
       <Box
         aria-hidden="true"
-        width="2px"
-        height="40px"
+        width={{ base: "1.5px", md: "2px" }}
+        height={{ base: "24px", md: "32px", lg: "40px" }}
         background="linear-gradient(135deg, #8c1515 0%, #dc2626 100%)"
         borderRadius="2px"
         alignSelf="center"
+        display={{ base: "none", sm: "block" }}
       ></Box>
       <Box
         as="span"
-        fontSize="0.95em"
+        fontSize={{ base: "0.85em", md: "0.90em", lg: "0.95em" }}
         fontWeight="500"
         color="gray.700"
         letterSpacing="-0.01em"
+        mt={{ base: "1", sm: "0" }}
+        w={{ base: "100%", sm: "auto" }}
       >
         A Cappella
       </Box>
