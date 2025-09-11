@@ -63,7 +63,12 @@ export default async function Shows() {
         Shows
       </Heading>
       {showsData.length > 0 ? (
-        <VStack gap="3" mt="6" role="list" aria-label="Upcoming a cappella shows">
+        <VStack
+          gap="3"
+          mt="6"
+          role="list"
+          aria-label="Upcoming a cappella shows"
+        >
           {showsData.map((show) => (
             <ShowCard
               key={show.group + ":" + show.title}
@@ -99,16 +104,8 @@ function ShowCard({
     title: show.title,
     description: show.description,
     location: show.location,
-    start: new Date(
-      show.startDate.toLocaleString("en-US", {
-        timeZone: "America/Los_Angeles",
-      })
-    ),
-    end: new Date(
-      show.endDate.toLocaleString("en-US", {
-        timeZone: "America/Los_Angeles",
-      })
-    ),
+    start: show.startDate,
+    end: show.endDate,
   };
 
   // Helper to generate Outlook/Office 365 URL based on platform
@@ -119,9 +116,9 @@ function ShowCard({
 
     // Mobile platforms use a different URL scheme
     // (The `ms-outlook://` scheme is used for iOS and Android)
-    // Previously, Android used `msoutlook://`, but as far as I can tell,
-    // the `ms-outlook://` scheme works on both iOS and Android.
-    const formatISO = (date: Date) => date.toISOString().slice(0, 19);
+    // Format dates as ISO strings (which are in UTC)
+    // Outlook mobile apps should handle the timezone conversion
+    const formatISO = (date: Date) => date.toISOString().slice(0, 19) + "Z";
     return `ms-outlook://events/new?title=${encodeURIComponent(
       event.title
     )}&start=${formatISO(event.start)}&end=${formatISO(
@@ -166,7 +163,10 @@ function ShowCard({
         >
           {groupInfoEntry ? (
             /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={groupInfoEntry[1].imgUrl} alt={`${groupInfoEntry[1].name} group photo`} />
+            <img
+              src={groupInfoEntry[1].imgUrl}
+              alt={`${groupInfoEntry[1].name} group photo`}
+            />
           ) : (
             <Image
               width={90}
@@ -195,7 +195,12 @@ function ShowCard({
             <Heading size="md" mb="1" as="h3">
               {show.title}
             </Heading>
-            <Box as="ul" fontSize="0.94em" color="#444" sx={{ listStyle: "none" }}>
+            <Box
+              as="ul"
+              fontSize="0.94em"
+              color="#444"
+              sx={{ listStyle: "none" }}
+            >
               <InfoRow mdIcon={<MdCalendarMonth />}>
                 {formatDate(show.startDate, "EEE, MMM d, yyyy")}
                 {show.showEndTime
@@ -209,8 +214,12 @@ function ShowCard({
             </Box>
           </CardHeader>
           <CardBody>
-            <Text>{show.description}</Text>
-            <HStack mt="4">
+            {show.description.split("\n").map((line, idx) => (
+              <Text key={idx} mb="2.5">
+                {line}
+              </Text>
+            ))}
+            <HStack mt="5">
               {show.link && (
                 <Button
                   as="a"
@@ -218,7 +227,9 @@ function ShowCard({
                   href={show.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${show.linkText ?? "Learn More"} about ${show.title} (opens in new tab)`}
+                  aria-label={`${show.linkText ?? "Learn More"} about ${
+                    show.title
+                  } (opens in new tab)`}
                 >
                   {show.linkText ?? "Learn More"}
                 </Button>
@@ -244,7 +255,9 @@ function ShowCard({
                       href={link.url}
                       target={link.noNewTab ? "_self" : "_blank"}
                       rel="noopener noreferrer"
-                      aria-label={`Add to ${link.name}${link.noNewTab ? "" : " (opens in new tab)"}`}
+                      aria-label={`Add to ${link.name}${
+                        link.noNewTab ? "" : " (opens in new tab)"
+                      }`}
                     >
                       {link.name}
                     </MenuItem>
@@ -321,6 +334,34 @@ function convertKeyToCamelCase(key: string): string {
     .join("");
 }
 
+/**
+ * Determines if a date is in Pacific Daylight Time (PDT)
+ * PDT runs from second Sunday in March to first Sunday in November
+ */
+function isPacificDaylightTime(
+  year: number,
+  month: number,
+  day: number
+): boolean {
+  // month is 0-indexed in JavaScript
+  const date = new Date(year, month, day);
+
+  // Find second Sunday in March
+  const march = new Date(year, 2, 1); // March 1st
+  const daysUntilSunday = (7 - march.getDay()) % 7;
+  const firstSundayMarch = 1 + daysUntilSunday;
+  const secondSundayMarch = firstSundayMarch + 7;
+  const dstStart = new Date(year, 2, secondSundayMarch);
+
+  // Find first Sunday in November
+  const november = new Date(year, 10, 1); // November 1st
+  const daysUntilSundayNov = (7 - november.getDay()) % 7;
+  const firstSundayNov = 1 + daysUntilSundayNov;
+  const dstEnd = new Date(year, 10, firstSundayNov);
+
+  return date >= dstStart && date < dstEnd;
+}
+
 function convertGoogleSheetsDateAndTimeToJSDate(
   dateStr: string,
   timeStr: string
@@ -339,8 +380,21 @@ function convertGoogleSheetsDateAndTimeToJSDate(
     .slice(-3)
     .map((num: string) => parseInt(num));
 
-  // Construct and return the Date object
-  return Reflect.construct(Date, [...datePart, ...timePart]);
+  // Google Sheets provides dates in the format: year, month (0-indexed), day, hour, minute, second
+  const [year, month, day] = datePart;
+  const [hour, minute, second] = timePart;
+
+  // Determine timezone offset based on DST
+  const offset = isPacificDaylightTime(year, month, day) ? "-07:00" : "-08:00";
+
+  // Create ISO string with proper Pacific Time offset
+  const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+    day
+  ).padStart(2, "0")}T${String(hour).padStart(2, "0")}:${String(
+    minute
+  ).padStart(2, "0")}:${String(second).padStart(2, "0")}${offset}`;
+
+  return new Date(dateString);
 }
 
 async function fetchShowsData() {

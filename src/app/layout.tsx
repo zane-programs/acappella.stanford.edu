@@ -9,7 +9,7 @@ import NavItem from "./components/shared/NavItem";
 import Footer from "./components/shared/Footer";
 import ScrollRestorer from "./utils/ScrollRestorer";
 import CookieConsentBanner from "./components/shared/CookieConsentBanner";
-import OShowPromo from "./components/shared/OShowPromo";
+import NotificationManager from "./components/shared/NotificationManager";
 
 // fonts
 import { Source_Sans_3 } from "next/font/google";
@@ -117,7 +117,7 @@ export default function RootLayout({
                   </Flex>
                 </Flex>
                 <Box as="main" role="main" id="main-content" mt="6">
-                  <OShowPromo />
+                  <NotificationManager />
                   {children}
                 </Box>
               </Box>
@@ -134,7 +134,7 @@ export default function RootLayout({
 function LogoHeading() {
   return (
     <Heading
-      size={{ base: "xl", md: "2xl", lg: "3xl" }}
+      size={{ base: "2xl", md: "3xl" }}
       as="h1"
       textAlign="center"
       mt="-1"
@@ -168,13 +168,17 @@ function LogoHeading() {
         display={{ base: "none", sm: "block" }}
       ></Box>
       <Box
-        as="span"
+        as="div"
         fontSize={{ base: "0.85em", md: "0.90em", lg: "0.95em" }}
         fontWeight="500"
         color="gray.700"
         letterSpacing="-0.01em"
         mt={{ base: "1", sm: "0" }}
         w={{ base: "100%", sm: "auto" }}
+        // Fix alignment with inflexible Stanford font
+        // TODO: Consider replacing logo font with SVG
+        position="relative"
+        transform="translateY(-2.5%)"
       >
         A Cappella
       </Box>
