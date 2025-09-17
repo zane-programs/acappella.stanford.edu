@@ -201,7 +201,7 @@ function YoutubeChannelEmbed({
 }) {
   const ytPlayerSource = useMemo(
     () => getYtPlayerSource(url, isOverridePlaylist, isVideo),
-    [url, isOverridePlaylist]
+    [url, isOverridePlaylist, isVideo]
   );
 
   return (
