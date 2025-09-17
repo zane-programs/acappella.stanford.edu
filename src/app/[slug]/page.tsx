@@ -200,10 +200,10 @@ function YoutubeChannelEmbed({
   );
 
   return (
-    <Flex w="100%" justifyContent={{ base: "center", md: "left" }}>
+    <Flex w="100%" justifyContent="center">
       <Box
         w="100%"
-        maxW={{ base: undefined, md: "400px" }}
+        maxW={{ base: undefined, md: "360px" }}
         aspectRatio="16 / 9"
       >
         <iframe

@@ -46,7 +46,7 @@ export default function OTone() {
       </Text>
 
       <Text>
-        We&apos;ll be holding auditions Monday, Tuesday, and Wednesday of Week 1, and
+        We&apos;ll be holding auditions Monday, Tuesday, and Wednesday of Week 1, and{" "}
         <strong>no language experience is required.</strong> To sign up for an audition slot,
         please visit{" "}
         <Link href="https://calendly.com/stanfordotone" target="_blank">
