@@ -10,6 +10,7 @@ const CONFIG: IConfig = {
     fleetstreet: "/fleet-street",
     harmz: "/harmonics",
     ep: "/everyday-people",
+    otone: "/o-tone",
   },
 };
 
