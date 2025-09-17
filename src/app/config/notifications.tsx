@@ -58,7 +58,7 @@ export const ACTIVE_NOTIFICATIONS: Notification[] = [
   {
     id: "auditions_fall_2025",
     title: "Want to audition?",
-    subtitle: "Stay tuned! Audition details coming Sep 17 👀",
+    subtitle: "Stay tuned! Audition details coming very soon 👀",
     // Hide on homepage - if user clicks into group page, they'll see this
     hidePages: ["/"],
     dismissible: true,

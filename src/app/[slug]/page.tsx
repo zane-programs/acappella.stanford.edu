@@ -33,7 +33,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const group = GROUPS[slug];
+  const group = GROUPS[slug as keyof typeof GROUPS];
 
   if (!group) {
     if (CONFIG.groupAltNameMappings[slug]) {
@@ -76,7 +76,7 @@ export default async function GroupPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const group = GROUPS[slug];
+  const group = GROUPS[slug as keyof typeof GROUPS];
 
   return (
     <>
@@ -162,6 +162,8 @@ function ArtistEmbed({ group }: { group: ACappellaGroup }) {
         return { spotify: listenEmbedOverride.embedId, youtube: undefined };
       } else if (listenEmbedOverride.type === "youtube") {
         return { spotify: undefined, youtube: listenEmbedOverride.embedId };
+      } else if (listenEmbedOverride.type === "youtube-video") {
+        return { spotify: undefined, youtube: listenEmbedOverride.embedId };
       }
     }
     return { spotify: _spotify, youtube: _youtube };
@@ -183,6 +185,7 @@ function ArtistEmbed({ group }: { group: ACappellaGroup }) {
     <YoutubeChannelEmbed
       url={youtube!}
       isOverridePlaylist={!!listenEmbedOverride}
+      isVideo={listenEmbedOverride?.type === "youtube-video"}
     />
   );
 }
@@ -190,12 +193,14 @@ function ArtistEmbed({ group }: { group: ACappellaGroup }) {
 function YoutubeChannelEmbed({
   url,
   isOverridePlaylist,
+  isVideo = false,
 }: {
   url: string;
   isOverridePlaylist?: boolean;
+  isVideo?: boolean;
 }) {
   const ytPlayerSource = useMemo(
-    () => getYtPlayerSource(url, isOverridePlaylist),
+    () => getYtPlayerSource(url, isOverridePlaylist, isVideo),
     [url, isOverridePlaylist]
   );
 
@@ -218,7 +223,17 @@ function YoutubeChannelEmbed({
   );
 }
 
-function getYtPlayerSource(url: string, isOverridePlaylist?: boolean) {
+function getYtPlayerSource(
+  url: string,
+  isOverridePlaylist?: boolean,
+  isVideo = false
+) {
+  if (isVideo) {
+    // Direct video link
+    const videoId = url.split("v=")[1]?.split("&")[0] || url.split("/").pop();
+    return `https://www.youtube-nocookie.com/embed/${videoId}?modestbranding=1`;
+  }
+
   // Override playlist URL (full YouTube embed URL)
   if (isOverridePlaylist) {
     return (

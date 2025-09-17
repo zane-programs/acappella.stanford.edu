@@ -39,7 +39,7 @@ export interface DirectAuditionLinkConfig {
 }
 
 export interface ListenEmbedOverride {
-  type: "spotify" | "youtube";
+  type: "spotify" | "youtube" | "youtube-video";
   embedId: string;
 }
 
@@ -72,8 +72,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street-171A3693.jpg",
     siteLink: "https://www.fleetstreet.com/",
-    auditionLink:
-      "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
+    // auditionLink:
+    //   "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
     socialLinks: {
       youtube: "https://www.youtube.com/user/FleetStreetSingers",
       appleMusic:
@@ -83,19 +83,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       facebook: "https://www.facebook.com/StanfordFleetStreetSingers/",
       tiktok: "https://www.tiktok.com/@fleetstreetsingers",
     },
-    // directAuditionLinkConfig: {
-    //   metadata: {
-    //     title: "Click to Audition for Fleet Street!",
-    //     description:
-    //       "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
-    //     openGraph: {
-    //       title: "Click to Audition for Fleet Street!",
-    //       description:
-    //         "Sign up to audition for Fleet Street, Stanford's all-gender comedy a cappella group!",
-    //       images: ["/assets/img/misc/FS_Poster_Fizz_Small_v3.jpg"],
-    //     },
-    //   },
-    // },
   },
   mendicants: {
     name: "Mendicants",
@@ -105,8 +92,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mendicants_new.jpg",
     descriptionImgUrl: "/assets/img/mendicants_new_inside_v3.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
-    auditionLink:
-      "https://calendly.com/stanfordmendicants/mendicants-auditions",
+    // auditionLink:
+    //   "https://calendly.com/stanfordmendicants/mendicants-auditions",
     socialLinks: {
       spotify: "https://open.spotify.com/artist/3ZBvLOZu5A9jtKO5XjHDTl",
       appleMusic:
@@ -124,8 +111,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
     siteLink: "https://stanfordcounterpoint.com/",
-    auditionLink:
-      "https://calendly.com/stanfordcounterpoint/first-round-of-auditions",
+    // auditionLink:
+    //   "https://calendly.com/stanfordcounterpoint/first-round-of-auditions",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
@@ -141,8 +128,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmz_2526_opt.webp",
     siteLink: "https://www.stanfordharmonics.com/",
-    auditionLink:
-      "https://calendly.com/stanfordharmonics/audition?month=2024-09",
+    // auditionLink:
+    //   "https://calendly.com/stanfordharmonics/audition?month=2024-09",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
@@ -159,7 +146,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Raagapella />,
     imgUrl: "/assets/img/raag-16-2024.jpg",
     siteLink: "https://www.raagapella.com/",
-    auditionLink: "https://calendly.com/raagauditions/round1",
+    // auditionLink: "https://calendly.com/raagauditions/round1",
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
@@ -175,7 +162,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.SATB,
     tagline: "Stanford's all-gender East Asian interest a cappella group",
     description: <OTone />,
-    imgUrl: "/assets/img/otone_2024.jpg",
+    imgUrl: "/assets/img/otone_2025.webp",
     siteLink: "https://stanfordotone.com/",
     auditionLink: "https://calendly.com/stanfordotone",
     extraKeywords: ["otone", "stanford otone"],
@@ -197,14 +184,17 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
-    auditionLink:
-      "https://docs.google.com/forms/d/e/1FAIpQLScafrKp7j9kHV8DSvpSVPZbvfbX2esgSbUp0v0Drb-zgC-tOg/viewform?usp=sf_link",
+    auditionLink: "https://calendly.com/stanfordeverydaypeople/30min",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
       instagram: "https://www.instagram.com/stanford_everydaypeople/",
       youtube: "https://www.youtube.com/user/StanfoEverydayPeople",
       twitter: "https://twitter.com/epacappella",
       facebook: "https://www.facebook.com/StanfordEverydayPeople/",
+    },
+    listenEmbedOverride: {
+      type: "youtube-video",
+      embedId: "CkCjxc0eluI",
     },
   },
   testimony: {
@@ -215,8 +205,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/testimony_new.jpg",
     descriptionImgUrl: "/assets/img/testimony_new_inside.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
-    auditionLink:
-      "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
+    // auditionLink:
+    //   "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
@@ -231,8 +221,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
-    auditionLink:
-      "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
+    // auditionLink:
+    //   "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
@@ -250,7 +240,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mixedco_new.jpg",
     descriptionImgUrl: "/assets/img/mixedco_new_inside.jpg",
     siteLink: "https://www.mixedco.com/",
-    auditionLink: "https://forms.gle/uu3HBG2P7QGGgFJ9A",
+    // auditionLink: "https://forms.gle/uu3HBG2P7QGGgFJ9A",
     extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
@@ -264,18 +254,10 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   },
 };
 
-export const GROUPS_WITH_CURRENT_AUDITION_LINKS = [
-  "harmonics",
-  "mixed-company",
-  "raagapella",
-  "fleet-street",
+export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "o-tone",
-  "counterpoint",
-  "talisman",
-  "mendicants",
-  "testimony",
   "everyday-people",
-];
+] satisfies Array<keyof typeof GROUPS>;
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
 // GROUPS["harmz"] = GROUPS["harmonics"];
