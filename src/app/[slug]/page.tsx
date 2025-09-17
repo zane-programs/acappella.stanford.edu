@@ -80,9 +80,9 @@ export default async function GroupPage({
 
   return (
     <>
-      <Heading 
-        as="h2" 
-        size="2xl" 
+      <Heading
+        as="h2"
+        size="2xl"
         mb="6"
         className="gradient-text slideInUp"
         fontWeight="800"
@@ -105,8 +105,8 @@ export default async function GroupPage({
             {CONFIG.showAuditionButtons &&
               group.auditionLink &&
               GROUPS_WITH_CURRENT_AUDITION_LINKS.indexOf(slug) !== -1 && (
-                <Button 
-                  colorScheme="red" 
+                <Button
+                  colorScheme="red"
                   size="lg"
                   className="glow"
                   borderRadius="16px"
@@ -118,8 +118,8 @@ export default async function GroupPage({
                   🎤 Audition for {group.name}
                 </Button>
               )}
-            <Button 
-              variant="glass" 
+            <Button
+              variant="glass"
               size="lg"
               colorScheme="blue"
               borderRadius="16px"
@@ -142,10 +142,7 @@ export default async function GroupPage({
               <Heading size="md" as="h3" my="2">
                 Listen
               </Heading>
-              <ArtistEmbed
-                spotify={group.socialLinks.spotify}
-                youtube={group.socialLinks.youtube}
-              />
+              <ArtistEmbed group={group} />
             </>
           )}
         </Box>
@@ -154,13 +151,22 @@ export default async function GroupPage({
   );
 }
 
-function ArtistEmbed({
-  spotify,
-  youtube,
-}: {
-  spotify: string | undefined;
-  youtube: string | undefined;
-}) {
+function ArtistEmbed({ group }: { group: ACappellaGroup }) {
+  const { spotify: _spotify, youtube: _youtube } = group.socialLinks || {};
+  const { listenEmbedOverride } = group;
+
+  // If `listenEmbedOverride` is provided, it takes precedence over the default links
+  const { spotify, youtube } = useMemo(() => {
+    if (listenEmbedOverride) {
+      if (listenEmbedOverride.type === "spotify") {
+        return { spotify: listenEmbedOverride.embedId, youtube: undefined };
+      } else if (listenEmbedOverride.type === "youtube") {
+        return { spotify: undefined, youtube: listenEmbedOverride.embedId };
+      }
+    }
+    return { spotify: _spotify, youtube: _youtube };
+  }, [listenEmbedOverride, _spotify, _youtube]);
+
   return spotify ? (
     <iframe
       style={{ borderRadius: "12px" }}
@@ -174,15 +180,25 @@ function ArtistEmbed({
       title="Spotify music player"
     ></iframe>
   ) : (
-    <YoutubeChannelEmbed url={youtube!} />
+    <YoutubeChannelEmbed
+      url={youtube!}
+      isOverridePlaylist={!!listenEmbedOverride}
+    />
   );
 }
 
-function YoutubeChannelEmbed({ url }: { url: string }) {
-  const channelId = useMemo(
-    () => url.split("/").slice(-1)[0].replace("@", ""),
-    [url]
+function YoutubeChannelEmbed({
+  url,
+  isOverridePlaylist,
+}: {
+  url: string;
+  isOverridePlaylist?: boolean;
+}) {
+  const ytPlayerSource = useMemo(
+    () => getYtPlayerSource(url, isOverridePlaylist),
+    [url, isOverridePlaylist]
   );
+
   return (
     <Flex w="100%" justifyContent={{ base: "center", md: "left" }}>
       <Box
@@ -193,18 +209,33 @@ function YoutubeChannelEmbed({ url }: { url: string }) {
         <iframe
           width="100%"
           height="100%"
-          src={
-            "https://www.youtube-nocookie.com/embed/" +
-            (/^UC[\w-]{21}[AQgw]$/.test(channelId)
-              ? "videoseries?list=UU" + channelId.substring(2)
-              : "?listType=user_uploads&list=" + channelId) +
-            "&modestbranding=1"
-          }
+          src={ytPlayerSource}
           allowFullScreen
-          title="YouTube video player"
+          title="YouTube player for a cappella group"
         ></iframe>
       </Box>
     </Flex>
+  );
+}
+
+function getYtPlayerSource(url: string, isOverridePlaylist?: boolean) {
+  // Override playlist URL (full YouTube embed URL)
+  if (isOverridePlaylist) {
+    return (
+      "https://www.youtube-nocookie.com/embed/?listType=playlist&list=" +
+      url +
+      "&modestbranding=1"
+    );
+  }
+
+  // Extract channel ID from URL
+  const channelId = url.split("/").slice(-1)[0].replace("@", "");
+  return (
+    "https://www.youtube-nocookie.com/embed/" +
+    (/^UC[\w-]{21}[AQgw]$/.test(channelId)
+      ? "videoseries?list=UU" + channelId.substring(2)
+      : "?listType=user_uploads&list=" + channelId) +
+    "&modestbranding=1"
   );
 }
 
@@ -238,9 +269,9 @@ function SocialLinks({
   group: ACappellaGroup;
 }) {
   return (
-    <Flex 
-      alignItems="center" 
-      justifyContent="center" 
+    <Flex
+      alignItems="center"
+      justifyContent="center"
       gap={{ base: "2", sm: "3" }}
       wrap="wrap"
       className="card-modern"
@@ -263,10 +294,12 @@ function SocialLinks({
             background="rgba(140, 21, 21, 0.1)"
             transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
             role="listitem"
-            aria-label={`Visit ${name} on ${SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]} (opens in new tab)`}
+            aria-label={`Visit ${name} on ${
+              SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
+            } (opens in new tab)`}
             sx={{
               "& svg": { fontSize: { base: "1.25rem", sm: "1.5rem" } },
-              "&:hover": { 
+              "&:hover": {
                 color: "white",
                 background: "brand.700",
                 transform: "translateY(-4px) scale(1.1)",

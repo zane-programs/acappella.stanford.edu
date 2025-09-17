@@ -38,6 +38,11 @@ export interface DirectAuditionLinkConfig {
   metadata: Metadata;
 }
 
+export interface ListenEmbedOverride {
+  type: "spotify" | "youtube";
+  embedId: string;
+}
+
 export interface ACappellaGroup {
   name: string;
   voiceParts: VoicePart;
@@ -56,6 +61,7 @@ export interface ACappellaGroup {
   // Optional: Alternate image for description page
   descriptionImgUrl?: string;
   directAuditionLinkConfig?: DirectAuditionLinkConfig;
+  listenEmbedOverride?: ListenEmbedOverride;
 }
 
 const GROUPS: { [slug: string]: ACappellaGroup } = {
@@ -171,13 +177,17 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <OTone />,
     imgUrl: "/assets/img/otone_2024.jpg",
     siteLink: "https://stanfordotone.com/",
-    auditionLink: "https://stanfordotone.com/auditions",
+    auditionLink: "https://calendly.com/stanfordotone",
     extraKeywords: ["otone", "stanford otone"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCalFurLezFrabetPytEvVFQ",
       instagram: "https://www.instagram.com/stanfordotone",
       facebook: "https://www.facebook.com/StanfordOTone",
       spotify: "https://open.spotify.com/artist/6AHkKb8FrqJ0ZgxL40eoHk",
+    },
+    listenEmbedOverride: {
+      type: "youtube",
+      embedId: "PLjHdgkpc3r_EJ-nc4dez7jqjN9mAU418I",
     },
   },
   "everyday-people": {
