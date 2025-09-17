@@ -128,8 +128,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmz_2526_opt.webp",
     siteLink: "https://www.stanfordharmonics.com/",
-    // auditionLink:
-    //   "https://calendly.com/stanfordharmonics/audition?month=2024-09",
+    auditionLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLSckziUoT7vNCMkPxTh4sRDaXLfmpha3wJVQE-1w6yY2kBncHA/viewform?usp=header",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
@@ -257,6 +257,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
 export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "o-tone",
   "everyday-people",
+  "harmonics",
 ] satisfies Array<keyof typeof GROUPS>;
 
 // GROUPS["mixed-co"] = GROUPS["mixed-company"];
