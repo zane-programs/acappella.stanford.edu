@@ -47,7 +47,7 @@ export default function OTone() {
 
       <Text>
         We&apos;ll be holding auditions Monday, Tuesday, and Wednesday of Week 1, and
-        no language experience is required. To sign up for an audition slot,
+        <strong>no language experience is required.</strong> To sign up for an audition slot,
         please visit{" "}
         <Link href="https://calendly.com/stanfordotone" target="_blank">
           calendly.com/stanfordotone
