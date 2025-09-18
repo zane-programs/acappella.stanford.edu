@@ -111,8 +111,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
     siteLink: "https://stanfordcounterpoint.com/",
-    // auditionLink:
-    //   "https://calendly.com/stanfordcounterpoint/first-round-of-auditions",
+    auditionLink:
+      "https://calendly.com/emmadi-stanford/ctp-audition",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
@@ -259,6 +259,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "everyday-people",
   "harmonics",
   "fleet-street",
+  "counterpoint",
 ] satisfies Array<keyof typeof GROUPS>;
 
 export default GROUPS;
