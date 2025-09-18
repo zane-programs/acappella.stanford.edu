@@ -72,8 +72,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street-171A3693.jpg",
     siteLink: "https://www.fleetstreet.com/",
-    // auditionLink:
-    //   "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-50566259-fleet",
+    auditionLink:
+      "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-58458698-fleet",
     socialLinks: {
       youtube: "https://www.youtube.com/user/FleetStreetSingers",
       appleMusic:
@@ -258,10 +258,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "o-tone",
   "everyday-people",
   "harmonics",
+  "fleet-street",
 ] satisfies Array<keyof typeof GROUPS>;
-
-// GROUPS["mixed-co"] = GROUPS["mixed-company"];
-// GROUPS["harmz"] = GROUPS["harmonics"];
-// GROUPS["fleetstreet"] = GROUPS["fleet-street"];
 
 export default GROUPS;
