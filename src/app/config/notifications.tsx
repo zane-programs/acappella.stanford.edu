@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { MdArrowForward } from "react-icons/md";
+import { GROUPS_WITH_CURRENT_AUDITION_LINKS } from "./groups";
 
 export interface NotificationAction {
   label: string;
@@ -60,7 +61,7 @@ export const ACTIVE_NOTIFICATIONS: Notification[] = [
     title: "Want to audition?",
     subtitle: "Stay tuned! Audition details coming very soon 👀",
     // Hide on homepage - if user clicks into group page, they'll see this
-    hidePages: ["/"],
+    hidePages: ["/", ...GROUPS_WITH_CURRENT_AUDITION_LINKS.map((g) => `/${g}`)],
     dismissible: true,
     dismissDuration: "session",
     backgroundGradient: "linear-gradient(135deg, #2563eb 0%, #1e40af 100%)",
