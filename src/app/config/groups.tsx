@@ -111,8 +111,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint.jpg",
     siteLink: "https://stanfordcounterpoint.com/",
-    auditionLink:
-      "https://calendly.com/emmadi-stanford/ctp-audition",
+    auditionLink: "https://calendly.com/emmadi-stanford/ctp-audition",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
@@ -128,8 +127,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Harmonics />,
     imgUrl: "/assets/img/harmz_2526_opt.webp",
     siteLink: "https://www.stanfordharmonics.com/",
-    auditionLink:
-      "https://calendly.com/stanfordharmonics/audition",
+    auditionLink: "https://calendly.com/stanfordharmonics/audition",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
@@ -184,7 +182,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
-    auditionLink: "https://docs.google.com/forms/d/e/1FAIpQLScbxVIGG1MHs8lAvEm5lAhptxVrqQRzFd5-eVMGh65Vqf-OgQ/viewform",
+    auditionLink:
+      "https://docs.google.com/forms/d/e/1FAIpQLScbxVIGG1MHs8lAvEm5lAhptxVrqQRzFd5-eVMGh65Vqf-OgQ/viewform",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
       instagram: "https://www.instagram.com/stanford_everydaypeople/",
@@ -205,8 +204,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/testimony_new.jpg",
     descriptionImgUrl: "/assets/img/testimony_new_inside.jpg",
     siteLink: "https://testimonyacappella.weebly.com/",
-    // auditionLink:
-    //   "https://calendly.com/noelseo-stanford/t-34-auditions?month=2024-09",
+    auditionLink: "https://forms.gle/ZRNgk8fvprTBPjCDA",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
@@ -260,6 +258,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "harmonics",
   "fleet-street",
   "counterpoint",
+  "testimony",
 ] satisfies Array<keyof typeof GROUPS>;
 
 export default GROUPS;
