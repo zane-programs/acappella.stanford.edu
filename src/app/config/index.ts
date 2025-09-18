@@ -11,6 +11,7 @@ const CONFIG: IConfig = {
     harmz: "/harmonics",
     ep: "/everyday-people",
     otone: "/o-tone",
+    ctp: "/counterpoint",
   },
 };
 
