@@ -129,7 +129,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/harmz_2526_opt.webp",
     siteLink: "https://www.stanfordharmonics.com/",
     auditionLink:
-      "https://docs.google.com/forms/d/e/1FAIpQLSckziUoT7vNCMkPxTh4sRDaXLfmpha3wJVQE-1w6yY2kBncHA/viewform?usp=header",
+      "https://calendly.com/stanfordharmonics/audition",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
       spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
