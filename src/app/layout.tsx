@@ -140,7 +140,7 @@ function LogoHeading() {
       mt="-1"
       display="flex"
       fontWeight="400"
-      gap={{ base: "2", md: "3" }}
+      gap={{ base: "1", md: "3" }}
       sx={{ "& span": { alignSelf: "flex-end" } }}
       userSelect="none"
       flexWrap={{ base: "wrap", sm: "nowrap" }}
