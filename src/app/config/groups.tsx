@@ -220,6 +220,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     siteLink: "http://www.stanfordtalisman.com/",
     // auditionLink:
     //   "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
+    auditionLink: "https://calendly.com/samgb-stanford/talisman-auditions",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
@@ -258,6 +259,7 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "fleet-street",
   "counterpoint",
   "testimony",
+  "talisman",
 ] satisfies Array<keyof typeof GROUPS>;
 
 export default GROUPS;
