@@ -19,9 +19,9 @@ export enum VoicePart {
   Tenor = 0b100,
   Bari_Bass = 0b1000,
   SATB = VoicePart.Soprano |
-    VoicePart.Alto |
-    VoicePart.Tenor |
-    VoicePart.Bari_Bass,
+  VoicePart.Alto |
+  VoicePart.Tenor |
+  VoicePart.Bari_Bass,
 }
 
 export interface GroupSocialLinks {
@@ -92,8 +92,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mendicants_new.jpg",
     descriptionImgUrl: "/assets/img/mendicants_new_inside_v3.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
-    // auditionLink:
-    //   "https://calendly.com/stanfordmendicants/mendicants-auditions",
+    auditionLink: "https://stanfordmendicants.com/auditions",
     socialLinks: {
       spotify: "https://open.spotify.com/artist/3ZBvLOZu5A9jtKO5XjHDTl",
       appleMusic:
@@ -144,7 +143,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Raagapella />,
     imgUrl: "/assets/img/raag-16-2024.jpg",
     siteLink: "https://www.raagapella.com/",
-    // auditionLink: "https://calendly.com/raagauditions/round1",
+    auditionLink: "https://calendly.com/raagauditions/round1?month=2025-09",
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
@@ -238,7 +237,7 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mixedco_new.jpg",
     descriptionImgUrl: "/assets/img/mixedco_new_inside.jpg",
     siteLink: "https://www.mixedco.com/",
-    // auditionLink: "https://forms.gle/uu3HBG2P7QGGgFJ9A",
+    auditionLink: "https://docs.google.com/forms/d/e/1FAIpQLSfvsI5rWTcMjMYbiOlaq8GPW0evASdwIV10FUCXdru0fEhC7w/viewform?usp=dialog",
     extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
@@ -260,6 +259,9 @@ export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
   "counterpoint",
   "testimony",
   "talisman",
+  "mixed-company",
+  "raagapella",
+  "mendicants",
 ] satisfies Array<keyof typeof GROUPS>;
 
 export default GROUPS;
