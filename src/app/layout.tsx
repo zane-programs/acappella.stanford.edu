@@ -155,6 +155,7 @@ function LogoHeading() {
         marginBottom="-0.1em"
         className="gradient-text"
         fontSize={{ base: "inherit", md: "inherit" }}
+        whiteSpace="nowrap"
       >
         Stanford
       </Box>
