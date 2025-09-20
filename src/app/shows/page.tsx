@@ -144,6 +144,17 @@ function ShowCard({
     },
   ];
 
+  const displayedStartDatePacificTimeForced = new Date(
+    show.startDate.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+    })
+  );
+  const displayedEndDatePacificTimeForced = new Date(
+    show.endDate.toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+    })
+  );
+
   return (
     <Card width="100%" overflow="hidden" role="listitem">
       <Flex direction={{ base: "column", md: "row" }}>
@@ -202,13 +213,13 @@ function ShowCard({
               sx={{ listStyle: "none" }}
             >
               <InfoRow mdIcon={<MdCalendarMonth />}>
-                {formatDate(show.startDate, "EEE, MMM d, yyyy")}
+                {formatDate(displayedStartDatePacificTimeForced, "EEE, MMM d, yyyy")}
                 {show.showEndTime
-                  ? `, ${formatDate(show.startDate, "h:mmaaa")} - ${formatDate(
-                      show.endDate,
+                  ? `, ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")} - ${formatDate(
+                      displayedEndDatePacificTimeForced,
                       "h:mm a"
                     )}`
-                  : ` at ${formatDate(show.startDate, "h:mmaaa")}`}
+                  : ` at ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")}`}
               </InfoRow>
               <InfoRow mdIcon={<MdLocationPin />}>{show.location}</InfoRow>
             </Box>
@@ -407,6 +418,7 @@ async function fetchShowsData() {
 
   const jsonStart = res.indexOf("{");
   const jsonEnd = res.lastIndexOf("}") + 1;
+  console.log(res, jsonStart, jsonEnd);
   const gvizData = JSON.parse(res.substring(jsonStart, jsonEnd));
 
   // Check if sheet empty, and if so return nothing
