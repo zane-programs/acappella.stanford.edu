@@ -4,7 +4,7 @@ interface IConfig {
 }
 
 const CONFIG: IConfig = {
-  showAuditionButtons: true,
+  showAuditionButtons: false,
   groupAltNameMappings: {
     fs: "/fleet-street",
     fleetstreet: "/fleet-street",
