@@ -409,17 +409,31 @@ function convertGoogleSheetsDateAndTimeToJSDate(
 }
 
 async function fetchShowsData() {
-  const req = await fetch(
-    `https://docs.google.com/spreadsheets/d/${
-      process.env.SHOWS_SHEET_ID
-    }/gviz/tq?tqx=out:json&tq&gid=${process.env.SHOWS_SHEET_GID}&${Date.now()}`
-  );
-  const res = await req.text();
+  const sheetId = process.env.SHOWS_SHEET_ID;
+  const sheetGid = process.env.SHOWS_SHEET_GID;
+  if (!sheetId || !sheetGid) return [];
+
+  let res: string;
+  try {
+    const req = await fetch(
+      `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&tq&gid=${sheetGid}&${Date.now()}`
+    );
+    if (!req.ok) return [];
+    res = await req.text();
+  } catch {
+    return [];
+  }
 
   const jsonStart = res.indexOf("{");
   const jsonEnd = res.lastIndexOf("}") + 1;
-  console.log(res, jsonStart, jsonEnd);
-  const gvizData = JSON.parse(res.substring(jsonStart, jsonEnd));
+  if (jsonStart === -1 || jsonEnd === 0) return [];
+
+  let gvizData: any;
+  try {
+    gvizData = JSON.parse(res.substring(jsonStart, jsonEnd));
+  } catch {
+    return [];
+  }
 
   // Check if sheet empty, and if so return nothing
   if (

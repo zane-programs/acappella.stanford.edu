@@ -87,5 +87,10 @@ function CookieConsentBannerContent({
 }
 
 function parseLocalStorageValue(value: string | null): boolean {
-  return value === null ? false : JSON.parse(value);
+  if (value === null) return false;
+  try {
+    return JSON.parse(value);
+  } catch {
+    return false;
+  }
 }
