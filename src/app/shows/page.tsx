@@ -12,17 +12,22 @@ import {
   VStack,
   Button,
   HStack,
-  Menu,
-  MenuList,
-  MenuItem,
-  ButtonMenuButton,
 } from "@/app/components/chakra";
 import GROUPS from "../config/groups";
 import Link from "next/link";
 import Image from "next/image";
 import { format as formatDate } from "date-fns";
 import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
-import { google, office365, ics, type CalendarEvent } from "calendar-link";
+import {
+  CalendarEventDetails,
+  Platform,
+  detectPlatform,
+  getCalendarLinks,
+} from "@/app/utils/calendar";
+import AddToCalendarMenu from "@/app/components/shared/AddToCalendarMenu";
+import FeaturedShowCard from "@/app/components/shared/FeaturedShowCard";
+import InfoRow from "@/app/components/shared/InfoRow";
+import { FEATURED_SHOW } from "../config/shows";
 
 export const dynamic = "force-dynamic";
 
@@ -41,21 +46,10 @@ export const metadata: Metadata = {
   ],
 };
 
-type Platform = "ios" | "android" | "other";
-
 export default async function Shows() {
   const showsData = await fetchShowsData();
   const headersList = await headers();
-  const userAgent = headersList.get("user-agent") || "";
-
-  let platform: Platform;
-  if (/iphone|ipad|ipod/i.test(userAgent)) {
-    platform = "ios";
-  } else if (/android/i.test(userAgent)) {
-    platform = "android";
-  } else {
-    platform = "other";
-  }
+  const platform = detectPlatform(headersList.get("user-agent") || "");
 
   return (
     <>
@@ -77,6 +71,14 @@ export default async function Shows() {
             />
           ))}
         </VStack>
+      ) : FEATURED_SHOW && FEATURED_SHOW.event.end.getTime() > Date.now() ? (
+        <Box mt="6">
+          <FeaturedShowCard featured={FEATURED_SHOW} platform={platform} />
+          <Text mt="5" color="gray.600" textAlign="center">
+            More shows coming soon&mdash;be on the lookout for performances
+            throughout the year!
+          </Text>
+        </Box>
       ) : (
         <Text>
           Coming soon&mdash;be on the lookout for a cappella shows and
@@ -100,49 +102,14 @@ function ShowCard({
       group.name.trim().toLowerCase() === show.group.trim().toLowerCase()
   );
 
-  const event: CalendarEvent = {
+  const event: CalendarEventDetails = {
     title: show.title,
     description: show.description,
     location: show.location,
     start: show.startDate,
     end: show.endDate,
   };
-
-  // Helper to generate Outlook/Office 365 URL based on platform
-  const getOutlookUrl = () => {
-    if (platform === "other") {
-      return office365(event);
-    }
-
-    // Mobile platforms use a different URL scheme
-    // (The `ms-outlook://` scheme is used for iOS and Android)
-    // Format dates as ISO strings (which are in UTC)
-    // Outlook mobile apps should handle the timezone conversion
-    const formatISO = (date: Date) => date.toISOString().slice(0, 19) + "Z";
-    return `ms-outlook://events/new?title=${encodeURIComponent(
-      event.title
-    )}&start=${formatISO(event.start)}&end=${formatISO(
-      event.end
-    )}&location=${encodeURIComponent(
-      event.location ?? ""
-    )}&description=${encodeURIComponent(event.description ?? "")}`;
-  };
-
-  const eventLinks = [
-    {
-      name: "Apple Calendar",
-      url: ics(event),
-      noNewTab: true,
-    },
-    {
-      name: "Stanford (Office 365)",
-      url: getOutlookUrl(),
-    },
-    {
-      name: "Google Calendar",
-      url: google(event),
-    },
-  ];
+  const calendarLinks = getCalendarLinks(event, platform);
 
   const displayedStartDatePacificTimeForced = new Date(
     show.startDate.toLocaleString("en-US", {
@@ -212,7 +179,7 @@ function ShowCard({
               color="#444"
               sx={{ listStyle: "none" }}
             >
-              <InfoRow mdIcon={<MdCalendarMonth />}>
+              <InfoRow icon={<MdCalendarMonth />}>
                 {formatDate(displayedStartDatePacificTimeForced, "EEE, MMM d, yyyy")}
                 {show.showEndTime
                   ? `, ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")} - ${formatDate(
@@ -221,7 +188,7 @@ function ShowCard({
                     )}`
                   : ` at ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")}`}
               </InfoRow>
-              <InfoRow mdIcon={<MdLocationPin />}>{show.location}</InfoRow>
+              <InfoRow icon={<MdLocationPin />}>{show.location}</InfoRow>
             </Box>
           </CardHeader>
           <CardBody>
@@ -245,61 +212,17 @@ function ShowCard({
                   {show.linkText ?? "Learn More"}
                 </Button>
               )}
-              <Menu placement="bottom">
-                {/* <Button colorScheme="blue" display="flex">
-                  Add to Calendar <MdChevronRight />
-                </Button> */}
-                <ButtonMenuButton
-                  colorScheme="blue"
-                  display="flex"
-                  gap="2"
-                  alignItems="center"
-                  aria-label={`Add ${show.title} to calendar`}
-                >
-                  <MdCalendarMonth /> Add to Calendar
-                </ButtonMenuButton>
-                <MenuList>
-                  {eventLinks.map((link) => (
-                    <MenuItem
-                      key={link.name}
-                      as="a"
-                      href={link.url}
-                      target={link.noNewTab ? "_self" : "_blank"}
-                      rel="noopener noreferrer"
-                      aria-label={`Add to ${link.name}${
-                        link.noNewTab ? "" : " (opens in new tab)"
-                      }`}
-                    >
-                      {link.name}
-                    </MenuItem>
-                  ))}
-                </MenuList>
-              </Menu>
+              <AddToCalendarMenu
+                colorScheme="blue"
+                links={calendarLinks}
+                eventTitle={show.title}
+                analyticsLabel={`show:${show.title}`}
+              />
             </HStack>
           </CardBody>
         </Box>
       </Flex>
     </Card>
-  );
-}
-
-function InfoRow({
-  mdIcon,
-  children,
-}: React.PropsWithChildren<{ mdIcon: React.ReactNode }>) {
-  return (
-    <Flex
-      direction="row"
-      gap="1"
-      alignItems="center"
-      as="li"
-      fontSize="inherit"
-    >
-      {mdIcon}
-      <Text flex={1} fontWeight="600" fontSize="inherit">
-        {children}
-      </Text>
-    </Flex>
   );
 }
 

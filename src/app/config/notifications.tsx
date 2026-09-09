@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { MdArrowForward } from "react-icons/md";
-import { GROUPS_WITH_CURRENT_AUDITION_LINKS } from "./groups";
+import type { CalendarEventDetails } from "../utils/calendar";
+import { OSHOW_PROMO } from "./oshow";
 
 export interface NotificationAction {
   label: string;
@@ -15,6 +15,8 @@ export interface Notification {
   subtitle?: string;
   description?: string;
   action?: NotificationAction;
+  /** When set, the banner shows an "Add to Calendar" menu for this event. */
+  calendarEvent?: CalendarEventDetails;
   displayPages?: string[];
   hidePages?: string[];
   startDate?: Date;
@@ -32,4 +34,4 @@ export interface Notification {
   };
 }
 
-export const ACTIVE_NOTIFICATIONS: Notification[] = [];
+export const ACTIVE_NOTIFICATIONS: Notification[] = [OSHOW_PROMO];

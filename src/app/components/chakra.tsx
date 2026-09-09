@@ -39,6 +39,7 @@ export {
   MenuList,
   MenuItem,
   Stack,
+  Portal,
 } from "@chakra-ui/react";
 
 export { Link, Image } from "@chakra-ui/next-js";

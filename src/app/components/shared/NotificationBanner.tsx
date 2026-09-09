@@ -14,6 +14,13 @@ import { useCallback, useEffect, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { Notification } from "@/app/config/notifications";
 import { usePathname } from "next/navigation";
+import {
+  CalendarLink,
+  detectPlatform,
+  getCalendarLinks,
+} from "@/app/utils/calendar";
+import AddToCalendarMenu from "./AddToCalendarMenu";
+import { onDarkButtonProps } from "./buttonStyles";
 
 interface NotificationBannerProps {
   notification: Notification;
@@ -23,8 +30,10 @@ export default function NotificationBanner({
   notification,
 }: NotificationBannerProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [calendarLinks, setCalendarLinks] = useState<CalendarLink[]>([]);
   const pathname = usePathname();
   const dismissedKey = `dismissed:${notification.id}`;
+  const textColor = notification.textColor || "white";
 
   const handleClose = useCallback(() => {
     if (typeof window !== "undefined" && notification.analytics) {
@@ -83,15 +92,32 @@ export default function NotificationBanner({
     setIsOpen(shouldDisplay() && isNotDismissed() && isWithinDateRange());
   }, [pathname, notification, dismissedKey]);
 
+  // Calendar links depend on the visitor's platform and embed a timestamp,
+  // so build them after mount rather than during server rendering. Only
+  // bother once the banner is actually shown on this page.
+  useEffect(() => {
+    if (!notification.calendarEvent || !isOpen) return;
+    setCalendarLinks(
+      getCalendarLinks(
+        notification.calendarEvent,
+        detectPlatform(navigator.userAgent)
+      )
+    );
+  }, [notification.calendarEvent, isOpen]);
+
   const backgroundStyle = notification.backgroundGradient
     ? { background: notification.backgroundGradient }
     : { backgroundColor: notification.backgroundColor || "#8c1515" };
+
+  const buttonStyle = onDarkButtonProps(textColor);
+
+  const hasActions = !!notification.action || calendarLinks.length > 0;
 
   return (
     <Collapse in={isOpen}>
       <Box
         {...backgroundStyle}
-        color={notification.textColor || "white"}
+        color={textColor}
         p={{ base: "3", md: "4" }}
         borderRadius={{ base: "12px", md: "16px" }}
         position="relative"
@@ -111,7 +137,7 @@ export default function NotificationBanner({
             icon={<MdClose />}
             aria-label={`Close ${notification.title} banner`}
             background="rgba(255, 255, 255, 0.15)"
-            color={notification.textColor || "white"}
+            color={textColor}
             borderRadius="6px"
             minW="auto"
             h="auto"
@@ -162,34 +188,29 @@ export default function NotificationBanner({
               </Text>
             )}
           </Box>
-          {notification.action && (
-            <Button
-              background="rgba(255, 255, 255, 0.2)"
-              color={notification.textColor || "white"}
-              borderWidth="1px"
-              borderStyle="solid"
-              borderColor="rgba(255, 255, 255, 0.3)"
-              rightIcon={notification.action.icon as React.ReactElement}
-              as={Link}
-              href={notification.action.href}
-              onClick={handleAction}
-              size={{ base: "sm", md: "md" }}
-              fontWeight="600"
-              whiteSpace="nowrap"
-              flexShrink={0}
-              aria-label={`${notification.action.label} for ${notification.title}`}
-              _hover={{
-                background: "rgba(255, 255, 255, 0.3)",
-                borderColor: "rgba(255, 255, 255, 0.5)",
-              }}
-              _focus={{
-                outline: "2px solid",
-                outlineColor: notification.textColor || "white",
-                outlineOffset: "2px",
-              }}
-            >
-              {notification.action.label}
-            </Button>
+          {hasActions && (
+            <Flex gap="2" wrap="wrap" flexShrink={0}>
+              {notification.action && (
+                <Button
+                  {...buttonStyle}
+                  rightIcon={notification.action.icon as React.ReactElement}
+                  as={Link}
+                  href={notification.action.href}
+                  onClick={handleAction}
+                  aria-label={`${notification.action.label} for ${notification.title}`}
+                >
+                  {notification.action.label}
+                </Button>
+              )}
+              {notification.calendarEvent && calendarLinks.length > 0 && (
+                <AddToCalendarMenu
+                  {...buttonStyle}
+                  links={calendarLinks}
+                  eventTitle={notification.calendarEvent.title}
+                  analyticsLabel={notification.analytics?.label ?? notification.id}
+                />
+              )}
+            </Flex>
           )}
         </Flex>
       </Box>
