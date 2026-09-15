@@ -20,7 +20,6 @@
     "@types/react": "^18.3.31",
     "@types/react-collapse": "^5.0.4",
     "@types/react-dom": "^18.3.7",
-    "calendar-link": "^2.11.5",
     "date-fns": "^3.6.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "^15.5.25",

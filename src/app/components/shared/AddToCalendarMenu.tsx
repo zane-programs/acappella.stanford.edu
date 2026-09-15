@@ -27,8 +27,19 @@ interface AddToCalendarMenuProps extends ButtonProps {
 
 /**
  * "Add to Calendar" button that opens a menu of calendar providers.
- * The menu is portaled so it isn't clipped by `overflow: hidden` ancestors
- * (cards, collapsing banners, etc.).
+ *
+ * Implementation notes:
+ * - The menu is portaled so it isn't clipped by `overflow: hidden` ancestors
+ *   (cards, collapsing banners, etc.).
+ * - It uses `position: fixed`. Chakra moves focus into the menu on open
+ *   without `preventScroll`, and with absolute positioning that could scroll
+ *   the page whenever the menu extended past the viewport. Fixed elements
+ *   never trigger viewport scrolling.
+ * - `autoSelect` is off so a click/tap opens the menu without pre-highlighting
+ *   the first item; keyboard opening still focuses it.
+ * - Items are plain anchors. `data-prevent-progress` opts them out of the
+ *   route-change progress bar, which otherwise starts on any same-tab link
+ *   and never finishes for downloads and app handoffs.
  */
 export default function AddToCalendarMenu({
   links,
@@ -48,7 +59,7 @@ export default function AddToCalendarMenu({
   );
 
   return (
-    <Menu placement="bottom">
+    <Menu placement="bottom" strategy="fixed" autoSelect={false}>
       <ButtonMenuButton
         display="flex"
         gap="2"
@@ -65,10 +76,11 @@ export default function AddToCalendarMenu({
               key={link.name}
               as="a"
               href={link.url}
-              target={link.noNewTab ? "_self" : "_blank"}
-              rel="noopener noreferrer"
+              target={link.opensInNewTab ? "_blank" : undefined}
+              rel={link.opensInNewTab ? "noopener noreferrer" : undefined}
+              data-prevent-progress="true"
               aria-label={`Add to ${link.name}${
-                link.noNewTab ? "" : " (opens in new tab)"
+                link.opensInNewTab ? " (opens in new tab)" : ""
               }`}
               onClick={() => handleSelect(link)}
             >
