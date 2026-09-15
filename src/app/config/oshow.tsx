@@ -13,8 +13,7 @@ export const O_SHOW_2026: CalendarEventDetails = {
   // Saturday, September 19, 2026, 7–9 PM Pacific (PDT is UTC−7)
   start: new Date("2026-09-19T19:00:00-07:00"),
   end: new Date("2026-09-19T21:00:00-07:00"),
-  // TODO: confirm venue with this year's organizers
-  location: undefined,
+  location: "Meyer Green",
   description:
     "Hear every Stanford a cappella group perform at O-Show, the annual " +
     "showcase for new students.\n\nMore info: https://acappella.stanford.edu/shows",
