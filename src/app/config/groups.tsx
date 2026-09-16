@@ -186,7 +186,7 @@ const GROUP_DEFINITIONS = {
     },
     listenEmbedOverride: {
       type: "youtube-video",
-      embedId: "CkCjxc0eluI",
+      embedId: "W8kCdmX9kt0",
     },
   },
   testimony: {
