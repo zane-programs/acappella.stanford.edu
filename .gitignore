@@ -38,3 +38,5 @@ next-env.d.ts
 
 # local development
 /scratch/
+# playwright mcp screenshots/snapshots
+.playwright-mcp/
