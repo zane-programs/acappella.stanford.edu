@@ -3,7 +3,7 @@ import { Container } from "@/app/components/ui/Container";
 /** The 32px cardinal Stanford University bar. Always solid, scrolls away. */
 export function Masthead() {
   return (
-    <div className="bg-cardinal text-white">
+    <div id="masthead" className="bg-cardinal text-white">
       <Container className="flex h-8 items-center">
         <a
           href="https://www.stanford.edu"
