@@ -14,16 +14,15 @@ import Talisman from "../components/group-pages/Talisman";
 import MixedCompany from "../components/group-pages/MixedCompany";
 import KolEtz from "../components/group-pages/KolEtz";
 
-export enum VoicePart {
-  Soprano = 0b1,
-  Alto = 0b10,
-  Tenor = 0b100,
-  Bari_Bass = 0b1000,
-  SATB = VoicePart.Soprano |
-  VoicePart.Alto |
-  VoicePart.Tenor |
-  VoicePart.Bari_Bass,
-}
+/**
+ * The range a group sings in, following the CARA (Contemporary A Cappella
+ * Recording Awards, casa.org) categories:
+ * - "upper": sings in an upper vocal range, such as SSAA
+ * - "lower": sings in a lower vocal range, such as TTBB
+ * - "mixed": sings in a mix of upper and lower vocal ranges, such as SATB
+ * Range-based, not gender-based.
+ */
+export type Voicing = "upper" | "lower" | "mixed";
 
 export interface GroupSocialLinks {
   instagram: string;
@@ -46,7 +45,7 @@ export interface ListenEmbedOverride {
 
 export interface ACappellaGroup {
   name: string;
-  voiceParts: VoicePart;
+  voicing: Voicing;
   tagline: string;
   description: React.ReactNode;
   imgUrl: string;
@@ -68,7 +67,7 @@ export interface ACappellaGroup {
 const GROUP_DEFINITIONS = {
   "fleet-street": {
     name: "Fleet Street",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's all-gender, all-original comedy a cappella group",
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street-171A3693.jpg",
@@ -85,7 +84,7 @@ const GROUP_DEFINITIONS = {
   },
   mendicants: {
     name: "Mendicants",
-    voiceParts: VoicePart.Tenor | VoicePart.Bari_Bass,
+    voicing: "lower",
     tagline: "Stanford's original a cappella group",
     description: <Mendicants />,
     imgUrl: "/assets/img/mendicants_new.jpg",
@@ -103,7 +102,7 @@ const GROUP_DEFINITIONS = {
   },
   counterpoint: {
     name: "Counterpoint",
-    voiceParts: VoicePart.Soprano | VoicePart.Alto,
+    voicing: "upper",
     tagline: "Stanford's only soprano/alto a cappella group",
     description: <Counterpoint />,
     imgUrl: "/assets/img/counterpoint_2026.webp",
@@ -118,7 +117,7 @@ const GROUP_DEFINITIONS = {
   },
   harmonics: {
     name: "Harmonics",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's only rock/experimental a cappella group",
     description: <Harmonics />,
     imgUrl: "/assets/img/harmz_2026.webp",
@@ -136,7 +135,7 @@ const GROUP_DEFINITIONS = {
   },
   raagapella: {
     name: "Raagapella",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's all-gender South Asian Fusion a cappella group",
     description: <Raagapella />,
     imgUrl: "/assets/img/raag-16-2024.jpg",
@@ -153,7 +152,7 @@ const GROUP_DEFINITIONS = {
   },
   "o-tone": {
     name: "O-Tone",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's all-gender East Asian interest a cappella group",
     description: <OTone />,
     imgUrl: "/assets/img/otone_2025.webp",
@@ -172,7 +171,7 @@ const GROUP_DEFINITIONS = {
   },
   "everyday-people": {
     name: "Everyday People",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's only hip-hop, Motown, R&B, and soul a cappella group",
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
@@ -191,7 +190,7 @@ const GROUP_DEFINITIONS = {
   },
   testimony: {
     name: "Testimony",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's Christian co-ed a cappella group",
     description: <Testimony />,
     imgUrl: "/assets/img/testimony_2025.webp",
@@ -205,7 +204,7 @@ const GROUP_DEFINITIONS = {
   },
   talisman: {
     name: "Talisman",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Soul and storytelling through song",
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
@@ -220,7 +219,7 @@ const GROUP_DEFINITIONS = {
   },
   "mixed-company": {
     name: "Mixed Company",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline:
       "Stanford University's oldest all-gender, all-genre a cappella group",
     description: <MixedCompany />,
@@ -240,7 +239,7 @@ const GROUP_DEFINITIONS = {
   },
   "kol-etz": {
     name: "Kol Etz",
-    voiceParts: VoicePart.SATB,
+    voicing: "mixed",
     tagline: "Stanford's Jewish a cappella group",
     description: <KolEtz />,
     imgUrl: "/assets/img/koletz_2026.webp",

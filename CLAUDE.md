@@ -25,7 +25,7 @@ This is a Next.js 13+ application using the App Router architecture that showcas
 **Configuration System (`src/app/config/`)**:
 - `groups.tsx` - Central configuration for all a cappella groups with type-safe interfaces
 - `branding.tsx` - Brand colors and styling constants
-- Voice part enumeration using bitwise flags for flexible group categorization
+- `Voicing` type (`"upper" | "lower" | "mixed"`) classifies each group by vocal range, per the CARA categories
 
 **Component Architecture**:
 - **Group Pages**: Individual components for each group in `components/group-pages/`
@@ -34,7 +34,7 @@ This is a Next.js 13+ application using the App Router architecture that showcas
 
 **Data Model**:
 - `ACappellaGroup` interface defines group structure with metadata, social links, and SEO configuration
-- `VoicePart` enum uses bitwise operations for flexible voice part combinations
+- `Voicing` is a string union (`"upper" | "lower" | "mixed"`): the range a group sings in (SSAA / TTBB / SATB), following CARA; range-based, not gender-based
 - Groups array indexed by slug for dynamic routing
 
 ### Key Features
@@ -63,7 +63,7 @@ This is a Next.js 13+ application using the App Router architecture that showcas
 4. Add group images to `public/assets/img/`
 
 **Group Configuration**:
-- Use `VoicePart` bitwise flags for voice parts (e.g., `VoicePart.SATB` for all parts)
+- Set `voicing` to `"upper"`, `"lower"` or `"mixed"` (CARA categories; most groups are `"mixed"`)
 - Include `extraKeywords` for SEO aliases (e.g., "harmz" for Harmonics)
 - Set `descriptionImgUrl` for different images on detail pages
 - Configure `socialLinks` with partial object (only include available platforms)

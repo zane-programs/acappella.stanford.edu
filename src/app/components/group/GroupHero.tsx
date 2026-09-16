@@ -4,7 +4,7 @@ import { Heading } from "@/app/components/ui/Heading";
 import { Section } from "@/app/components/ui/Section";
 import { TextLink } from "@/app/components/ui/TextLink";
 import { SocialLinks } from "./SocialLinks";
-import { VoiceParts } from "./VoiceParts";
+import { Voicing } from "./Voicing";
 
 /**
  * Most group photos are 600px-wide JPEGs (see docs/DESIGN.md §5); the 2026
@@ -49,7 +49,7 @@ export function GroupHero({ slug, group }: { slug: string; group: ACappellaGroup
             {group.name}
           </Heading>
           <p className="type-lead max-w-[36rem] text-white/85">{group.tagline}</p>
-          <VoiceParts parts={group.voiceParts} />
+          <Voicing voicing={group.voicing} />
           <div className="mt-1 flex flex-wrap items-center gap-x-6 gap-y-2">
             {group.socialLinks && Object.keys(group.socialLinks).length > 0 && (
               <SocialLinks name={group.name} links={group.socialLinks} className="-ml-3" />

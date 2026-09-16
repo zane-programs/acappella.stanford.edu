@@ -190,8 +190,9 @@ Group page (`/[slug]`):
   photo (`descriptionImgUrl ?? imgUrl`, 3:2, `rounded-md`, max-width ~560px, never
   upscaled beyond its natural pixel width by more than 1.15×) with
   `data-shared-image={slug}`; right, eyebrow "Stanford A Cappella", display name in
-  serif white, tagline in `type-lead text-white/85`, voice-part chips derived from
-  the `VoicePart` bitmask (S · A · T · B), then a row of social icon links (white,
+  serif white, tagline in `type-lead text-white/85`, one `Badge tone="on-cardinal"`
+  from the group's `voicing` ("Upper voices" / "Lower voices" / "Mixed voices",
+  the CARA categories; `title` carries the definition), then a row of social icon links (white,
   28px hit area 44px) and, if present, a "Website ↗" text link.
 - Below the hero, white section, two columns on lg: left (wider) the bio
   `description` in `type-body` prose; right, a sticky aside card `ring-1
