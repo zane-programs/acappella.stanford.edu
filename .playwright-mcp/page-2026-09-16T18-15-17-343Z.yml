@@ -1,0 +1,146 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - link "Stanford University logo" [ref=e5] [cursor=pointer]:
+      - /url: https://www.stanford.edu
+      - img "Stanford University logo" [ref=e6]
+    - generic [ref=e7]:
+      - navigation "Main navigation" [ref=e8]:
+        - img "Treble Clef Logo" [ref=e10]
+        - heading "Stanford A Cappella" [level=1] [ref=e11]:
+          - generic [ref=e12]: Stanford
+          - generic [ref=e14]: A Cappella
+        - menubar [ref=e15]:
+          - menuitem "Groups" [ref=e16] [cursor=pointer]
+          - menuitem "Shows" [ref=e17] [cursor=pointer]
+          - menuitem "About" [ref=e18] [cursor=pointer]
+      - main [ref=e19]:
+        - heading "Testimony" [level=2] [ref=e20]
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - generic [ref=e23]:
+              - generic [ref=e27]: Loading...
+              - img "Testimony group photo" [ref=e28]
+            - list "Social media links for Testimony" [ref=e29]:
+              - listitem "Visit Testimony on Instagram (opens in new tab)" [ref=e30] [cursor=pointer]:
+                - img [ref=e31]
+              - listitem "Visit Testimony on YouTube (opens in new tab)" [ref=e33] [cursor=pointer]:
+                - img [ref=e34]
+              - listitem "Visit Testimony on Spotify (opens in new tab)" [ref=e36] [cursor=pointer]:
+                - img [ref=e37]
+              - listitem "Visit Testimony on Facebook (opens in new tab)" [ref=e39] [cursor=pointer]:
+                - img [ref=e40]
+            - generic [ref=e42]:
+              - link "Audition for Testimony (opens in new tab)" [ref=e44] [cursor=pointer]:
+                - /url: https://docs.google.com/forms/d/e/1FAIpQLSeidLb8gdl8M6GlsKd5UZ7wE320h_i-9HBm2Sk9U_CQf2bJiA/viewform
+                - text: 🎤 Audition for Testimony
+              - link "Visit Testimony website (opens in new tab)" [ref=e45] [cursor=pointer]:
+                - /url: https://testimonyacappella.weebly.com/
+                - text: 🌐 Testimony Website
+              - button "Share" [ref=e46] [cursor=pointer]:
+                - img [ref=e48]
+                - text: Share
+          - generic [ref=e51]:
+            - paragraph [ref=e53]: Testimony Christian A Cappella is Stanford University's award-winning Christian a cappella group. Now celebrating thirty-six years of God-inspired song and its sixth album release, Testimony is the original collegiate Christian a cappella group on the west coast, comprised of Stanford students dedicated to sharing their music and faith with their community, both within the Stanford community and internationally. Through year round concerts ranging from performances on campus, to local church services, to homeless shelters and soup kitchens, and christian conferences across the country, Testimony Christian A Cappella seeks to glorify God with the voices He has lent us. We sing to many, rejoicing in our audience of one.
+            - heading "Listen" [level=3] [ref=e54]
+            - iframe [ref=e55]:
+              - generic [active] [ref=f2e1]:
+                - generic [ref=f2e4]:
+                  - generic [ref=f2e5]:
+                    - img "Testimony A Cappella cover" [ref=f2e8] [cursor=pointer]
+                    - button "Play on Spotify" [ref=f2e10] [cursor=pointer]:
+                      - img [ref=f2e11]
+                    - generic [ref=f2e18]:
+                      - generic [ref=f2e19]: Testimony A Cappella
+                      - generic [ref=f2e20]: ·
+                      - generic [ref=f2e21]: Top tracks
+                    - list "Tags" [ref=f2e23]:
+                      - generic "Preview" [ref=f2e24]
+                    - generic [ref=f2e26]:
+                      - generic [ref=f2e27]:
+                        - button "Previous" [disabled] [ref=f2e28]:
+                          - img [ref=f2e30]
+                        - button "Next" [disabled] [ref=f2e32]:
+                          - img [ref=f2e34]
+                      - button "More" [ref=f2e37] [cursor=pointer]:
+                        - img [ref=f2e38]
+                      - button "Play" [ref=f2e42] [cursor=pointer]:
+                        - img [ref=f2e43]
+                  - list "Track list" [ref=f2e48]:
+                    - listitem [ref=f2e49]:
+                      - button "Play track" [ref=f2e51] [cursor=pointer]:
+                        - generic [ref=f2e52]: "1"
+                      - generic [ref=f2e53]:
+                        - heading "Jesus, Thank You" [level=3] [ref=f2e54]
+                        - generic [ref=f2e55]: ·
+                        - generic [ref=f2e56]: Testimony A Cappella
+                    - listitem [ref=f2e57]:
+                      - button "Play track" [ref=f2e59] [cursor=pointer]:
+                        - generic [ref=f2e60]: "2"
+                      - generic [ref=f2e61]:
+                        - heading "Before the Throne" [level=3] [ref=f2e62]
+                        - generic [ref=f2e63]: ·
+                        - generic [ref=f2e64]: Testimony A Cappella
+                    - listitem [ref=f2e65]:
+                      - button "Play track" [ref=f2e67] [cursor=pointer]:
+                        - generic [ref=f2e68]: "3"
+                      - generic [ref=f2e69]:
+                        - heading "You are the Sun" [level=3] [ref=f2e70]
+                        - generic [ref=f2e71]: ·
+                        - generic [ref=f2e72]: Testimony A Cappella
+                    - listitem [ref=f2e73]:
+                      - button "Play track" [ref=f2e75] [cursor=pointer]:
+                        - generic [ref=f2e76]: "4"
+                      - generic [ref=f2e77]:
+                        - heading "After The Music Fades" [level=3] [ref=f2e78]
+                        - generic [ref=f2e79]: ·
+                        - generic [ref=f2e80]: Testimony A Cappella
+                    - listitem [ref=f2e81]:
+                      - button "Play track" [ref=f2e83] [cursor=pointer]:
+                        - generic [ref=f2e84]: "5"
+                      - generic [ref=f2e85]:
+                        - heading "Dead Man" [level=3] [ref=f2e86]
+                        - generic [ref=f2e87]: ·
+                        - generic [ref=f2e88]: Testimony A Cappella
+                    - listitem [ref=f2e89]:
+                      - button "Play track" [ref=f2e91] [cursor=pointer]:
+                        - generic [ref=f2e92]: "6"
+                      - generic [ref=f2e93]:
+                        - heading "From Now On" [level=3] [ref=f2e94]
+                        - generic [ref=f2e95]: ·
+                        - generic [ref=f2e96]: Testimony A Cappella
+                    - listitem [ref=f2e97]:
+                      - button "Play track" [ref=f2e99] [cursor=pointer]:
+                        - generic [ref=f2e100]: "7"
+                      - generic [ref=f2e101]:
+                        - heading "Open the Eyes of My Heart" [level=3] [ref=f2e102]
+                        - generic [ref=f2e103]: ·
+                        - generic [ref=f2e104]: Testimony A Cappella
+                    - listitem [ref=f2e105]:
+                      - button "Play track" [ref=f2e107] [cursor=pointer]:
+                        - generic [ref=f2e108]: "8"
+                      - generic [ref=f2e109]:
+                        - heading "Shackles (Praise You)" [level=3] [ref=f2e110]
+                        - generic [ref=f2e111]: ·
+                        - generic [ref=f2e112]: Testimony A Cappella
+                    - listitem [ref=f2e113]:
+                      - button "Play track" [ref=f2e115] [cursor=pointer]:
+                        - generic [ref=f2e116]: "9"
+                      - generic [ref=f2e117]:
+                        - heading "I'm Not Going Down" [level=3] [ref=f2e118]
+                        - generic [ref=f2e119]: ·
+                        - generic [ref=f2e120]: Testimony A Cappella
+                    - listitem [ref=f2e121]:
+                      - button "Play track" [ref=f2e123] [cursor=pointer]:
+                        - generic [ref=f2e124]: "10"
+                      - generic [ref=f2e125]:
+                        - heading "Vapor" [level=3] [ref=f2e126]
+                        - generic [ref=f2e127]: ·
+                        - generic [ref=f2e128]: Testimony A Cappella
+                - alert [ref=f2e129]
+    - contentinfo [ref=e56]:
+      - paragraph [ref=e57]:
+        - text: © 2026 Stanford A Cappella |
+        - link "Privacy" [ref=e58] [cursor=pointer]:
+          - /url: /privacy

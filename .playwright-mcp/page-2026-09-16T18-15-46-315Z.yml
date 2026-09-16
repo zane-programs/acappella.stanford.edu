@@ -1,0 +1,28 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=e3]:
+    - link "Stanford University logo" [ref=e5] [cursor=pointer]:
+      - /url: https://www.stanford.edu
+      - img "Stanford University logo" [ref=e6]
+    - generic [ref=e7]:
+      - navigation "Main navigation" [ref=e8]:
+        - img "Treble Clef Logo" [ref=e10]
+        - heading "Stanford A Cappella" [level=1] [ref=e11]:
+          - generic [ref=e12]: Stanford
+          - generic [ref=e14]: A Cappella
+        - menubar [ref=e15]:
+          - menuitem "Groups" [ref=e16] [cursor=pointer]
+          - menuitem "Shows" [ref=e17] [cursor=pointer]
+          - menuitem "About" [ref=e18] [cursor=pointer]
+      - main [ref=e19]:
+        - generic [ref=e20]:
+          - heading "Testimony" [level=2] [ref=e21]
+          - generic [ref=e22]:
+            - generic [ref=e24]: Loading...
+            - paragraph [ref=e25]: Loading…
+    - contentinfo [ref=e26]:
+      - paragraph [ref=e27]:
+        - text: © 2026 Stanford A Cappella |
+        - link "Privacy" [ref=e28] [cursor=pointer]:
+          - /url: /privacy

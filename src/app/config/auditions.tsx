@@ -92,6 +92,13 @@ export const AUDITION_COHORTS = {
     },
   },
   2026: {
+    "fleet-street": {
+      links: [
+        {
+          href: "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-65642443-fleet",
+        },
+      ],
+    },
     counterpoint: {
       links: [
         { href: "https://calendly.com/rachwei-stanford/counterpoint-audition" },
@@ -99,6 +106,13 @@ export const AUDITION_COHORTS = {
     },
     harmonics: {
       links: [{ href: "https://calendly.com/stanfordharmonics/audition" }],
+    },
+    testimony: {
+      links: [
+        {
+          href: "https://docs.google.com/forms/d/e/1FAIpQLSeidLb8gdl8M6GlsKd5UZ7wE320h_i-9HBm2Sk9U_CQf2bJiA/viewform",
+        },
+      ],
     },
     "mixed-company": {
       links: [
