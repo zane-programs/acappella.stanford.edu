@@ -39,7 +39,7 @@ export function GroupTile({
         sharedImage={sharedImage}
         className="group block rounded-md focus-ring"
       >
-        <div className="relative aspect-[3/2] overflow-hidden rounded-md bg-fog-light ring-1 ring-black-10">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-md bg-fog-light ring-1 ring-black-10 sm:aspect-[3/2]">
           {/* eslint-disable-next-line @next/next/no-img-element -- shared-image morph measures a plain img (DESIGN.md §7) */}
           <img
             ref={imgRef}
@@ -52,12 +52,12 @@ export function GroupTile({
             className="absolute inset-0 size-full object-cover transition-transform duration-[600ms] ease-[var(--ease-out-expo)] group-hover:scale-[1.03]"
           />
         </div>
-        <h3 className="mt-4 font-serif text-[1.375rem] leading-tight text-black">
+        <h3 className="mt-3 font-serif text-[1.0625rem] leading-tight text-black sm:mt-4 sm:text-[1.375rem]">
           <span className="relative inline-block after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-cardinal after:transition-[width] after:duration-300 after:ease-[var(--ease-out-expo)] group-hover:after:w-full">
             {name}
           </span>
         </h3>
-        <p className="type-small mt-1 text-black-70">{tagline}</p>
+        <p className="type-small mt-1 line-clamp-2 text-[0.8125rem] text-black-70 sm:line-clamp-none sm:text-[0.9375rem]">{tagline}</p>
       </TransitionLink>
     </li>
   );
