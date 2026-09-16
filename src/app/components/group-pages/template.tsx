@@ -1,16 +1,17 @@
-import { Text, Link } from "@/app/components/chakra";
+import { TextLink } from "@/app/components/ui/TextLink";
 
+/**
+ * Starting point for a new group's bio. Bios render inside `ui/Prose`, so
+ * plain <p> and links are all that's needed.
+ */
 export default function Template() {
   return (
     <>
-      <Text>
+      <p>
         Add text here. And add{" "}
-        <Link href="https://www.google.com" target="_blank">
-          links
-        </Link>{" "}
-        like this!
-      </Text>
-      <Text>Add another paragraph like this...</Text>
+        <TextLink href="https://www.google.com">links</TextLink> like this!
+      </p>
+      <p>Add another paragraph like this...</p>
     </>
   );
 }

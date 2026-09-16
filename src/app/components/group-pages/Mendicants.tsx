@@ -1,16 +1,14 @@
-import { Text } from "@/app/components/chakra";
-
 export default function Mendicants() {
   return (
     <>
-      <Text>
+      <p>
         5-Time ICCA Semi-Finalist, The Mendicants, are Stanford University&apos;s
         Original A-Cappella Group founded in 1963. Boasting a discography of 30
         studio albums, they rank as the second most streamed college a cappella
         group in the nation.
-      </Text>
+      </p>
 
-      <Text>
+      <p>
         Dedicated to delivering the finest tunes spanning generations, the
         Mendicants perform a wide range of styles from soulful gospel to radio
         pop. They&apos;ve performed around the world, yet it all began with an
@@ -20,7 +18,7 @@ export default function Mendicants() {
         reverberated, the room erupted into a thunderous applause.
         Undergraduates swarmed the astonished Mendicants, yearning for an
         encore. The rest, as they say, is history.
-      </Text>
+      </p>
     </>
   );
 }

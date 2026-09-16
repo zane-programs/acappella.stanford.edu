@@ -1,9 +1,7 @@
-import { Link, Text } from "@/app/components/chakra";
-
 export default function Talisman() {
   return (
     <>
-      <Text>
+      <p>
         We are Stanford Talisman, a group of singers on Stanford&apos;s campus
         who since our origins have sung music stemming from Black liberation
         struggles across the world. We&apos;ve performed all over the globe, be
@@ -14,7 +12,7 @@ export default function Talisman() {
         to bringing these songs to life as best as our abilities allow. With us,
         you will find not only music in all its rich history, but also a
         life-long community.
-      </Text>
+      </p>
     </>
   );
 }

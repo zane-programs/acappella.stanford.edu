@@ -1,9 +1,7 @@
-import { Text } from "@/app/components/chakra";
-
 export default function MixedCompany() {
   return (
     <>
-      <Text>
+      <p>
         2022 and 2023 ICCA semifinalists, and featured on several Best of
         College A Cappella and Voices Only compilation CDs, Stanford Mixed
         Company—or Mixed Co—is Stanford&apos;s oldest all-gender acapella group,
@@ -13,13 +11,13 @@ export default function MixedCompany() {
         on two major concerts: an anti-Valentine&apos;s Day show called Love
         Sucks in February, and their Spring Show in May, as well as performing
         in gigs and shows around campus and the Bay Area.
-      </Text>
-      <Text>
+      </p>
+      <p>
         Mixed Co strives to build a meaningful community by fostering strong
         bonds between current members and continuing the traditions of the
         group&apos;s more than 250 alumni. The group boasts 16 albums to date,
         and is working to release their next album soon!
-      </Text>
+      </p>
     </>
   );
 }

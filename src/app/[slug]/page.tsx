@@ -1,33 +1,9 @@
-import { useMemo } from "react";
 import type { Metadata } from "next";
 import { notFound, redirect, RedirectType } from "next/navigation";
 
-import { Box, Button, Flex, Heading, Link } from "@/app/components/chakra";
-import AutoStyledContent from "@/app/components/shared/AutoStyledContent";
-import { type ButtonProps } from "@chakra-ui/react";
-import type { IconType } from "react-icons";
-import PosterImage from "../components/shared/PosterImage";
-import ShareButton from "../components/shared/ShareButton";
-import AuditionSection from "../components/shared/AuditionSection";
-
-import {
-  type ACappellaGroup,
-  type GroupSocialLinks,
-  getGroup,
-} from "@/app/config/groups";
+import { getGroup } from "@/app/config/groups";
 import CONFIG from "../config";
-import { getGroupAudition } from "../utils/auditions";
-
-// icons
-import {
-  SiInstagram,
-  SiYoutube,
-  SiSpotify,
-  SiApplemusic,
-  SiTiktok,
-  SiX,
-  SiFacebook,
-} from "react-icons/si";
+import { GroupBody, GroupHero, MoreGroups } from "../components/group";
 
 // The audition open/close window is evaluated per request, never at build time.
 export const dynamic = "force-dynamic";
@@ -49,17 +25,20 @@ export async function generateMetadata({
   }
 
   const groupNameLowercase = group.name.toLowerCase();
+  const description =
+    group.seoDescription ?? `Learn more about ${group.name} - ${group.tagline}!`;
 
   return {
     title: group.name + " - Stanford A Cappella",
-    description:
-      group.seoDescription ??
-      `Learn more about ${group.name} - ${group.tagline}!`,
+    description,
+    alternates: { canonical: `/${slug}` },
     openGraph: {
       title: group.name,
       siteName: "Stanford A Cappella",
       description: `Learn more about ${group.name} - ${group.tagline}!`,
       images: [group.imgUrl],
+      url: `/${slug}`,
+      type: "website",
     },
     keywords: [
       groupNameLowercase,
@@ -93,261 +72,9 @@ export default async function GroupPage({
 
   return (
     <>
-      <Heading
-        as="h2"
-        size="2xl"
-        mb="6"
-        className="gradient-text slideInUp"
-        fontWeight="800"
-        letterSpacing="-0.02em"
-        textAlign={{ base: "center", md: "left" }}
-      >
-        {group.name}
-      </Heading>
-      <Flex direction={{ base: "column", md: "row" }} gap="8">
-        <Flex
-          direction="column"
-          gap="4"
-          w={{ base: "auto", md: "270px", mdPlus: "315px", lg: "345px" }}
-        >
-          <PosterImage group={group} isDescription />
-          {group.socialLinks && Object.keys(group.socialLinks).length > 0 && (
-            <SocialLinks group={group} />
-          )}
-          <Flex direction="column" w="100%" gap="1">
-            <AuditionSection
-              groupName={group.name}
-              audition={getGroupAudition(slug)}
-              linkProps={linkButton}
-            />
-            {group.siteLink && (
-              <Button
-                variant="glass"
-                size="lg"
-                colorScheme="blue"
-                borderRadius="16px"
-                fontWeight="600"
-                aria-label={`Visit ${group.name} website (opens in new tab)`}
-                {...linkButton(group.siteLink)}
-              >
-                🌐 {group.name} Website
-              </Button>
-            )}
-            <ShareButton />
-          </Flex>
-        </Flex>
-        <Box flex={{ base: undefined, md: 1 }}>
-          <AutoStyledContent lineHeight="1.3em">
-            {group.description}
-          </AutoStyledContent>
-          {/* Spotify Preview (for groups with listed Spotify) */}
-          {(group.socialLinks?.spotify || group.socialLinks?.youtube) && (
-            <>
-              <Heading size="md" as="h3" my="2">
-                Listen
-              </Heading>
-              <ArtistEmbed group={group} />
-            </>
-          )}
-        </Box>
-      </Flex>
+      <GroupHero slug={slug} group={group} />
+      <GroupBody slug={slug} group={group} />
+      <MoreGroups slug={slug} />
     </>
   );
-}
-
-function ArtistEmbed({ group }: { group: ACappellaGroup }) {
-  const { spotify: _spotify, youtube: _youtube } = group.socialLinks || {};
-  const { listenEmbedOverride } = group;
-
-  // If `listenEmbedOverride` is provided, it takes precedence over the default links
-  const { spotify, youtube } = useMemo(() => {
-    if (listenEmbedOverride) {
-      if (listenEmbedOverride.type === "spotify") {
-        return { spotify: listenEmbedOverride.embedId, youtube: undefined };
-      } else if (listenEmbedOverride.type === "youtube") {
-        return { spotify: undefined, youtube: listenEmbedOverride.embedId };
-      } else if (listenEmbedOverride.type === "youtube-video") {
-        return { spotify: undefined, youtube: listenEmbedOverride.embedId };
-      }
-    }
-    return { spotify: _spotify, youtube: _youtube };
-  }, [listenEmbedOverride, _spotify, _youtube]);
-
-  return spotify ? (
-    <iframe
-      style={{ borderRadius: "12px" }}
-      src={"https://open.spotify.com/embed" + new URL(spotify).pathname}
-      width="100%"
-      height="152"
-      frameBorder={0}
-      allowFullScreen
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-      title="Spotify music player"
-    ></iframe>
-  ) : (
-    <YoutubeChannelEmbed
-      url={youtube!}
-      isOverridePlaylist={!!listenEmbedOverride}
-      isVideo={listenEmbedOverride?.type === "youtube-video"}
-    />
-  );
-}
-
-function YoutubeChannelEmbed({
-  url,
-  isOverridePlaylist,
-  isVideo = false,
-}: {
-  url: string;
-  isOverridePlaylist?: boolean;
-  isVideo?: boolean;
-}) {
-  const ytPlayerSource = useMemo(
-    () => getYtPlayerSource(url, isOverridePlaylist, isVideo),
-    [url, isOverridePlaylist, isVideo]
-  );
-
-  return (
-    <Flex w="100%" justifyContent="center">
-      <Box
-        w="100%"
-        maxW={{ base: undefined, md: "360px" }}
-        aspectRatio="16 / 9"
-      >
-        <iframe
-          width="100%"
-          height="100%"
-          src={ytPlayerSource}
-          allowFullScreen
-          title="YouTube player for a cappella group"
-        ></iframe>
-      </Box>
-    </Flex>
-  );
-}
-
-function getYtPlayerSource(
-  url: string,
-  isOverridePlaylist?: boolean,
-  isVideo = false
-) {
-  if (isVideo) {
-    // Direct video link
-    const videoId = url.split("v=")[1]?.split("&")[0] || url.split("/").pop();
-    return `https://www.youtube-nocookie.com/embed/${videoId}?modestbranding=1`;
-  }
-
-  // Override playlist URL (full YouTube embed URL)
-  if (isOverridePlaylist) {
-    return (
-      "https://www.youtube-nocookie.com/embed/?listType=playlist&list=" +
-      url +
-      "&modestbranding=1"
-    );
-  }
-
-  // Extract channel ID from URL
-  const channelId = url.split("/").slice(-1)[0].replace("@", "");
-  return (
-    "https://www.youtube-nocookie.com/embed/" +
-    (/^UC[\w-]{21}[AQgw]$/.test(channelId)
-      ? "videoseries?list=UU" + channelId.substring(2)
-      : "?listType=user_uploads&list=" + channelId) +
-    "&modestbranding=1"
-  );
-}
-
-const SOCIAL_LINK_NAMES: {
-  [k in keyof GroupSocialLinks]: string;
-} = {
-  instagram: "Instagram",
-  youtube: "YouTube",
-  spotify: "Spotify",
-  appleMusic: "Apple Music",
-  tiktok: "TikTok",
-  twitter: "X (Twitter)",
-  facebook: "Facebook",
-};
-
-const SOCIAL_LINK_ICONS: {
-  [k in keyof GroupSocialLinks]: IconType;
-} = {
-  instagram: SiInstagram,
-  youtube: SiYoutube,
-  spotify: SiSpotify,
-  appleMusic: SiApplemusic,
-  tiktok: SiTiktok,
-  twitter: SiX,
-  facebook: SiFacebook,
-};
-
-function SocialLinks({
-  group: { name, socialLinks },
-}: {
-  group: ACappellaGroup;
-}) {
-  return (
-    <Flex
-      alignItems="center"
-      justifyContent="center"
-      gap={{ base: "2", sm: "3" }}
-      wrap="wrap"
-      className="card-modern"
-      p="4"
-      borderRadius="16px"
-      role="list"
-      aria-label={`Social media links for ${name}`}
-    >
-      {Object.entries(SOCIAL_LINK_ICONS)
-        .filter(([key]) => !!socialLinks![key as keyof GroupSocialLinks])
-        .map(([key, IconComponent]) => (
-          <Link
-            key={key}
-            href={socialLinks![key as keyof GroupSocialLinks]!}
-            target="_blank"
-            rel="noopener noreferrer"
-            color="brand.700"
-            p={{ base: "2", sm: "3" }}
-            borderRadius="12px"
-            background="rgba(140, 21, 21, 0.1)"
-            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-            role="listitem"
-            aria-label={`Visit ${name} on ${
-              SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
-            } (opens in new tab)`}
-            sx={{
-              "& svg": { fontSize: { base: "1.25rem", sm: "1.5rem" } },
-              "&:hover": {
-                color: "white",
-                background: "brand.700",
-                transform: "translateY(-4px) scale(1.1)",
-                boxShadow: "0 8px 25px rgba(140, 21, 21, 0.3)",
-              },
-              "&:focus": {
-                outline: "2px solid",
-                outlineColor: "brand.600",
-                outlineOffset: "2px",
-              },
-            }}
-            title={
-              name + " " + SOCIAL_LINK_NAMES[key as keyof GroupSocialLinks]
-            }
-          >
-            <IconComponent />
-          </Link>
-        ))}
-    </Flex>
-  );
-}
-
-function linkButton(
-  href: string
-): Partial<ButtonProps & { href: string; target: string }> {
-  return {
-    href,
-    as: "a",
-    target: "_blank",
-    rel: "noopener",
-  };
 }
