@@ -57,7 +57,7 @@ export function GroupTile({
             {name}
           </span>
         </h3>
-        <p className="type-small mt-1 line-clamp-2 text-[0.8125rem] text-black-70 sm:line-clamp-none sm:text-[0.9375rem]">{tagline}</p>
+        <p className="type-small mt-1 line-clamp-3 text-[0.8125rem] text-black-70 sm:line-clamp-none sm:text-[0.9375rem]">{tagline}</p>
       </TransitionLink>
     </li>
   );
