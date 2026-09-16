@@ -1,54 +1,46 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { MdIosShare } from "react-icons/md";
 
-import { MdShare } from "react-icons/md";
-import { Button } from "@/app/components/chakra";
+import { Button } from "@/app/components/ui/Button";
 
-const hasShareSupport =
-  typeof window !== "undefined" && "share" in window.navigator;
+/**
+ * Native share sheet trigger. Rendered only where `navigator.share` exists
+ * (decided after mount so server and client markup match).
+ */
+export default function ShareButton({ className }: { className?: string }) {
+  const [supported, setSupported] = useState(false);
 
-export default function ShareButton() {
-  const [isShowing, setIsShowing] = useState(true);
+  useEffect(() => {
+    setSupported(typeof navigator !== "undefined" && "share" in navigator);
+  }, []);
+
   const handleShare = useCallback(() => {
     navigator
       .share({
         title: document.title,
         text:
-          document
-            .querySelector(`meta[name="description"]`)
-            ?.getAttribute("content") ??
-          "StanfordACappella.com - The Digital Home of A Cappella at Stanford University",
+          document.querySelector(`meta[name="description"]`)?.getAttribute("content") ??
+          "Stanford A Cappella - The home of a cappella at Stanford University",
         url: window.location.origin + window.location.pathname,
       })
       .then(() => {
-        console.log("Shared!");
-
-        // Log analytics event
-        typeof window !== "undefined" &&
-          window?.gtag?.("event", "shareWithShareButton", {
-            event_category: "groupPage",
-            event_label: document.title,
-          });
+        window.gtag?.("event", "shareWithShareButton", {
+          event_category: "groupPage",
+          event_label: document.title,
+        });
       })
-      .catch((e) => console.error(e));
+      .catch(() => {
+        // The user dismissed the sheet; nothing to do.
+      });
   }, []);
 
-  useEffect(() => {
-    if (!hasShareSupport) {
-      setIsShowing(false);
-    }
-  }, []);
+  if (!supported) return null;
 
   return (
-    <Button
-      colorScheme="green"
-      leftIcon={<MdShare />}
-      onClick={handleShare}
-      aria-hidden={!isShowing}
-      display={isShowing ? undefined : "none"}
-    >
-      Share
+    <Button variant="ghost" onClick={handleShare} iconLeft={<MdIosShare />} className={className}>
+      Share this page
     </Button>
   );
 }

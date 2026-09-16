@@ -1,9 +1,7 @@
-import { Text } from "@/app/components/chakra";
-
 export default function Testimony() {
   return (
     <>
-      <Text>
+      <p>
         Testimony Christian A Cappella is Stanford University&apos;s
         award-winning Christian a cappella group. Now celebrating thirty-four
         years of God-inspired song and its sixth album release, Testimony is the
@@ -15,7 +13,7 @@ export default function Testimony() {
         kitchens, and christian conferences across the country, Testimony
         Christian A Cappella seeks to glorify God with the voices He has lent
         us. We sing to many, rejoicing in our audience of one.
-      </Text>
+      </p>
     </>
   );
 }
