@@ -179,7 +179,7 @@ const GROUP_DEFINITIONS = {
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
-      instagram: "https://www.instagram.com/stanford_everydaypeople/",
+      instagram: "https://www.instagram.com/stanfordeverydaypeople/",
       youtube: "https://www.youtube.com/user/StanfoEverydayPeople",
       twitter: "https://twitter.com/epacappella",
       facebook: "https://www.facebook.com/StanfordEverydayPeople/",

@@ -107,6 +107,13 @@ export const AUDITION_COHORTS = {
     harmonics: {
       links: [{ href: "https://calendly.com/stanfordharmonics/audition" }],
     },
+    "everyday-people": {
+      links: [
+        {
+          href: "https://docs.google.com/forms/d/e/1FAIpQLSdU2WztsQ4JN9JN39XTn4pbUbDur45IYHUx-Sa9wzpzHeKncA/viewform",
+        },
+      ],
+    },
     testimony: {
       links: [
         {
