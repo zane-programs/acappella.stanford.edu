@@ -56,38 +56,37 @@ export function AuditionsStrip() {
           </p>
         </div>
         <ul data-reveal className="min-w-0 divide-y divide-black-20 border-y border-black-20">
-          {entries.map(({ slug, name, tagline, audition, status }) => (
-            <li key={slug}>
-              <TransitionLink
-                href={`/${slug}`}
-                className="group flex items-center justify-between gap-4 py-4 focus-ring rounded-sm"
-              >
-                <span className="min-w-0">
-                  <span className="block font-serif text-[1.25rem] leading-tight text-black group-hover:text-cardinal transition-colors duration-150">
-                    {name}
+          {entries.map(({ slug, name, tagline, audition, status }) => {
+            const meta =
+              status === "open"
+                ? audition.closesAt && `Closes ${formatAuditionInstant(audition.closesAt)}`
+                : `Opens ${audition.opensAt ? formatAuditionInstant(audition.opensAt) : "soon"}`;
+            return (
+              <li key={slug}>
+                <TransitionLink
+                  href={`/${slug}`}
+                  className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 py-4 focus-ring rounded-sm sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:gap-x-3"
+                >
+                  <span className="col-start-1 row-start-1 min-w-0">
+                    <span className="block font-serif text-[1.25rem] leading-tight text-black group-hover:text-cardinal transition-colors duration-150">
+                      {name}
+                    </span>
+                    <span className="type-small mt-0.5 block truncate text-black-70">{tagline}</span>
                   </span>
-                  <span className="type-small mt-0.5 block truncate text-black-70">{tagline}</span>
-                </span>
-                <span className="flex shrink-0 items-center gap-3 text-right">
-                  {status === "open" ? (
-                    audition.closesAt && (
-                      <span className="type-small text-black-70">
-                        Closes {formatAuditionInstant(audition.closesAt)}
-                      </span>
-                    )
-                  ) : (
-                    <span className="type-small text-black-70">
-                      Opens {audition.opensAt ? formatAuditionInstant(audition.opensAt) : "soon"}
+                  {/* Status meta: under the tagline on phones, right-aligned beside the arrow from sm up. */}
+                  {meta && (
+                    <span className="type-small col-start-1 row-start-2 mt-1 text-black-70 sm:col-start-2 sm:row-start-1 sm:mt-0 sm:text-right">
+                      {meta}
                     </span>
                   )}
                   <MdArrowForward
                     aria-hidden="true"
-                    className="text-[1.25rem] text-black-50 transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-1 group-hover:text-cardinal"
+                    className="col-start-2 row-start-1 row-span-2 shrink-0 text-[1.25rem] text-black-50 transition-transform duration-300 ease-[var(--ease-out-expo)] group-hover:translate-x-1 group-hover:text-cardinal sm:col-start-3 sm:row-span-1"
                   />
-                </span>
-              </TransitionLink>
-            </li>
-          ))}
+                </TransitionLink>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </Section>
