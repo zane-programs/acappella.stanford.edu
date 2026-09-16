@@ -40,3 +40,6 @@ next-env.d.ts
 /scratch/
 # playwright mcp screenshots/snapshots
 .playwright-mcp/
+
+# agent worktrees
+.claude/worktrees/
