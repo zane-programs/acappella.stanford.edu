@@ -58,9 +58,14 @@ const VIDEO_DIR = path.join(process.cwd(), "public", "assets", "video");
 
 export default async function Home() {
   const groupCount = Object.keys(GROUPS).length;
-  const hasVideo =
-    existsSync(path.join(VIDEO_DIR, "hero-loop.mp4")) ||
-    existsSync(path.join(VIDEO_DIR, "hero-loop.webm"));
+  const hasVideo = {
+    desktop:
+      existsSync(path.join(VIDEO_DIR, "hero-loop.mp4")) ||
+      existsSync(path.join(VIDEO_DIR, "hero-loop.webm")),
+    mobile:
+      existsSync(path.join(VIDEO_DIR, "hero-loop-mobile.mp4")) ||
+      existsSync(path.join(VIDEO_DIR, "hero-loop-mobile.webm")),
+  };
 
   return (
     <>

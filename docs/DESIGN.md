@@ -152,11 +152,15 @@ Skip link: keep, restyle as a cardinal pill that appears top-left on focus.
 
 Home (`/`):
 1. `VideoHero`: 100svh (min 640px). `<video autoplay muted loop playsinline
-   preload="metadata" poster>` with `<source webm>` then `<source mp4>`, from
-   `/assets/video/hero-loop.{webm,mp4}` and `/assets/video/hero-poster.jpg`.
-   On `(max-width: 767px)` or `prefers-reduced-motion` or `navigator.connection.
-   saveData`, don't attach sources: show the poster only (portrait poster
-   `hero-poster-mobile.jpg` under 768px via `<picture>`-like logic). Bottom
+   preload="auto" poster>` with `<source webm>` then `<source mp4>`. Two cuts of
+   the same loop, built by `tools/hero-video` (see its README): the 16:9
+   `/assets/video/hero-loop.{webm,mp4}` above 768px and the 9:16
+   `/assets/video/hero-loop-mobile.{webm,mp4}` below. Sources are attached on
+   mount for the matching cut; under `prefers-reduced-motion` or
+   `navigator.connection.saveData` none are attached and the poster stays
+   (`hero-poster.jpg` / `hero-poster-mobile.jpg`, each exactly frame 0 of its
+   encode, art-directed via `<picture>`). If autoplay is refused (iOS Low Power
+   Mode) the poster stays and the pause toggle reads "Play". Bottom
    scrim `from-black/70 via-black/20 to-transparent`. Content bottom-left inside
    the container: eyebrow "Stanford University", display title "A Cappella at
    Stanford" (serif, white), lead line, two buttons: primary white-on-cardinal
@@ -277,8 +281,9 @@ snapshot + image clones `z-[76]`, header `z-[80]`, intro card `z-[88]`, wipe
   longer does, since restoration is manual).
 - Intro card (homepage hard loads only): `VideoHero` server-renders a fixed
   `bg-cardinal` card (`[data-intro]`, hidden without `html.js`) with the logo and
-  wordmark entering via CSS animation. On mount it is dropped at once on phones,
-  reduced motion, data-saver, or when `navState.routed` says this is a
+  wordmark entering via CSS animation. On mount it is dropped at once on phones
+  (they fade the mobile cut in over its poster rather than wait on a cellular
+  buffer), reduced motion, data-saver, or when `navState.routed` says this is a
   client-side arrival. Otherwise it marks the intro pending
   (`transitions/intro.ts`), shows a 2px progress bar only after 2.5s (real
   `buffered/duration`, drifting to 85% until data arrives), and lifts after

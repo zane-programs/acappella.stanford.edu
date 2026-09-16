@@ -25,10 +25,26 @@ export interface FootageCredit {
   order: number;
 }
 
-const VIDEO_WEBM = "/assets/video/hero-loop.webm";
-const VIDEO_MP4 = "/assets/video/hero-loop.mp4";
-const POSTER = "/assets/video/hero-poster.jpg";
-const POSTER_MOBILE = "/assets/video/hero-poster-mobile.jpg";
+/**
+ * Two cuts of the same loop, built by `tools/hero-video`: a 16:9 desktop encode
+ * and a 9:16 mobile encode. Each poster is frame 0 of its own encode so the
+ * hand-off from poster to video is invisible.
+ */
+export type HeroVariant = "desktop" | "mobile";
+const VIDEO: Record<HeroVariant, { webm: string; mp4: string; poster: string }> = {
+  desktop: {
+    webm: "/assets/video/hero-loop.webm",
+    mp4: "/assets/video/hero-loop.mp4",
+    poster: "/assets/video/hero-poster.jpg",
+  },
+  mobile: {
+    webm: "/assets/video/hero-loop-mobile.webm",
+    mp4: "/assets/video/hero-loop-mobile.mp4",
+    poster: "/assets/video/hero-poster-mobile.jpg",
+  },
+};
+const POSTER = VIDEO.desktop.poster;
+const POSTER_MOBILE = VIDEO.mobile.poster;
 const LOGO = "/assets/img/a_cappella_treble_clef_transparent.png";
 
 /** Intro card timing (ms). See docs/DESIGN.md §6 "Intro card". */
@@ -43,10 +59,12 @@ const INTRO_HARD_TIMEOUT_MS = 9000;
  * The `<section>` is the `#hero-sentinel` the site header watches: the header
  * is drawn transparent over this block and turns solid once it scrolls past.
  *
- * Sources are attached only after mount, and only on wide viewports without
- * reduced motion or a data-saver preference; everyone else sees the poster.
- * `hasVideo` is decided on the server from the presence of the encoded files
- * so a missing asset never produces a failed request.
+ * Sources are attached only after mount: the portrait encode under 768px, the
+ * landscape one above, and none at all under reduced motion or a data-saver
+ * preference (those visitors see the poster). `hasVideo` is decided on the
+ * server per variant from the presence of the encoded files, so a missing
+ * asset never produces a failed request. If autoplay is refused (iOS Low Power
+ * Mode does this) the poster stays and the control offers Play instead.
  *
  * Intro card: on a hard load of the homepage (not a client-side navigation
  * back to it) a cardinal card with the logo and wordmark covers the page while
@@ -63,14 +81,16 @@ export function VideoHero({
 }: {
   credits: FootageCredit[];
   groupCount: number;
-  hasVideo: boolean;
+  hasVideo: Record<HeroVariant, boolean>;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [useVideo, setUseVideo] = useState(false);
+  const { desktop: hasDesktopVideo, mobile: hasMobileVideo } = hasVideo;
+  const [variant, setVariant] = useState<HeroVariant | null>(null);
+  const useVideo = variant !== null;
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
 
-  const [intro, setIntro] = useState<"pending" | "done">(hasVideo ? "pending" : "done");
+  const [intro, setIntro] = useState<"pending" | "done">(hasDesktopVideo ? "pending" : "done");
   const introRootRef = useRef<HTMLDivElement>(null);
   const introEdgeRef = useRef<HTMLDivElement>(null);
   const introCardRef = useRef<HTMLDivElement>(null);
@@ -128,16 +148,19 @@ export function VideoHero({
   }, []);
 
   useEffect(() => {
-    if (!hasVideo) return;
     const small = window.matchMedia("(max-width: 767px)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } })
       .connection;
-    const ok = !small && !reduced && !connection?.saveData;
-    if (ok) setUseVideo(true);
+    const wanted: HeroVariant = small ? "mobile" : "desktop";
+    const available = wanted === "mobile" ? hasMobileVideo : hasDesktopVideo;
+    const ok = available && !reduced && !connection?.saveData;
+    if (ok) setVariant(wanted);
 
-    // No intro on phones, reduced motion, data-saver, or client-side arrivals.
-    if (!ok || navState.routed || !document.documentElement.classList.contains("js")) {
+    // The intro card is desktop-only: phones fade the video in over the
+    // poster instead of waiting on a cellular buffer. Also none under reduced
+    // motion, data-saver, or on client-side arrivals.
+    if (!ok || small || navState.routed || !document.documentElement.classList.contains("js")) {
       setIntro("done");
       return;
     }
@@ -167,7 +190,7 @@ export function VideoHero({
       window.clearTimeout(barTimer);
       window.clearTimeout(hardTimer);
     };
-  }, [hasVideo, finishIntro]);
+  }, [hasDesktopVideo, hasMobileVideo, finishIntro]);
 
   useEffect(() => {
     if (!useVideo) return;
@@ -201,7 +224,9 @@ export function VideoHero({
     // Sources were added after mount; ask the element to pick one up.
     video.load();
     video.play().catch(() => {
-      /* autoplay blocked: the poster stays, the control still works */
+      // Autoplay refused (e.g. iOS Low Power Mode): keep the poster and let
+      // the control read "Play" so a tap can start it.
+      setPaused(true);
     });
     if (video.readyState >= 4) finishIntro();
 
@@ -292,7 +317,7 @@ export function VideoHero({
           </picture>
         </div>
 
-        {useVideo && (
+        {variant && (
           <video
             ref={videoRef}
             aria-hidden="true"
@@ -301,7 +326,7 @@ export function VideoHero({
             playsInline
             autoPlay
             preload="auto"
-            poster={POSTER}
+            poster={VIDEO[variant].poster}
             disablePictureInPicture
             onPlaying={() => setPlaying(true)}
             className={cn(
@@ -309,8 +334,8 @@ export function VideoHero({
               playing ? "opacity-100" : "opacity-0"
             )}
           >
-            <source src={VIDEO_WEBM} type="video/webm" />
-            <source src={VIDEO_MP4} type="video/mp4" />
+            <source src={VIDEO[variant].webm} type="video/webm" />
+            <source src={VIDEO[variant].mp4} type="video/mp4" />
           </video>
         )}
 
