@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "group": "Fleet Street",
+    "title": "Clawcappella | Stanford Reunion Weekend 2024",
+    "url": "https://www.youtube.com/watch?v=zOUumrRziCQ",
+    "channel": "The Stanford Fleet Street Singers",
+    "in": "01:32.0",
+    "out": "01:36.5",
+    "order": 1,
+    "source_resolution": "2274x1440"
+  },
+  {
+    "group": "Mendicants",
+    "title": "Somewhere Only We Know (Live) | Stanford Mendicants Cover",
+    "url": "https://www.youtube.com/watch?v=5X50utN-rCY",
+    "channel": "Stanford Mendicants",
+    "in": "02:34.0",
+    "out": "02:38.0",
+    "order": 2,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "O-Tone",
+    "title": "NewJeans A Cappella Medley | OMG, Hype Boy, Ditto, Cool With You, Attention [MV]",
+    "url": "https://www.youtube.com/watch?v=bDEJ1SM8H6Q",
+    "channel": "Stanford O-Tone",
+    "in": "02:06.0",
+    "out": "02:10.0",
+    "order": 3,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "Talisman",
+    "title": "Modimo Trilogy - Spring Show 2025 - Stanford Talisman",
+    "url": "https://www.youtube.com/watch?v=cFfWEUnUaOk",
+    "channel": "Stanford Talisman",
+    "in": "04:35.0",
+    "out": "04:39.5",
+    "order": 4,
+    "source_resolution": "1920x1080"
+  },
+  {
+    "group": "Harmonics",
+    "title": "Animals - Nickelback A Cappella Cover (Live) | The Harmonics (Lucky Harmz)",
+    "url": "https://www.youtube.com/watch?v=_0Nxa4fUFlQ",
+    "channel": "The Harmonics",
+    "in": "02:23.0",
+    "out": "02:27.0",
+    "order": 5,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "Testimony",
+    "title": "Rather Be - Break it Down Los Angeles 2024",
+    "url": "https://www.youtube.com/watch?v=6jXvoJZlxhU",
+    "channel": "Stanford Testimony Christian A Cappella",
+    "in": "01:32.0",
+    "out": "01:36.5",
+    "order": 6,
+    "source_resolution": "1920x1080"
+  },
+  {
+    "group": "Raagapella",
+    "title": "Stanford Raagapella Competition Set 2025",
+    "url": "https://www.youtube.com/watch?v=oNp35rb3FY8",
+    "channel": "Stanford Raagapella",
+    "in": "08:42.0",
+    "out": "08:46.0",
+    "order": 7,
+    "source_resolution": "1920x1080"
+  },
+  {
+    "group": "Mixed Company",
+    "title": "Somebody To Love",
+    "url": "https://www.youtube.com/watch?v=Ze71xbPVO2g",
+    "channel": "Stanford Mixed Company",
+    "in": "02:33.0",
+    "out": "02:37.0",
+    "order": 8,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "Everyday People",
+    "title": "Let's Stay Together (Al Green) by Stanford Everyday People",
+    "url": "https://www.youtube.com/watch?v=-1s3-NV9nVg",
+    "channel": "Stanford Everyday People A Cappella",
+    "in": "01:02.0",
+    "out": "01:06.0",
+    "order": 9,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "Counterpoint",
+    "title": "Hercules - Stanford Counterpoint Winter Show 2024",
+    "url": "https://www.youtube.com/watch?v=VdI3TUiz-5I",
+    "channel": "Stanford Counterpoint",
+    "in": "02:03.0",
+    "out": "02:07.5",
+    "order": 10,
+    "source_resolution": "1920x1080"
+  },
+  {
+    "group": "Mendicants",
+    "title": "The Stanford Mendicants - 2024 ICCA Set",
+    "url": "https://www.youtube.com/watch?v=MuJ_ho2Qs5Y",
+    "channel": "Stanford Mendicants",
+    "in": "06:00.5",
+    "out": "06:04.5",
+    "order": 11,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "Fleet Street",
+    "title": "Cuncti Potens (Live at Stanford Freshman Orientation) - Stanford Fleet Street Singers",
+    "url": "https://www.youtube.com/watch?v=f2iQFNYIa3g",
+    "channel": "The Stanford Fleet Street Singers",
+    "in": "03:02.0",
+    "out": "03:06.5",
+    "order": 12,
+    "source_resolution": "2560x1440"
+  },
+  {
+    "group": "O-Tone",
+    "title": "Stanford O-Tone | ICCA 2025",
+    "url": "https://www.youtube.com/watch?v=8MW6DoUN2YY",
+    "channel": "Stanford O-Tone",
+    "in": "03:01.0",
+    "out": "03:05.0",
+    "order": 13,
+    "source_resolution": "1920x1080"
+  },
+  {
+    "group": "Talisman",
+    "title": "Indodana - Gala 2024 - Stanford Talisman",
+    "url": "https://www.youtube.com/watch?v=L17D-XqqNDw",
+    "channel": "Stanford Talisman",
+    "in": "02:05.0",
+    "out": "02:09.5",
+    "order": 14,
+    "source_resolution": "1920x1080"
+  }
+]
