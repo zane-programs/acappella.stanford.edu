@@ -222,37 +222,71 @@ Privacy (`/privacy`): prose only, `type-body`, h2s in serif. Keep the copy.
 
 Owner: `src/app/components/transitions/`. Everyone else only consumes the API.
 
-`TransitionProvider` (client, wraps `{children}` in the root layout):
-- Renders a fixed `#wipe` layer (`bg-cardinal`, `z-[90]`, `pointer-events-none`,
-  hidden by default) and a fixed `#shared-clone` slot.
-- Exposes `useTransitionRouter()` returning `{ push(href, opts?) }` where `opts =
-  { sharedImage?: { slug: string; from: DOMRect; src: string } }`.
-- Exposes `TransitionLink`, a `next/link` wrapper that intercepts left-clicks
-  without modifier keys on internal hrefs and calls `push`. External links and
-  `target="_blank"` pass through. All internal navigation in the app uses
-  `TransitionLink` (nav, tiles, footer, buttons-as-links).
-- Wipe sequence (default): (1) `#wipe` scales in from bottom (`scaleY 0→1`,
-  `transform-origin bottom`, 600ms in-out-quart) while the wordmark lockup in white
-  fades in at center (150ms delay); (2) `router.push`; (3) when `usePathname()`
-  changes and the new page has painted (double rAF), scroll to top, then `#wipe`
-  scales out to the top (`transform-origin top`, 600ms), and the new page's
-  `[data-reveal]` elements stagger in (`y: 24→0, opacity 0→1`, 900ms out-expo,
-  stagger 60ms, max 8 elements).
-- Shared-image sequence (when `opts.sharedImage` is present): (1) create a fixed
-  `<img>` clone at `from` with the same `src`, `object-fit: cover`,
-  `border-radius: 6px`; fade the source tile's image to 0 and dim the page
-  (`#wipe` at `opacity 0.0→1` behind the clone is NOT used here; instead a
-  `bg-white` fade to 0.6). (2) `router.push`. (3) On pathname change + paint,
-  find `[data-shared-image="<slug>"]` on the new page; if found within 800ms,
-  measure and `gsap.to(clone, { top, left, width, height, duration: 0.9, ease:
-  out-expo })`, meanwhile `[data-reveal]` staggers in; on complete, set the target
-  image opacity 1 and remove the clone. (4) If not found (e.g. redirect), fall back
-  to a fast wipe-out. Back/forward navigation never uses the shared clone; it just
-  does a 300ms opacity crossfade.
-- `prefers-reduced-motion`: all sequences become an instant swap with a 150ms
-  opacity crossfade. No wipe, no clone.
-- Header stays above the wipe? No: wipe is `z-[90]`, header `z-[80]`, mobile menu
-  `z-[100]`, cookie card `z-[70]`.
+`TransitionProvider` (client, wraps `{children}` in the root layout). It owns
+scroll: `history.scrollRestoration` is `manual` for the life of the app, every
+`router.push` passes `{ scroll: false }`, and the last scroll position of every
+URL (pathname + search) is remembered in a module Map so Back/Forward land
+exactly where the visitor left. Layers, bottom to top: cardinal band `z-[75]`,
+snapshot + image clones `z-[76]`, header `z-[80]`, intro card `z-[88]`, wipe
+`z-[90]`, mobile menu `z-[99]/[100]`.
+
+- API: `useTransitionRouter()` → `{ push(href, opts?), isTransitioning }`,
+  `opts = { sharedImage?: { slug, from: DOMRect, src } }`; `TransitionLink`
+  (a `next/link` that routes plain left-clicks on internal hrefs through
+  `push`, with an optional `sharedImage` callback); `data-reveal`,
+  `data-shared-image={slug}` and `#hero-sentinel` element contracts.
+- Technique: before the route changes, `<main>` is deep-cloned into the fixed
+  layer (ids, `data-shared-image`, iframes/video stripped) and the real `<main>`
+  is hidden. The snapshot is what animates out, so the moment Next swaps the DOM
+  is never visible however long the fetch takes.
+- Wipe (default for any push without a shared image): a `cardinal-dark` leading
+  edge and the `cardinal` body both `scaleY` up from the bottom (550ms
+  power4.inOut, body 60ms behind) while the outgoing `<main>` fades to 0.6 and
+  drifts `y: -8`; the white wordmark fades in at center from 250ms. `push` fires
+  at 380ms. On the new route: scroll to top (or the hash), the body retreats
+  upward first and the edge follows, and `[data-reveal]` starts staggering in at
+  220ms, as the wipe clears the top third.
+- Tile → hero morph (`sharedImage` present): the tile's photo is cloned into the
+  layer; in the snapshot, the clicked tile's caption fades and every other
+  `[data-reveal]` in its section recedes (`opacity 0, y 12, scale .985`, 350ms,
+  radial stagger from the tile, ≤ 200ms), then the whole snapshot fades. `push`
+  fires immediately. When the destination's `[data-shared-image]` exists (≤
+  800ms): scroll to top, the sticky header + masthead slide from where they were
+  to where they now sit (never a 32px jump), the hero `<section>` grows down from
+  under the header via `clip-path: inset(0 0 100% 0 → 0)` (600ms expo.out), the
+  clone flies 950ms on the custom `hero` ease (`CustomEase "M0,0 C0.7,0 0.2,1
+  1,1"`), re-measuring the target every frame so it lands exactly even if the
+  page shifts; at 580ms the hero copy (`[data-reveal]` column children) steps in
+  60ms apart from `y: 20`; at 900ms the body reveals; on landing the clone
+  cross-fades into the real image (300ms). The destination is recorded in
+  `morphMemory: Map<url, { fromUrl, slug }>`.
+- Back out of a morphed page (popstate where `morphMemory[from].fromUrl === to`):
+  the hero photo is cloned, a fixed cardinal band is placed over the hero
+  section, `<main>` is snapshotted and hidden, then on paint: scroll to the
+  remembered position under the hidden main, header/masthead slide-compensate,
+  the band retreats upward (500ms), the clone flies back onto the tile (same
+  ease, tracking), neighbours fade back in radiating from the tile from 400ms,
+  the tile caption from 600ms, cross-fade on landing. Forward into a morphed
+  page replays the forward morph when the tile is in view. Any other Back /
+  Forward is a 300ms snapshot cross-fade with the scroll restored instantly
+  underneath. A missing target (redirect, resized layout) degrades to that
+  cross-fade.
+- Reduced motion (or no `html.js`): every sequence is an instant swap; scroll
+  memory still applies.
+- Reload restores the previous scroll from `sessionStorage` (the browser no
+  longer does, since restoration is manual).
+- Intro card (homepage hard loads only): `VideoHero` server-renders a fixed
+  `bg-cardinal` card (`[data-intro]`, hidden without `html.js`) with the logo and
+  wordmark entering via CSS animation. On mount it is dropped at once on phones,
+  reduced motion, data-saver, or when `navState.routed` says this is a
+  client-side arrival. Otherwise it marks the intro pending
+  (`transitions/intro.ts`), shows a 2px progress bar only after 2.5s (real
+  `buffered/duration`, drifting to 85% until data arrives), and lifts after
+  `canplaythrough` (or `canplay` + 1.5s, `error`, or a 9s timeout) and at least
+  900ms: bar completes, content fades, card and dark edge scale up from the top
+  (600ms power4.inOut). It dispatches `sac:intro-done` on `window` as it clears
+  the top third; the provider's first reveal awaits `whenIntroDone()`. A CSS
+  fallback fades the card at 9.5s if hydration never happens.
 
 Micro-interactions (allowed, nothing else):
 - Nav underline grow 300ms.
@@ -261,7 +295,11 @@ Micro-interactions (allowed, nothing else):
 - Hero content: single entrance stagger on first load (title, lead, buttons).
 - Section `[data-reveal]` entrance on scroll via one ScrollTrigger batch (`once:
   true`, start 85%). Not on every element: section headings, tile groups, cards.
-- Mobile menu slide + link stagger.
+- Mobile menu: overlay 200ms, panel slides in 600ms expo.out with links
+  staggered 40ms from `y: 24`, hamburger lines morph to an X; close reverses
+  (links 120ms, panel 450ms power3.in), and Radix only unmounts, unlocks scroll
+  and restores focus once the close has finished. A menu link starts the close
+  and the wipe together.
 - Announcement bar dismiss: height collapse 300ms.
 
 Not allowed: parallax, cursor followers, magnetic buttons, text scramble, infinite
@@ -348,3 +386,23 @@ Additions/clarifications to the contract above, as built:
 - **Button** gained an `on-cardinal-outline` variant for the hero's secondary CTA.
 - Static pages decide the "Auditions" nav CTA on the client (`AuditionsNavButton`)
   so nothing stale is baked at build time.
+
+## 12. Implementation notes (motion pass, 2026-09-16)
+
+- `transitions/gsap.ts` registers `CustomEase` and exports `EASE.hero`,
+  `DURATION.flight` (0.95) and `DURATION.wipe` (0.55).
+- `transitions/intro.ts`: `markIntroPending / markIntroDone / whenIntroDone /
+  isIntroPending`, `INTRO_DONE_EVENT = "sac:intro-done"`, and `navState.routed`
+  (true after the first client-side route change).
+- Scroll memory and morph memory are keyed by URL rather than a history-state
+  id: Next's `HistoryUpdater` drops custom `history.state` keys after
+  navigations, so an id stored there is not reliable.
+- Restored scroll positions can differ from the saved value by the height of
+  content that mounts after paint (the announcement bar): Chrome's scroll
+  anchoring keeps the viewport content in place, which is the intended outcome.
+- `GroupTile` / `GroupHero` are unchanged; the provider finds the tile's `<li>`
+  and `<section>` via `closest()`, and the hero's caption column as the first
+  `[data-reveal]` in the hero `<section>`.
+- The masthead carries `id="masthead"` so the provider can slide it with the
+  header.
+
