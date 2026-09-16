@@ -45,6 +45,15 @@ const VIDEO: Record<HeroVariant, { webm: string; mp4: string; poster: string }> 
 };
 const POSTER = VIDEO.desktop.poster;
 const POSTER_MOBILE = VIDEO.mobile.poster;
+/**
+ * Exact codec strings so `canPlayType` answers "" rather than "maybe". Without
+ * them Safari selects the WebM source on hardware that cannot decode VP9,
+ * fails once it is fetched, and only then (slowly, sometimes never) falls
+ * through to the MP4. VP9 profile 0, 8-bit; H.264 High 4.1 (both set in
+ * tools/hero-video/herovideo/encode.py).
+ */
+const WEBM_TYPE = 'video/webm; codecs="vp09.00.10.08"';
+const MP4_TYPE = 'video/mp4; codecs="avc1.640029"';
 const LOGO = "/assets/img/a_cappella_treble_clef_transparent.png";
 
 /** Intro card timing (ms). See docs/DESIGN.md §6 "Intro card". */
@@ -63,8 +72,19 @@ const INTRO_HARD_TIMEOUT_MS = 9000;
  * landscape one above, and none at all under reduced motion or a data-saver
  * preference (those visitors see the poster). `hasVideo` is decided on the
  * server per variant from the presence of the encoded files, so a missing
- * asset never produces a failed request. If autoplay is refused (iOS Low Power
- * Mode does this) the poster stays and the control offers Play instead.
+ * asset never produces a failed request.
+ *
+ * Autoplay policy: a muted, playsinline video may autoplay everywhere except
+ * when the visitor's device forbids it: iOS Low Power Mode, iOS Settings ›
+ * Accessibility › Motion › "Auto-Play Video Previews" off, macOS Safari
+ * "Never Auto-Play" for the site, or a browser with autoplay disabled. Those
+ * reject `play()` with NotAllowedError, but the same call inside a user
+ * gesture is allowed, so the poster stays, the control reads "Play", and the
+ * first tap, click or key press anywhere retries (`prefers-reduced-motion`
+ * visitors never get a video at all, see above). A visitor's own Pause is
+ * final: nothing restarts it. If the tab is backgrounded or restored from the
+ * back/forward cache, iOS pauses the element and does not always resume it,
+ * so playback is retried when the page is visible again.
  *
  * Intro card: on a hard load of the homepage (not a client-side navigation
  * back to it) a cardinal card with the logo and wordmark covers the page while
@@ -89,6 +109,9 @@ export function VideoHero({
   const useVideo = variant !== null;
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  /** The visitor pressed Pause: no gesture, tab return or cache restore may restart it. */
+  const userPausedRef = useRef(false);
 
   const [intro, setIntro] = useState<"pending" | "done">(hasDesktopVideo ? "pending" : "done");
   const introRootRef = useRef<HTMLDivElement>(null);
@@ -221,13 +244,78 @@ export function VideoHero({
     video.addEventListener("error", onReady);
     video.addEventListener("stalled", onProgress);
 
+    // React sets `muted` as a property only. Mirror it to the content
+    // attribute (`defaultMuted` reflects it) so every autoplay policy check
+    // sees a muted element however it inspects the node.
+    video.muted = true;
+    video.defaultMuted = true;
+
+    // With <source> children an unsupported or unreachable resource fires
+    // `error` on the last <source>, never on the element. No playable source:
+    // keep the poster, drop the control, and don't hold the intro card.
+    const lastSource = video.querySelector("source:last-of-type");
+    const onNoSource = () => {
+      finishIntro();
+      setVariant(null);
+    };
+    lastSource?.addEventListener("error", onNoSource);
+
+    // Keep the control truthful when the browser itself pauses or resumes
+    // (backgrounded tab, phone call, Low Power Mode engaging mid-play).
+    const onPlay = () => setPaused(false);
+    const onPause = () => setPaused(true);
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+
+    // Autoplay refused (see the component note): retry inside the visitor's
+    // first gesture. Capture phase so a tap that navigates away still counts;
+    // the pause control is excluded because it manages the element itself.
+    const UNLOCK_EVENTS = ["pointerup", "touchend", "click", "keydown"] as const;
+    let armed = false;
+    function onGesture(event: Event) {
+      if (userPausedRef.current) return disarm();
+      if (toggleRef.current?.contains(event.target as Node | null)) return;
+      video!.play().then(disarm, () => {});
+    }
+    function arm() {
+      if (armed || userPausedRef.current) return;
+      armed = true;
+      for (const type of UNLOCK_EVENTS) {
+        document.addEventListener(type, onGesture, { capture: true, passive: true });
+      }
+    }
+    function disarm() {
+      if (!armed) return;
+      armed = false;
+      for (const type of UNLOCK_EVENTS) document.removeEventListener(type, onGesture, true);
+    }
+
+    const attemptPlay = () => {
+      video.play().then(disarm, (err: unknown) => {
+        const name = err instanceof DOMException ? err.name : "";
+        // A load() or pause() interrupted this call; the next one will do.
+        if (name === "AbortError") return;
+        // Policy refusal (or no source yet, which the <source> error handles):
+        // keep the poster, let the control read "Play", and don't hold the
+        // intro card on a video that isn't coming.
+        setPaused(true);
+        finishIntro();
+        if (name === "NotAllowedError") arm();
+      });
+    };
+
+    // iOS pauses the element when the tab is backgrounded or the page enters
+    // the back/forward cache and does not always resume it on return.
+    const onVisible = () => {
+      if (document.visibilityState !== "visible" || userPausedRef.current) return;
+      if (video.paused) attemptPlay();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("pageshow", onVisible);
+
     // Sources were added after mount; ask the element to pick one up.
     video.load();
-    video.play().catch(() => {
-      // Autoplay refused (e.g. iOS Low Power Mode): keep the poster and let
-      // the control read "Play" so a tap can start it.
-      setPaused(true);
-    });
+    attemptPlay();
     if (video.readyState >= 4) finishIntro();
 
     return () => {
@@ -236,6 +324,12 @@ export function VideoHero({
       video.removeEventListener("canplaythrough", onReady);
       video.removeEventListener("error", onReady);
       video.removeEventListener("stalled", onProgress);
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+      lastSource?.removeEventListener("error", onNoSource);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onVisible);
+      disarm();
       if (canPlayTimer !== null) window.clearTimeout(canPlayTimer);
     };
   }, [useVideo, finishIntro]);
@@ -244,9 +338,11 @@ export function VideoHero({
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      userPausedRef.current = false;
       video.play().catch(() => {});
       setPaused(false);
     } else {
+      userPausedRef.current = true;
       video.pause();
       setPaused(true);
     }
@@ -334,8 +430,8 @@ export function VideoHero({
               playing ? "opacity-100" : "opacity-0"
             )}
           >
-            <source src={VIDEO[variant].webm} type="video/webm" />
-            <source src={VIDEO[variant].mp4} type="video/mp4" />
+            <source src={VIDEO[variant].webm} type={WEBM_TYPE} />
+            <source src={VIDEO[variant].mp4} type={MP4_TYPE} />
           </video>
         )}
 
@@ -395,6 +491,7 @@ export function VideoHero({
             )}
             {useVideo && (
               <IconButton
+                ref={toggleRef}
                 tone="white"
                 label={paused ? "Play background video" : "Pause background video"}
                 aria-pressed={paused}

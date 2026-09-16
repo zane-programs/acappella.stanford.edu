@@ -159,8 +159,15 @@ Home (`/`):
    mount for the matching cut; under `prefers-reduced-motion` or
    `navigator.connection.saveData` none are attached and the poster stays
    (`hero-poster.jpg` / `hero-poster-mobile.jpg`, each exactly frame 0 of its
-   encode, art-directed via `<picture>`). If autoplay is refused (iOS Low Power
-   Mode) the poster stays and the pause toggle reads "Play". Bottom
+   encode, art-directed via `<picture>`). `<source type>` carries exact codec
+   strings (`vp09.00.10.08`, `avc1.640029`) so Safari skips the WebM outright on
+   hardware without VP9 rather than failing after the fetch. If autoplay is
+   refused (iOS Low Power Mode, iOS Accessibility › Motion › "Auto-Play Video
+   Previews" off, macOS Safari "Never Auto-Play") the poster stays, the pause
+   toggle reads "Play", and the visitor's first tap/click/key anywhere retries
+   `play()` inside that gesture; an explicit Pause is never undone. Playback is
+   also retried on `visibilitychange`/`pageshow` since iOS pauses backgrounded
+   and bfcache-restored videos without always resuming them. Bottom
    scrim `from-black/70 via-black/20 to-transparent`. Content bottom-left inside
    the container: eyebrow "Stanford University", display title "A Cappella at
    Stanford" (serif, white), lead line, two buttons: primary white-on-cardinal
