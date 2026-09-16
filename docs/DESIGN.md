@@ -321,3 +321,30 @@ it exists, use a clearly marked placeholder component with the same props:
   internal, `<a target=_blank rel=noopener>` when external), `TextLink`, `Badge`
   (`tone: "neutral" | "open"`), `IconButton`, `Wordmark` (`tone: "cardinal" |
   "white"`, sizes), `VisuallyHidden`.
+
+## 11. Implementation notes (foundation, 2026-09-16)
+
+Additions/clarifications to the contract above, as built:
+
+- **Reveal gating.** An inline script in `layout.tsx` adds `html.js` before first
+  paint unless the visitor prefers reduced motion. `html.js [data-reveal]` is
+  `opacity: 0` in CSS; the provider animates it in. Without JS, or with reduced
+  motion, nothing is ever hidden. Put `data-reveal` only on elements inside
+  `<main>`; the first 8 in view stagger, the rest in view appear at once,
+  below-the-fold ones reveal on scroll (once).
+- **Header tone.** The page renders `id="hero-sentinel"` on its hero `<section>`.
+  CSS `body:has(#hero-sentinel)` pulls content under the header
+  (`margin-bottom: calc(-1 * var(--header-h))`) and draws it transparent/white
+  until the header's IntersectionObserver reports the sentinel has scrolled
+  past. `--header-h` is `64px` (< lg) / `72px` on `:root`.
+- **Announcement bar.** The layout's instance is wrapped in `.announcement-slot`,
+  hidden by CSS on hero pages; the home page renders `<AnnouncementBar inline />`
+  directly below its hero.
+- **Hash links.** `[id] { scroll-margin-top: calc(var(--header-h) + 8px) }`;
+  after a wipe the provider scrolls to the destination hash if present.
+- **`ui/Menu`** (styled Radix DropdownMenu: `Menu`, `MenuTrigger`, `MenuContent`,
+  `MenuItem`, `MenuLabel`, `MenuSeparator`) is the primitive for every dropdown;
+  `AddToCalendarMenu` should be rebuilt on it.
+- **Button** gained an `on-cardinal-outline` variant for the hero's secondary CTA.
+- Static pages decide the "Auditions" nav CTA on the client (`AuditionsNavButton`)
+  so nothing stale is baked at build time.

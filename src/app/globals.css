@@ -1,166 +1,234 @@
-/* Modern Animations */
-@keyframes fadeOnce {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+@import "tailwindcss";
+
+/*
+  Design tokens for the 2026 redesign. See docs/DESIGN.md §3.
+  Decanter-inspired, hand-typed. Components use the utilities these generate
+  (bg-cardinal, text-black-70, font-serif, type-h2, ...) and never raw hex.
+*/
+@theme {
+  /* Reset Tailwind's default palette so only Stanford colors exist. */
+  --color-*: initial;
+
+  --color-cardinal: #8c1515;
+  --color-cardinal-light: #b83a4b;
+  --color-cardinal-dark: #820000;
+  --color-digital-red: #b1040e;
+  --color-digital-red-light: #e50808;
+
+  --color-black: #2e2d29;
+  --color-black-90: #43423e;
+  --color-black-80: #585754;
+  --color-black-70: #6d6c69;
+  --color-black-60: #767674;
+  --color-black-50: #979694;
+  --color-black-40: #ababa9;
+  --color-black-30: #c0c0bf;
+  --color-black-20: #d5d5d4;
+  --color-black-10: #eaeaea;
+
+  --color-white: #ffffff;
+  --color-fog-light: #f4f4f4;
+  --color-fog: #e3ded1;
+  --color-palo-alto: #175e54;
+
+  /* Fonts: the CSS variables are set on <html> by next/font in layout.tsx. */
+  --font-sans: var(--next-font-sans), "Source Sans 3", "Helvetica Neue", Arial,
+    sans-serif;
+  --font-serif: var(--next-font-serif), "Source Serif 4", Georgia, serif;
+  --font-stanford: var(--next-font-stanford), "Source Serif 4", Georgia, serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --shadow-elevated: 0 20px 40px -20px rgb(46 45 41 / 0.25);
+
+  --radius-sm: 2px;
+  --radius-md: 6px;
+
+  --breakpoint-xs: 26rem;
 }
 
-@keyframes slideInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ---------- Type scale (docs/DESIGN.md §3) ---------- */
 
-@keyframes staggerFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(140, 21, 21, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(140, 21, 21, 0.6);
-  }
-}
-
-/* Animation Classes */
-.fadeOnce {
-  animation: fadeOnce 375ms ease;
-}
-
-.slideInUp {
-  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.staggerFadeIn {
-  animation: staggerFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-/* Glass Morphism Utilities */
-.glass {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-}
-
-/* Modern Gradients */
-.gradient-primary {
-  background: linear-gradient(135deg, #8c1515 0%, #b91c1c 50%, #dc2626 100%);
-}
-
-.gradient-accent {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #8c1515 0%, #dc2626 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Shimmer Loading Effect */
-.shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* Modern Card Effects */
-.card-modern {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* .card-modern:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-} */
-
-/* Smooth Transitions */
-* {
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Custom Scrollbar */
-/* ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
-} */
-
-/* Font Face */
-@font-face {
-  font-family: Stanford;
+@utility type-display {
+  font-family: var(--font-serif);
   font-weight: 400;
-  src: url(/assets/fonts/stanford.woff) format("woff"),
-    url(/assets/fonts/stanford.ttf) format("truetype");
+  font-size: clamp(2.75rem, 2rem + 3.5vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+@utility type-h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 1.8rem + 1.8vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+@utility type-h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
+
+@utility type-h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+
+@utility type-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+  line-height: 1.5;
+}
+
+@utility type-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+@utility type-small {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+@utility type-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Shared focus ring, used by every interactive primitive. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-digital-red);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Base ---------- */
+
+@layer base {
+  :root {
+    /* Sticky header height; SiteHeader and anything portaled read this. */
+    --header-h: 64px;
+  }
+  @media (min-width: 64rem) {
+    :root {
+      --header-h: 72px;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100svh;
+  }
+
+  /* Hash targets land below the sticky header. */
+  [id] {
+    scroll-margin-top: calc(var(--header-h) + 8px);
+  }
+
+  ::selection {
+    background-color: var(--color-cardinal);
+    color: var(--color-white);
+  }
+
+  /* Elements the transition provider staggers in. Hidden until GSAP sets them
+     visible so there is no flash; the provider clears this on reduced motion
+     and when JS runs. The no-js fallback below keeps content visible. */
+  html.js [data-reveal] {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    html.js [data-reveal] {
+      opacity: 1;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ---------- Components ---------- */
+
+@layer components {
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /*
+    Site header tone (docs/DESIGN.md §4). The home page renders an element with
+    id="hero-sentinel" (its hero). While that element exists and is still under
+    the header, the header is drawn as a transparent overlay with white text; it
+    also pulls the following content up underneath itself so the hero starts at
+    the very top. `data-tone` is set by SiteHeader's IntersectionObserver; before
+    hydration (data-tone="auto") CSS :has() decides so there is no flash.
+  */
+  .site-header {
+    background-color: rgb(255 255 255 / 0.95);
+    color: var(--color-black);
+    border-bottom: 1px solid var(--color-black-10);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition:
+      background-color 300ms var(--ease-out-expo),
+      color 300ms var(--ease-out-expo),
+      border-color 300ms var(--ease-out-expo);
+  }
+  body:has(#hero-sentinel) .site-header {
+    margin-bottom: calc(-1 * var(--header-h));
+  }
+  body:has(#hero-sentinel) .site-header[data-tone="auto"],
+  .site-header[data-tone="overlay"] {
+    background-color: transparent;
+    color: var(--color-white);
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* The layout's announcement slot hides on hero pages; the page renders its
+     own <AnnouncementBar inline /> below the hero instead. */
+  body:has(#hero-sentinel) .announcement-slot {
+    display: none;
+  }
 }
