@@ -3,7 +3,7 @@ import { Eyebrow } from "@/app/components/ui/Eyebrow";
 import { Heading } from "@/app/components/ui/Heading";
 import { Section } from "@/app/components/ui/Section";
 import { TextLink } from "@/app/components/ui/TextLink";
-import { GroupCard } from "./GroupCard";
+import { GroupTile } from "@/app/components/home/GroupTile";
 
 const MORE_COUNT = 4;
 
@@ -40,7 +40,7 @@ export function MoreGroups({ slug }: { slug: string }) {
       </div>
       <ul className="mt-10 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {groups.map(([s, g]) => (
-          <GroupCard key={s} slug={s} group={g} />
+          <GroupTile key={s} slug={s} group={g} />
         ))}
       </ul>
     </Section>

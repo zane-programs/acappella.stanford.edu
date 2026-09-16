@@ -1,6 +1,5 @@
 "use client";
 
-import { Box, Flex, Heading, Spinner, Text } from "@/app/components/chakra";
 import { useEffect, useRef } from "react";
 
 /**
@@ -36,24 +35,16 @@ export default function GroupPromoRedirect({
   }, [slug, destination]);
 
   return (
-    <Box userSelect="none">
-      <Heading as="h2" size="xl" w="100%" textAlign="center" mt="2">
-        {groupName}
-      </Heading>
-      <Flex
-        direction="column"
-        w="100%"
-        h="320px"
-        alignItems="center"
-        justifyContent="center"
-        textAlign="center"
-        gap="8"
-      >
-        <Spinner size="xl" color="#555" thickness="4px" />
-        <Text fontSize="2xl" fontWeight="600">
-          Loading&hellip;
-        </Text>
-      </Flex>
-    </Box>
+    <section
+      aria-live="polite"
+      className="mx-auto flex min-h-[60svh] w-full max-w-[1440px] flex-col items-center justify-center gap-6 px-5 text-center select-none"
+    >
+      <h1 className="type-h1 font-serif text-black">{groupName}</h1>
+      <span
+        aria-hidden="true"
+        className="size-9 animate-spin rounded-full border-2 border-black-20 border-t-cardinal"
+      />
+      <p className="type-lead text-black-70">Taking you to the sign-up page…</p>
+    </section>
   );
 }

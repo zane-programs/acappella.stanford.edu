@@ -10,6 +10,7 @@ import { Eyebrow } from "@/app/components/ui/Eyebrow";
 import { Heading } from "@/app/components/ui/Heading";
 import { IconButton } from "@/app/components/ui/IconButton";
 import { Menu, MenuContent, MenuItem, MenuLabel, MenuTrigger } from "@/app/components/ui/Menu";
+import { numberWordCapitalized } from "@/app/lib/words";
 
 export interface FootageCredit {
   group: string;
@@ -143,7 +144,7 @@ export function VideoHero({
             A Cappella at Stanford
           </Heading>
           <p data-reveal className="type-lead mt-6 max-w-[36rem] text-white/85">
-            {numberWordSentence(groupCount)} student groups and more than sixty years of
+            {numberWordCapitalized(groupCount)} student groups and more than sixty years of
             harmony on the Farm. Meet every group, find an upcoming show, and learn how to
             audition.
           </p>
@@ -199,12 +200,3 @@ export function VideoHero({
   );
 }
 
-const WORDS = [
-  "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-  "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-  "Eighteen", "Nineteen", "Twenty",
-];
-
-function numberWordSentence(n: number): string {
-  return n >= 0 && n < WORDS.length ? WORDS[n] : String(n);
-}

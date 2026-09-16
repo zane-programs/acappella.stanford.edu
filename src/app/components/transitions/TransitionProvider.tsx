@@ -243,9 +243,22 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         duration: DURATION.slower,
         ease: EASE.outExpo,
         onComplete: () => {
-          target!.style.opacity = "";
-          clone.remove();
-          settle();
+          // Crossfade rather than swap: some groups show a different photo on
+          // their page (`descriptionImgUrl`) than on the tile, and a hard cut
+          // between the two reads as a glitch.
+          gsap.to(target!, {
+            opacity: 1,
+            duration: DURATION.base,
+            clearProps: "opacity",
+          });
+          gsap.to(clone, {
+            opacity: 0,
+            duration: DURATION.base,
+            onComplete: () => {
+              clone.remove();
+              settle();
+            },
+          });
         },
       });
       revealPage({ animate: true, exclude: revealAncestor });

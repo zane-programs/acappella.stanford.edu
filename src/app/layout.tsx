@@ -4,7 +4,6 @@ import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import localFont from "next/font/local";
 
 import GROUPS from "./config/groups";
-import { Providers } from "./providers";
 import { TransitionProvider } from "./components/transitions/TransitionProvider";
 import {
   AnnouncementBar,
@@ -102,9 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SiteHeader groups={navGroups} />
           <AnnouncementBar />
           <main id="main-content" className="flex-1">
-            {/* TEMP: Chakra provider wraps only page content until the home,
-                group and shows pages are converted; removed at integration. */}
-            <Providers>{children}</Providers>
+            {children}
           </main>
           <SiteFooter />
           <CookieConsent />
