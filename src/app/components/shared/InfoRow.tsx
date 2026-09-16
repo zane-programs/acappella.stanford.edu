@@ -1,22 +1,24 @@
-import { Flex, Text } from "@/app/components/chakra";
+import type { PropsWithChildren, ReactNode } from "react";
+import { cn } from "@/app/lib/cn";
 
-/** Icon + text line used for event details (date, location, ...). */
+/**
+ * Icon + text line used for event details (date, location, ...).
+ * Renders an `<li>`; wrap a group of them in a `<ul>`.
+ */
 export default function InfoRow({
   icon,
+  className,
   children,
-}: React.PropsWithChildren<{ icon: React.ReactNode }>) {
+}: PropsWithChildren<{ icon: ReactNode; className?: string }>) {
   return (
-    <Flex
-      direction="row"
-      gap="1.5"
-      alignItems="center"
-      as="li"
-      fontSize="inherit"
-    >
-      {icon}
-      <Text flex={1} fontWeight="600" fontSize="inherit">
-        {children}
-      </Text>
-    </Flex>
+    <li className={cn("flex items-start gap-2", className)}>
+      <span
+        aria-hidden="true"
+        className="mt-[0.2em] inline-flex shrink-0 text-[1.1em] opacity-80"
+      >
+        {icon}
+      </span>
+      <span className="flex-1 font-semibold">{children}</span>
+    </li>
   );
 }

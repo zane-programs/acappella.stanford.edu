@@ -1,32 +1,13 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import {
-  Badge,
-  Box,
-  Heading,
-  Text,
-  Card,
-  CardHeader,
-  CardBody,
-  Flex,
-  VStack,
-  Button,
-  HStack,
-} from "@/app/components/chakra";
-import GROUPS from "../config/groups";
-import Link from "next/link";
-import Image from "next/image";
-import { format as formatDate } from "date-fns";
-import { MdLocationPin, MdCalendarMonth } from "react-icons/md";
-import {
-  CalendarEventDetails,
-  Platform,
-  detectPlatform,
-  getCalendarLinks,
-} from "@/app/utils/calendar";
-import AddToCalendarMenu from "@/app/components/shared/AddToCalendarMenu";
-import FeaturedShowCard from "@/app/components/shared/FeaturedShowCard";
-import InfoRow from "@/app/components/shared/InfoRow";
+
+import { Eyebrow } from "@/app/components/ui/Eyebrow";
+import { Heading } from "@/app/components/ui/Heading";
+import { Section } from "@/app/components/ui/Section";
+import FeaturedShowCard from "@/app/components/shows/FeaturedShowCard";
+import ShowCard from "@/app/components/shows/ShowCard";
+import { fetchShows } from "@/app/lib/shows";
+import { detectPlatform } from "@/app/utils/calendar";
 import { FEATURED_SHOW } from "../config/shows";
 
 export const dynamic = "force-dynamic";
@@ -47,357 +28,58 @@ export const metadata: Metadata = {
 };
 
 export default async function Shows() {
-  const showsData = await fetchShowsData();
+  const shows = await fetchShows();
   const headersList = await headers();
   const platform = detectPlatform(headersList.get("user-agent") || "");
 
+  const featured =
+    FEATURED_SHOW && FEATURED_SHOW.event.end.getTime() > Date.now()
+      ? FEATURED_SHOW
+      : null;
+
   return (
     <>
-      <Heading size="lg" as="h2" mb="2">
-        Shows
-      </Heading>
-      {showsData.length > 0 ? (
-        <VStack
-          gap="3"
-          mt="6"
-          role="list"
-          aria-label="Upcoming a cappella shows"
-        >
-          {showsData.map((show) => (
-            <ShowCard
-              key={show.group + ":" + show.title}
-              show={show}
-              platform={platform}
-            />
-          ))}
-        </VStack>
-      ) : FEATURED_SHOW && FEATURED_SHOW.event.end.getTime() > Date.now() ? (
-        <Box mt="6">
-          <FeaturedShowCard featured={FEATURED_SHOW} platform={platform} />
-          <Text mt="5" color="gray.600" textAlign="center">
-            More shows coming soon&mdash;be on the lookout for performances
-            throughout the year!
-          </Text>
-        </Box>
-      ) : (
-        <Text>
-          Coming soon&mdash;be on the lookout for a cappella shows and
-          performances!
-        </Text>
-      )}
+      <Section spacing="tight" className="pt-14 md:pt-20 lg:pt-24">
+        <div data-reveal className="max-w-[46rem]">
+          <Eyebrow>Shows and events</Eyebrow>
+          <Heading as="h1" size="h1" className="mt-3">
+            Shows
+          </Heading>
+          <p className="type-lead mt-5 text-black-80">
+            Upcoming performances and events from Stanford&apos;s a cappella groups. Groups
+            add their own shows here throughout the year.
+          </p>
+        </div>
+      </Section>
+
+      <Section spacing="tight" className="pb-20 md:pb-28 lg:pb-32">
+        {shows.length > 0 ? (
+          <ul aria-label="Upcoming a cappella shows" className="border-b border-black-20">
+            {shows.map((show) => (
+              <ShowCard
+                key={show.group + ":" + show.title + ":" + show.startDate.toISOString()}
+                show={show}
+                platform={platform}
+              />
+            ))}
+          </ul>
+        ) : featured ? (
+          <div data-reveal>
+            <FeaturedShowCard featured={featured} platform={platform} />
+            {/* Previous copy (through the 2025–26 season):
+                "More shows coming soon—be on the lookout for performances throughout the year!" */}
+            <p className="type-body mt-8 text-black-70">
+              More shows are added as groups announce them. Check back throughout the year.
+            </p>
+          </div>
+        ) : (
+          /* Previous copy (through the 2025–26 season):
+             "Coming soon—be on the lookout for a cappella shows and performances!" */
+          <p data-reveal className="type-lead text-black-70">
+            No shows are scheduled right now. Check back soon for upcoming performances.
+          </p>
+        )}
+      </Section>
     </>
   );
-}
-
-function ShowCard({
-  show,
-  platform,
-}: {
-  show: IShowsDataItem;
-  platform: Platform;
-}) {
-  // Find group information
-  const groupInfoEntry = Object.entries(GROUPS).find(
-    ([_key, group]) =>
-      group.name.trim().toLowerCase() === show.group.trim().toLowerCase()
-  );
-
-  const event: CalendarEventDetails = {
-    title: show.title,
-    description: show.description,
-    location: show.location,
-    start: show.startDate,
-    end: show.endDate,
-  };
-  const calendarLinks = getCalendarLinks(event, platform);
-
-  const displayedStartDatePacificTimeForced = new Date(
-    show.startDate.toLocaleString("en-US", {
-      timeZone: "America/Los_Angeles",
-    })
-  );
-  const displayedEndDatePacificTimeForced = new Date(
-    show.endDate.toLocaleString("en-US", {
-      timeZone: "America/Los_Angeles",
-    })
-  );
-
-  return (
-    <Card width="100%" overflow="hidden" role="listitem">
-      <Flex direction={{ base: "column", md: "row" }}>
-        <Flex
-          width={{ base: "100%", md: "220px" }}
-          direction={{ base: "column", md: "row" }}
-          alignItems="center"
-          justifyContent="center"
-          p="6"
-          sx={{
-            "& img": { width: "100%" },
-            "& img.placeholder": {
-              width: "90px",
-            },
-            pb: { base: "0", md: "6" },
-          }}
-        >
-          {groupInfoEntry ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={groupInfoEntry[1].imgUrl}
-              alt={`${groupInfoEntry[1].name} group photo`}
-            />
-          ) : (
-            <Image
-              width={90}
-              height={90}
-              className="placeholder"
-              src="/assets/img/a_cappella_treble_clef_transparent.png"
-              alt="Stanford A Cappella logo"
-            />
-          )}
-        </Flex>
-        <Box flex={1}>
-          <CardHeader pb="0">
-            <Box mb="1.5" userSelect="none" sx={{ WebkitUserSelect: "none" }}>
-              {groupInfoEntry ? (
-                <Badge
-                  as={Link}
-                  href={"/" + groupInfoEntry[0]}
-                  colorScheme="blue"
-                >
-                  {groupInfoEntry[1].name}
-                </Badge>
-              ) : (
-                <Badge colorScheme="blue">{show.group}</Badge>
-              )}
-            </Box>
-            <Heading size="md" mb="1" as="h3">
-              {show.title}
-            </Heading>
-            <Box
-              as="ul"
-              fontSize="0.94em"
-              color="#444"
-              sx={{ listStyle: "none" }}
-            >
-              <InfoRow icon={<MdCalendarMonth />}>
-                {formatDate(displayedStartDatePacificTimeForced, "EEE, MMM d, yyyy")}
-                {show.showEndTime
-                  ? `, ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")} - ${formatDate(
-                      displayedEndDatePacificTimeForced,
-                      "h:mm a"
-                    )}`
-                  : ` at ${formatDate(displayedStartDatePacificTimeForced, "h:mmaaa")}`}
-              </InfoRow>
-              <InfoRow icon={<MdLocationPin />}>{show.location}</InfoRow>
-            </Box>
-          </CardHeader>
-          <CardBody>
-            {show.description.split("\n").map((line, idx) => (
-              <Text key={idx} mb="2.5">
-                {line}
-              </Text>
-            ))}
-            <HStack mt="5">
-              {show.link && (
-                <Button
-                  as="a"
-                  colorScheme="blue"
-                  href={show.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${show.linkText ?? "Learn More"} about ${
-                    show.title
-                  } (opens in new tab)`}
-                >
-                  {show.linkText ?? "Learn More"}
-                </Button>
-              )}
-              <AddToCalendarMenu
-                colorScheme="blue"
-                links={calendarLinks}
-                eventTitle={show.title}
-                analyticsLabel={`show:${show.title}`}
-              />
-            </HStack>
-          </CardBody>
-        </Box>
-      </Flex>
-    </Card>
-  );
-}
-
-interface IShowsDataItem {
-  group: string;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-  location: string;
-  description: string;
-  showEndTime: boolean;
-  link?: string | null;
-  linkText?: string | null;
-}
-
-function convertKeyToCamelCase(key: string): string {
-  // Split the key into words and remove empty strings caused by extra spaces
-  const words = key
-    .trim()
-    .split(" ")
-    .filter((word) => word.trim() !== "");
-
-  // Skip leading numeric words
-  const firstValidIndex = words.findIndex((word) => !/^\d+$/.test(word));
-
-  if (firstValidIndex === -1) {
-    return ""; // No valid word found
-  }
-
-  const validWords = words
-    .slice(firstValidIndex)
-    .map(
-      (word) => word.replace(/[^a-z0-9]/gi, "") // Keep only alphanumeric characters
-    )
-    .filter((word) => word.length > 0); // Filter out any empty strings after cleaning
-
-  return validWords
-    .map((word, index) =>
-      index === 0
-        ? word.toLowerCase()
-        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    )
-    .join("");
-}
-
-/**
- * Determines if a date is in Pacific Daylight Time (PDT)
- * PDT runs from second Sunday in March to first Sunday in November
- */
-function isPacificDaylightTime(
-  year: number,
-  month: number,
-  day: number
-): boolean {
-  // month is 0-indexed in JavaScript
-  const date = new Date(year, month, day);
-
-  // Find second Sunday in March
-  const march = new Date(year, 2, 1); // March 1st
-  const daysUntilSunday = (7 - march.getDay()) % 7;
-  const firstSundayMarch = 1 + daysUntilSunday;
-  const secondSundayMarch = firstSundayMarch + 7;
-  const dstStart = new Date(year, 2, secondSundayMarch);
-
-  // Find first Sunday in November
-  const november = new Date(year, 10, 1); // November 1st
-  const daysUntilSundayNov = (7 - november.getDay()) % 7;
-  const firstSundayNov = 1 + daysUntilSundayNov;
-  const dstEnd = new Date(year, 10, firstSundayNov);
-
-  return date >= dstStart && date < dstEnd;
-}
-
-function convertGoogleSheetsDateAndTimeToJSDate(
-  dateStr: string,
-  timeStr: string
-): Date {
-  // Extract date component from the date string
-  const datePart = dateStr
-    .slice(5, -1)
-    .split(",")
-    .slice(0, 3)
-    .map((num: string) => parseInt(num));
-
-  // Extract time component from the time string
-  const timePart = timeStr
-    .slice(5, -1)
-    .split(",")
-    .slice(-3)
-    .map((num: string) => parseInt(num));
-
-  // Google Sheets provides dates in the format: year, month (0-indexed), day, hour, minute, second
-  const [year, month, day] = datePart;
-  const [hour, minute, second] = timePart;
-
-  // Determine timezone offset based on DST
-  const offset = isPacificDaylightTime(year, month, day) ? "-07:00" : "-08:00";
-
-  // Create ISO string with proper Pacific Time offset
-  const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(
-    day
-  ).padStart(2, "0")}T${String(hour).padStart(2, "0")}:${String(
-    minute
-  ).padStart(2, "0")}:${String(second).padStart(2, "0")}${offset}`;
-
-  return new Date(dateString);
-}
-
-async function fetchShowsData() {
-  const sheetId = process.env.SHOWS_SHEET_ID;
-  const sheetGid = process.env.SHOWS_SHEET_GID;
-  if (!sheetId || !sheetGid) return [];
-
-  let res: string;
-  try {
-    const req = await fetch(
-      `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&tq&gid=${sheetGid}&${Date.now()}`
-    );
-    if (!req.ok) return [];
-    res = await req.text();
-  } catch {
-    return [];
-  }
-
-  const jsonStart = res.indexOf("{");
-  const jsonEnd = res.lastIndexOf("}") + 1;
-  if (jsonStart === -1 || jsonEnd === 0) return [];
-
-  let gvizData: any;
-  try {
-    gvizData = JSON.parse(res.substring(jsonStart, jsonEnd));
-  } catch {
-    return [];
-  }
-
-  // Check if sheet empty, and if so return nothing
-  if (
-    !gvizData.table.cols ||
-    gvizData.table.cols.filter((col: any) => !!col.label).length === 0
-  ) {
-    return [];
-  }
-
-  const showsData = gvizData.table.rows.map((row: any) => {
-    const rowData: any = {};
-    let colData, key, val;
-    for (let i = 0; i < row.c.length; i++) {
-      if (!row.c[i]) continue;
-
-      colData = gvizData.table.cols[i];
-      key = convertKeyToCamelCase(colData.label);
-
-      // Filter out form response labels
-      if (!key || key === "timestamp" || key === "emailAddress") continue;
-
-      val = row.c[i].v;
-      rowData[key] = val;
-    }
-
-    rowData.startDate = convertGoogleSheetsDateAndTimeToJSDate(
-      rowData.date,
-      rowData.startTime
-    );
-    rowData.endDate = convertGoogleSheetsDateAndTimeToJSDate(
-      rowData.date,
-      rowData.endTime
-    );
-
-    // Show end time iff showEndTime is checked (value will be "Yes")
-    rowData.showEndTime = rowData.showEndTime === "Yes";
-
-    return rowData;
-  });
-
-  return (showsData as IShowsDataItem[])
-    .filter((show) => show.startDate.getTime() + 86400000 >= Date.now())
-    .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 }
