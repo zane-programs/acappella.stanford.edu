@@ -22,18 +22,16 @@ export default function Counterpoint() {
         >
           God Is A Woman
         </Link>
-        ,” filmed in Paris. Our most recent music video, which was filmed in
-        Greece, is of our arrangement of ABBA&apos;s &ldquo;Gimme Gimme
-        Gimme&rdquo; and will be released soon. Counterpoint is regularly
-        invited to perform at all-campus events and holds quarterly
-        performances. Off-campus, Counterpoint performs gigs in the Bay Area.
-        Counterpoint tours Southern California every year with the Stanford
-        Mendicants, and also often travels separately during Spring Break. In
-        2023, Counterpoint traveled to Greece, where we say for the Stanford
-        Alumni Association of Greece and performed with singers at a Greek
-        university. In 2019, Counterpoint flew to Paris for Spring Break, where
-        we performed at the U.S. Embassy in central Paris as well as for the
-        Stanford Alumni Association of France.
+        ,” filmed in Paris. Counterpoint is regularly invited to perform at
+        all-campus events and holds quarterly performances. Off-campus,
+        Counterpoint performs gigs in the Bay Area. Counterpoint tours Southern
+        California every year with the Stanford Mendicants, and also often
+        travels separately during Spring Break. In 2023, Counterpoint traveled
+        to Greece, where we say for the Stanford Alumni Association of Greece
+        and performed with singers at a Greek university. In 2019, Counterpoint
+        flew to Paris for Spring Break, where we performed at the U.S. Embassy
+        in central Paris as well as for the Stanford Alumni Association of
+        France.
       </Text>
       <Text>
         Counterpoint&apos;s repertoire is diverse, and has included everything

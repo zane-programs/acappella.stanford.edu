@@ -51,6 +51,8 @@ export async function generateMetadata(): Promise<Metadata> {
       "fleet street",
       "harmonics",
       "harmz",
+      "kol etz",
+      "koletz",
     ],
   };
 }

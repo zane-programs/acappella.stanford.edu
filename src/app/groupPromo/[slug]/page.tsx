@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import GROUPS from "@/app/config/groups";
+import { getGroup } from "@/app/config/groups";
+import { getPrimaryAuditionHref } from "@/app/utils/auditions";
 import GroupPromoRedirect from "./GroupPromoRedirect";
 
 export async function generateMetadata({
@@ -9,9 +11,9 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const group = GROUPS[slug];
+  const group = getGroup(slug);
 
-  return group.directAuditionLinkConfig?.metadata ?? {};
+  return group?.directAuditionLinkConfig?.metadata ?? {};
 }
 
 export default async function GroupPromo({
@@ -20,6 +22,15 @@ export default async function GroupPromo({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const groupName = GROUPS[slug].name ?? "";
-  return <GroupPromoRedirect slug={slug} groupName={groupName} />;
+  const group = getGroup(slug);
+  if (!group) redirect("/");
+
+  return (
+    <GroupPromoRedirect
+      slug={slug}
+      groupName={group.name}
+      // No current audition link → land on the group page instead
+      destination={getPrimaryAuditionHref(slug) ?? `/${slug}`}
+    />
+  );
 }

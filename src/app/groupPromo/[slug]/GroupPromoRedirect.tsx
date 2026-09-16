@@ -3,44 +3,37 @@
 import { Box, Flex, Heading, Spinner, Text } from "@/app/components/chakra";
 import { useEffect, useRef } from "react";
 
-import GROUPS from "@/app/config/groups";
-
-function redirectTo(link: string | undefined) {
-  window.location.replace(link ?? "/");
-}
-
+/**
+ * Fires a `groupPromo` analytics event, then sends the visitor to
+ * `destination` (resolved on the server from the active audition cohort).
+ */
 export default function GroupPromoRedirect({
   slug,
   groupName,
+  destination,
 }: {
   slug: string;
   groupName: string;
+  destination: string;
 }) {
   const ranOnceRef = useRef(false);
 
   useEffect(() => {
-    if (slug in GROUPS) {
-      const group = GROUPS[slug];
-      if (group.auditionLink && typeof window !== "undefined") {
-        if (window.gtag && !ranOnceRef.current) {
-          ranOnceRef.current = true;
+    if (ranOnceRef.current) return;
+    ranOnceRef.current = true;
 
-          window.gtag("event", "groupPromo", {
-            event_category: "promo",
-            event_label: slug,
-            event_callback: () => {
-              console.log("analytics hit");
-              redirectTo(group.auditionLink);
-            },
-          });
-        } else {
-          redirectTo(group.auditionLink);
-        }
-      }
+    const redirectTo = () => window.location.replace(destination);
+
+    if (window.gtag) {
+      window.gtag("event", "groupPromo", {
+        event_category: "promo",
+        event_label: slug,
+        event_callback: redirectTo,
+      });
     } else {
-      window.location.href = "/";
+      redirectTo();
     }
-  }, [slug]);
+  }, [slug, destination]);
 
   return (
     <Box userSelect="none">

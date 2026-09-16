@@ -12,6 +12,7 @@ import OTone from "../components/group-pages/OTone";
 import Testimony from "../components/group-pages/Testimony";
 import Talisman from "../components/group-pages/Talisman";
 import MixedCompany from "../components/group-pages/MixedCompany";
+import KolEtz from "../components/group-pages/KolEtz";
 
 export enum VoicePart {
   Soprano = 0b1,
@@ -49,9 +50,9 @@ export interface ACappellaGroup {
   tagline: string;
   description: React.ReactNode;
   imgUrl: string;
-  siteLink: string;
-  // ADD THIS once your group has a live audition link
-  auditionLink?: string;
+  // Optional: the "<Group> Website" button is hidden when absent
+  siteLink?: string;
+  // Audition links live in `config/auditions.tsx`, keyed by slug and year.
   // Optional: extra keywords for SEO
   extraKeywords?: string[];
   // Social media links
@@ -64,7 +65,7 @@ export interface ACappellaGroup {
   listenEmbedOverride?: ListenEmbedOverride;
 }
 
-const GROUPS: { [slug: string]: ACappellaGroup } = {
+const GROUP_DEFINITIONS = {
   "fleet-street": {
     name: "Fleet Street",
     voiceParts: VoicePart.SATB,
@@ -72,8 +73,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <FleetStreet />,
     imgUrl: "/assets/img/fleet-street-171A3693.jpg",
     siteLink: "https://www.fleetstreet.com/",
-    auditionLink:
-      "https://www.signupgenius.com/go/10C0E44A9AF2AABFEC52-58458698-fleet",
     socialLinks: {
       youtube: "https://www.youtube.com/user/FleetStreetSingers",
       appleMusic:
@@ -92,7 +91,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mendicants_new.jpg",
     descriptionImgUrl: "/assets/img/mendicants_new_inside_v3.jpg",
     siteLink: "https://www.stanfordmendicants.com/",
-    auditionLink: "https://stanfordmendicants.com/auditions",
     socialLinks: {
       spotify: "https://open.spotify.com/artist/3ZBvLOZu5A9jtKO5XjHDTl",
       appleMusic:
@@ -108,9 +106,8 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     voiceParts: VoicePart.Soprano | VoicePart.Alto,
     tagline: "Stanford's only soprano/alto a cappella group",
     description: <Counterpoint />,
-    imgUrl: "/assets/img/counterpoint.jpg",
+    imgUrl: "/assets/img/counterpoint_2026.webp",
     siteLink: "https://stanfordcounterpoint.com/",
-    auditionLink: "https://calendly.com/emmadi-stanford/ctp-audition",
     socialLinks: {
       youtube: "https://www.youtube.com/user/StanfordCPT",
       instagram: "https://www.instagram.com/stanfordcounterpoint/",
@@ -122,16 +119,17 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
   harmonics: {
     name: "Harmonics",
     voiceParts: VoicePart.SATB,
-    tagline: "Stanford's rock/experimental a cappella group",
+    tagline: "Stanford's only rock/experimental a cappella group",
     description: <Harmonics />,
-    imgUrl: "/assets/img/harmz_2526_opt.webp",
+    imgUrl: "/assets/img/harmz_2026.webp",
     siteLink: "https://www.stanfordharmonics.com/",
-    auditionLink: "https://calendly.com/stanfordharmonics/audition",
     extraKeywords: ["harmz", "stanford harmz"],
     socialLinks: {
-      spotify: "https://play.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
-      instagram: "http://instagram.com/stanfordharmonics/",
-      youtube: "https://www.youtube.com/user/StanfordHarmonics",
+      spotify: "https://open.spotify.com/artist/528Rcthd9JqtIrlbrGKNsG",
+      instagram: "https://www.instagram.com/stanfordharmonics",
+      youtube: "https://www.youtube.com/@stanfordharmonics",
+      tiktok: "https://www.tiktok.com/@theharmonics",
+      twitter: "https://x.com/stanharmonics",
       // facebook: "https://www.facebook.com/theharmonics",
       appleMusic: "https://music.apple.com/us/artist/the-harmonics/380399259",
     },
@@ -143,7 +141,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Raagapella />,
     imgUrl: "/assets/img/raag-16-2024.jpg",
     siteLink: "https://www.raagapella.com/",
-    auditionLink: "https://calendly.com/raagauditions/round1?month=2025-09",
     socialLinks: {
       instagram: "https://www.instagram.com/stanfordraagapella/",
       tiktok: "https://www.tiktok.com/@stanfordraagapella",
@@ -161,7 +158,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <OTone />,
     imgUrl: "/assets/img/otone_2025.webp",
     siteLink: "https://stanfordotone.com/",
-    auditionLink: "https://calendly.com/stanfordotone",
     extraKeywords: ["otone", "stanford otone"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCalFurLezFrabetPytEvVFQ",
@@ -181,8 +177,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <EverydayPeople />,
     imgUrl: "/assets/img/everyday-people.jpg",
     siteLink: "https://linktr.ee/stanfordeverydaypeople",
-    auditionLink:
-      "https://docs.google.com/forms/d/e/1FAIpQLScbxVIGG1MHs8lAvEm5lAhptxVrqQRzFd5-eVMGh65Vqf-OgQ/viewform",
     extraKeywords: ["ep", "stanford ep"],
     socialLinks: {
       instagram: "https://www.instagram.com/stanford_everydaypeople/",
@@ -202,7 +196,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Testimony />,
     imgUrl: "/assets/img/testimony_2025.webp",
     siteLink: "https://testimonyacappella.weebly.com/",
-    auditionLink: "https://forms.gle/ZRNgk8fvprTBPjCDA",
     socialLinks: {
       youtube: "https://www.youtube.com/user/testimonyacappella",
       instagram: "https://www.instagram.com/testimonyacappella/",
@@ -217,9 +210,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     description: <Talisman />,
     imgUrl: "/assets/img/talisman_new.jpg",
     siteLink: "http://www.stanfordtalisman.com/",
-    // auditionLink:
-    //   "https://calendly.com/lsundar-stanford/talisman-auditions?month=2024-09",
-    auditionLink: "https://calendly.com/samgb-stanford/talisman-auditions",
     socialLinks: {
       youtube: "https://www.youtube.com/user/stanfordtalisman",
       facebook: "https://www.facebook.com/pages/Stanford-Talisman/6343264665",
@@ -237,7 +227,6 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
     imgUrl: "/assets/img/mixedco_new.jpg",
     descriptionImgUrl: "/assets/img/mixedco_new_inside.jpg",
     siteLink: "https://www.mixedco.com/",
-    auditionLink: "https://docs.google.com/forms/d/e/1FAIpQLSfvsI5rWTcMjMYbiOlaq8GPW0evASdwIV10FUCXdru0fEhC7w/viewform?usp=dialog",
     extraKeywords: ["mixed co", "mixedco", "mixed-co", "stanford mixed co"],
     socialLinks: {
       youtube: "https://www.youtube.com/channel/UCbweG2JD_9iO50jWnQQnwAQ",
@@ -249,19 +238,33 @@ const GROUPS: { [slug: string]: ACappellaGroup } = {
       spotify: "https://open.spotify.com/artist/2W6zg3XdtRCYc7DStZTFAq",
     },
   },
-};
+  "kol-etz": {
+    name: "Kol Etz",
+    voiceParts: VoicePart.SATB,
+    tagline: "Stanford's Jewish a cappella group",
+    description: <KolEtz />,
+    imgUrl: "/assets/img/koletz_2026.webp",
+    descriptionImgUrl: "/assets/img/koletz_2026_inside.webp",
+    // No website yet (as of Sept 2026); the Website button is hidden until one exists.
+    extraKeywords: ["kol etz", "koletz", "stanford kol etz", "jewish a cappella"],
+    socialLinks: {
+      instagram: "https://www.instagram.com/koletzacappella",
+    },
+  },
+} satisfies Record<string, ACappellaGroup>;
 
-export const GROUPS_WITH_CURRENT_AUDITION_LINKS: string[] = [
-  "o-tone",
-  "everyday-people",
-  "harmonics",
-  "fleet-street",
-  "counterpoint",
-  "testimony",
-  "talisman",
-  "mixed-company",
-  "raagapella",
-  "mendicants",
-] satisfies Array<keyof typeof GROUPS>;
+/** Union of every group slug, e.g. `"harmonics" | "mixed-company" | ...`. */
+export type GroupSlug = keyof typeof GROUP_DEFINITIONS;
+
+const GROUPS: Record<GroupSlug, ACappellaGroup> = GROUP_DEFINITIONS;
+
+export function isGroupSlug(slug: string): slug is GroupSlug {
+  return Object.hasOwn(GROUPS, slug);
+}
+
+/** Look up a group by an untrusted slug (e.g. a route param). */
+export function getGroup(slug: string): ACappellaGroup | undefined {
+  return isGroupSlug(slug) ? GROUPS[slug] : undefined;
+}
 
 export default GROUPS;

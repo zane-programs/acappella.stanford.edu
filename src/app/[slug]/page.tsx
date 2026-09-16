@@ -8,13 +8,15 @@ import { type ButtonProps } from "@chakra-ui/react";
 import type { IconType } from "react-icons";
 import PosterImage from "../components/shared/PosterImage";
 import ShareButton from "../components/shared/ShareButton";
+import AuditionSection from "../components/shared/AuditionSection";
 
-import GROUPS, {
+import {
   type ACappellaGroup,
   type GroupSocialLinks,
-  GROUPS_WITH_CURRENT_AUDITION_LINKS,
+  getGroup,
 } from "@/app/config/groups";
 import CONFIG from "../config";
+import { getGroupAudition } from "../utils/auditions";
 
 // icons
 import {
@@ -23,9 +25,12 @@ import {
   SiSpotify,
   SiApplemusic,
   SiTiktok,
-  SiTwitter,
+  SiX,
   SiFacebook,
 } from "react-icons/si";
+
+// The audition open/close window is evaluated per request, never at build time.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -33,7 +38,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const group = GROUPS[slug as keyof typeof GROUPS];
+  const group = getGroup(slug);
 
   if (!group) {
     if (CONFIG.groupAltNameMappings[slug]) {
@@ -76,7 +81,15 @@ export default async function GroupPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const group = GROUPS[slug as keyof typeof GROUPS];
+  const group = getGroup(slug);
+  if (!group) {
+    // Alias slugs (e.g. /harmz) redirect; anything else is a 404. Mirrors
+    // generateMetadata, which can't reliably redirect on its own.
+    if (CONFIG.groupAltNameMappings[slug]) {
+      redirect(CONFIG.groupAltNameMappings[slug], RedirectType.replace);
+    }
+    notFound();
+  }
 
   return (
     <>
@@ -102,33 +115,24 @@ export default async function GroupPage({
             <SocialLinks group={group} />
           )}
           <Flex direction="column" w="100%" gap="1">
-            {CONFIG.showAuditionButtons &&
-              group.auditionLink &&
-              GROUPS_WITH_CURRENT_AUDITION_LINKS.indexOf(slug) !== -1 && (
-                <Button
-                  colorScheme="red"
-                  size="lg"
-                  className="glow"
-                  borderRadius="16px"
-                  fontWeight="700"
-                  fontSize="md"
-                  aria-label={`Audition for ${group.name} (opens in new tab)`}
-                  {...linkButton(group.auditionLink)}
-                >
-                  🎤 Audition for {group.name}
-                </Button>
-              )}
-            <Button
-              variant="glass"
-              size="lg"
-              colorScheme="blue"
-              borderRadius="16px"
-              fontWeight="600"
-              aria-label={`Visit ${group.name} website (opens in new tab)`}
-              {...linkButton(group.siteLink)}
-            >
-              🌐 {group.name} Website
-            </Button>
+            <AuditionSection
+              groupName={group.name}
+              audition={getGroupAudition(slug)}
+              linkProps={linkButton}
+            />
+            {group.siteLink && (
+              <Button
+                variant="glass"
+                size="lg"
+                colorScheme="blue"
+                borderRadius="16px"
+                fontWeight="600"
+                aria-label={`Visit ${group.name} website (opens in new tab)`}
+                {...linkButton(group.siteLink)}
+              >
+                🌐 {group.name} Website
+              </Button>
+            )}
             <ShareButton />
           </Flex>
         </Flex>
@@ -262,7 +266,7 @@ const SOCIAL_LINK_NAMES: {
   spotify: "Spotify",
   appleMusic: "Apple Music",
   tiktok: "TikTok",
-  twitter: "Twitter",
+  twitter: "X (Twitter)",
   facebook: "Facebook",
 };
 
@@ -274,7 +278,7 @@ const SOCIAL_LINK_ICONS: {
   spotify: SiSpotify,
   appleMusic: SiApplemusic,
   tiktok: SiTiktok,
-  twitter: SiTwitter,
+  twitter: SiX,
   facebook: SiFacebook,
 };
 
