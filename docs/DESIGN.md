@@ -60,7 +60,7 @@ Color:
 | `--color-white` | `#FFFFFF` | page background |
 | `--color-fog-light` | `#F4F4F4` | alternate section background |
 | `--color-fog` | `#E3DED1` | warm neutral panel, quotes |
-| `--color-palo-alto` | `#175E54` | ONLY the "sign-ups open" status dot/label |
+| `--color-palo-alto` | `#175E54` | reserved; currently unused (the "open" status badge was removed 2026-09) |
 
 No other accent colors. No gradients except a single black→transparent scrim on
 video/photos for legibility.
@@ -171,9 +171,9 @@ Home (`/`):
 2. `AnnouncementBar` (if any active).
 3. `AuditionsStrip` (id="auditions"): only when the active cohort has ≥ 1 group
    with status open or upcoming. `bg-fog-light`. Eyebrow "Audition season", h2,
-   one sentence, then a compact list of groups with sign-ups (name, status label
-   with `palo-alto` dot when open, "opens <date>" when upcoming) linking to each
-   group page. Server component; the open/closed decision is per request.
+   one sentence, then a compact list of groups with sign-ups (name, tagline,
+   "Closes <date>" when open, "Opens <date>" when upcoming; no status badge)
+   linking to each group page. Server component; the open/closed decision is per request.
 4. `GroupsGrid` (id="groups"): eyebrow "The groups", h2 "Eleven groups, one
    campus" (count derived from config, not hard-coded). Grid 1 / 2 / 3 / 4 cols.
    `GroupTile`: photo 3:2, `rounded-md ring-1 ring-black-10`, `object-cover`; below
@@ -362,7 +362,7 @@ it exists, use a clearly marked placeholder component with the same props:
   digital red, lists), `Button` (`variant: "primary" | "secondary" | "ghost" |
   "on-cardinal"`, `size: "md" | "lg"`, renders `TransitionLink` when `href` is
   internal, `<a target=_blank rel=noopener>` when external), `TextLink`, `Badge`
-  (`tone: "neutral" | "open"`), `IconButton`, `Wordmark` (`tone: "cardinal" |
+  (`tone: "neutral" | "on-cardinal"`), `IconButton`, `Wordmark` (`tone: "cardinal" |
   "white"`, sizes), `VisuallyHidden`.
 
 ## 11. Implementation notes (foundation, 2026-09-16)

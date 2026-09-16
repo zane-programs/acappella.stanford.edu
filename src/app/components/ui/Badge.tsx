@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/app/lib/cn";
 
-export type BadgeTone = "neutral" | "open" | "on-cardinal";
+export type BadgeTone = "neutral" | "on-cardinal";
 
 export interface BadgeProps extends ComponentPropsWithoutRef<"span"> {
   tone?: BadgeTone;
@@ -9,7 +9,6 @@ export interface BadgeProps extends ComponentPropsWithoutRef<"span"> {
 
 const TONE: Record<BadgeTone, string> = {
   neutral: "bg-fog-light text-black-80",
-  open: "bg-palo-alto/10 text-palo-alto",
   "on-cardinal": "bg-white/15 text-white ring-1 ring-white/30",
 };
 
@@ -24,9 +23,6 @@ export function Badge({ tone = "neutral", className, children, ...rest }: BadgeP
       )}
       {...rest}
     >
-      {tone === "open" && (
-        <span aria-hidden="true" className="size-1.5 rounded-full bg-palo-alto" />
-      )}
       {children}
     </span>
   );

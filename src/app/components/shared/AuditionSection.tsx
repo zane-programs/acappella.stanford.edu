@@ -6,7 +6,6 @@ import {
   getAuditionStatus,
   type AuditionStatus,
 } from "@/app/utils/auditions";
-import { Badge } from "@/app/components/ui/Badge";
 import { Button } from "@/app/components/ui/Button";
 import { Eyebrow } from "@/app/components/ui/Eyebrow";
 
@@ -53,16 +52,9 @@ export default function AuditionSection({
 
   return (
     <section aria-labelledby="audition-heading" className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-3">
-        <Eyebrow as="span" id="audition-heading" tone="cardinal">
-          Auditions
-        </Eyebrow>
-        {status === "open" ? (
-          <Badge tone="open">Sign-ups open</Badge>
-        ) : (
-          <Badge tone="neutral">Opening soon</Badge>
-        )}
-      </div>
+      <Eyebrow as="span" id="audition-heading" tone="cardinal">
+        Auditions
+      </Eyebrow>
 
       {status === "open" && (
         <div className="flex flex-col gap-2">

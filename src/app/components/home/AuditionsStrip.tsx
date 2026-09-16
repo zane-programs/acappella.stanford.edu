@@ -9,7 +9,6 @@ import {
   type AuditionStatus,
 } from "@/app/utils/auditions";
 import { TransitionLink } from "@/app/components/transitions/TransitionLink";
-import { Badge } from "@/app/components/ui/Badge";
 import { Eyebrow } from "@/app/components/ui/Eyebrow";
 import { Heading } from "@/app/components/ui/Heading";
 import { Section } from "@/app/components/ui/Section";
@@ -71,14 +70,11 @@ export function AuditionsStrip() {
                 </span>
                 <span className="flex shrink-0 items-center gap-3 text-right">
                   {status === "open" ? (
-                    <span className="flex flex-col items-end gap-1">
-                      <Badge tone="open">Open</Badge>
-                      {audition.closesAt && (
-                        <span className="type-small hidden text-black-70 sm:block">
-                          Closes {formatAuditionInstant(audition.closesAt)}
-                        </span>
-                      )}
-                    </span>
+                    audition.closesAt && (
+                      <span className="type-small text-black-70">
+                        Closes {formatAuditionInstant(audition.closesAt)}
+                      </span>
+                    )
                   ) : (
                     <span className="type-small text-black-70">
                       Opens {audition.opensAt ? formatAuditionInstant(audition.opensAt) : "soon"}
