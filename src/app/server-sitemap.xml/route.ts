@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
   return getServerSideSitemap(
     Object.keys(GROUPS).map((slug) => ({
-      loc: "https://www.stanfordacappella.com/" + slug,
+      loc: "https://acappella.stanford.edu/" + slug,
       lastmod: new Date().toISOString(),
     }))
   );

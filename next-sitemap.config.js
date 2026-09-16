@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: "https://www.stanfordacappella.com",
+  siteUrl: "https://acappella.stanford.edu",
   generateRobotsTxt: true,
   exclude: ["/groupPromo/*"],
 };

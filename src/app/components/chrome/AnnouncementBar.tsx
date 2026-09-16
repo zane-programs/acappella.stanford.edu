@@ -139,7 +139,7 @@ function AnnouncementItem({ notification: n }: { notification: Notification }) {
                 <Menu>
                   <MenuTrigger
                     className="inline-flex items-center gap-0.5 font-semibold text-digital-red underline decoration-1 underline-offset-[3px] hover:text-digital-red-light focus-ring rounded-sm"
-                    aria-label={`Add ${n.calendarEvent.title} to calendar`}
+                    aria-label={`Add to calendar: ${n.calendarEvent.title}`}
                   >
                     Add to calendar
                     <MdExpandMore aria-hidden="true" className="text-[1.1em]" />

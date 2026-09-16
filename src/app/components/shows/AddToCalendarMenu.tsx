@@ -57,7 +57,7 @@ export default function AddToCalendarMenu({
           className={className}
           iconLeft={<MdCalendarMonth />}
           iconRight={<MdExpandMore />}
-          aria-label={`Add ${eventTitle} to calendar`}
+          aria-label={`Add to calendar: ${eventTitle}`}
         >
           Add to calendar
         </Button>
