@@ -7,7 +7,8 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "hero-video": "python3 tools/hero-video/build.py"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",

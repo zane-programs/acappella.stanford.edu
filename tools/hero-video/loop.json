@@ -1,0 +1,53 @@
+{
+  "$comment": "The hero loop edit. Times are seconds unless written MM:SS. `window` is the slice of the YouTube video that gets downloaded and cached; `offset`/`duration` pick the clip inside it. `framing` is per target: x/y = crop centre as a fraction of the source, zoom = tighter than the largest cover crop. See tools/hero-video/README.md.",
+  "fps": 30,
+  "crossfade": 0.9,
+  "grade": "curves=master='0/0.04 0.25/0.235 0.5/0.465 0.75/0.705 1/0.95',eq=saturation=0.85:brightness=-0.02,colorbalance=rs=0.05:gs=-0.01:bs=-0.04:rm=0.01:bm=-0.01,vignette=angle=PI/6",
+  "denoise": "hqdn3d=2.5:2:4:4",
+  "targets": {
+    "desktop": {
+      "width": 1920, "height": 1080, "suffix": "",
+      "mp4": {"crf": [32, 33, 34], "maxBytes": 8000000, "seamQuality": 20},
+      "webm": {"crf": [48, 52, 56], "maxBytes": 8000000, "seamQuality": 18},
+      "posterMaxBytes": 250000
+    },
+    "mobile": {
+      "width": 720, "height": 1280, "suffix": "-mobile",
+      "mp4": {"crf": [31, 33, 35], "maxBytes": 3500000, "seamQuality": 20},
+      "webm": {"crf": [46, 50, 54], "maxBytes": 3500000, "seamQuality": 18},
+      "posterMaxBytes": 200000
+    }
+  },
+  "clips": [
+    {"order": 1, "video": "zOUumrRziCQ", "window": "01:30-01:50", "offset": 2.0, "duration": 4.5, "gamma": 1.0, "framing": {"mobile": {"y": 0.55}}},
+    {"order": 2, "video": "5X50utN-rCY", "window": "02:30-02:50", "offset": 4.0, "duration": 4.0, "gamma": 1.12},
+    {"order": 3, "video": "bDEJ1SM8H6Q", "window": "02:00-02:20", "offset": 6.0, "duration": 4.0, "gamma": 1.0},
+    {"order": 4, "video": "cFfWEUnUaOk", "window": "04:30-04:50", "offset": 5.0, "duration": 4.5, "gamma": 1.0, "push": {"from": 1.0, "to": 1.06}},
+    {"order": 5, "video": "_0Nxa4fUFlQ", "window": "02:20-02:40", "offset": 3.0, "duration": 4.0, "gamma": 1.0, "framing": {"desktop": {"zoom": 1.3333, "y": 0.625}, "mobile": {"y": 0.6}}, "push": {"from": 1.06, "to": 1.1, "anchor": "bottom"}},
+    {"order": 6, "video": "6jXvoJZlxhU", "window": "01:30-01:50", "offset": 2.0, "duration": 4.5, "gamma": 1.05},
+    {"order": 7, "video": "oNp35rb3FY8", "window": "08:30-08:50", "offset": 12.0, "duration": 4.0, "gamma": 0.92},
+    {"order": 8, "video": "Ze71xbPVO2g", "window": "02:30-02:50", "offset": 3.0, "duration": 4.0, "gamma": 1.0, "framing": {"desktop": {"zoom": 1.3333, "y": 0.514}}},
+    {"order": 9, "video": "-1s3-NV9nVg", "window": "01:00-01:20", "offset": 2.0, "duration": 4.0, "gamma": 1.22, "framing": {"desktop": {"zoom": 1.3333, "y": 0.625}, "mobile": {"zoom": 1.2, "y": 0.6}}, "push": {"from": 1.06, "to": 1.1, "anchor": "bottom"}},
+    {"order": 10, "video": "VdI3TUiz-5I", "window": "02:00-02:20", "offset": 3.0, "duration": 4.5, "gamma": 1.05},
+    {"order": 11, "video": "MuJ_ho2Qs5Y", "window": "06:00-06:20", "offset": 0.5, "duration": 4.0, "gamma": 1.08},
+    {"order": 12, "video": "f2iQFNYIa3g", "window": "03:00-03:20", "offset": 2.0, "duration": 4.5, "gamma": 1.18, "framing": {"desktop": {"zoom": 1.3333, "y": 0.5}}, "push": {"from": 1.0, "to": 1.06}},
+    {"order": 13, "video": "8MW6DoUN2YY", "window": "03:00-03:20", "offset": 1.0, "duration": 4.0, "gamma": 0.86},
+    {"order": 14, "video": "L17D-XqqNDw", "window": "02:00-02:20", "offset": 5.0, "duration": 4.5, "gamma": 0.93, "push": {"from": 1.0, "to": 1.06}}
+  ],
+  "videos": {
+    "zOUumrRziCQ": {"group": "Fleet Street", "title": "Clawcappella | Stanford Reunion Weekend 2024", "channel": "The Stanford Fleet Street Singers"},
+    "5X50utN-rCY": {"group": "Mendicants", "title": "Somewhere Only We Know (Live) | Stanford Mendicants Cover", "channel": "Stanford Mendicants"},
+    "bDEJ1SM8H6Q": {"group": "O-Tone", "title": "NewJeans A Cappella Medley | OMG, Hype Boy, Ditto, Cool With You, Attention [MV]", "channel": "Stanford O-Tone"},
+    "cFfWEUnUaOk": {"group": "Talisman", "title": "Modimo Trilogy - Spring Show 2025 - Stanford Talisman", "channel": "Stanford Talisman"},
+    "_0Nxa4fUFlQ": {"group": "Harmonics", "title": "Animals - Nickelback A Cappella Cover (Live) | The Harmonics (Lucky Harmz)", "channel": "The Harmonics"},
+    "6jXvoJZlxhU": {"group": "Testimony", "title": "Rather Be - Break it Down Los Angeles 2024", "channel": "Stanford Testimony Christian A Cappella"},
+    "oNp35rb3FY8": {"group": "Raagapella", "title": "Stanford Raagapella Competition Set 2025", "channel": "Stanford Raagapella"},
+    "Ze71xbPVO2g": {"group": "Mixed Company", "title": "Somebody To Love", "channel": "Stanford Mixed Company"},
+    "-1s3-NV9nVg": {"group": "Everyday People", "title": "Let's Stay Together (Al Green) by Stanford Everyday People", "channel": "Stanford Everyday People A Cappella"},
+    "VdI3TUiz-5I": {"group": "Counterpoint", "title": "Hercules - Stanford Counterpoint Winter Show 2024", "channel": "Stanford Counterpoint"},
+    "MuJ_ho2Qs5Y": {"group": "Mendicants", "title": "The Stanford Mendicants - 2024 ICCA Set", "channel": "Stanford Mendicants"},
+    "f2iQFNYIa3g": {"group": "Fleet Street", "title": "Cuncti Potens (Live at Stanford Freshman Orientation) - Stanford Fleet Street Singers", "channel": "The Stanford Fleet Street Singers"},
+    "8MW6DoUN2YY": {"group": "O-Tone", "title": "Stanford O-Tone | ICCA 2025", "channel": "Stanford O-Tone"},
+    "L17D-XqqNDw": {"group": "Talisman", "title": "Indodana - Gala 2024 - Stanford Talisman", "channel": "Stanford Talisman"}
+  }
+}
