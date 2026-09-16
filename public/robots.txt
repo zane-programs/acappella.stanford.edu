@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.stanfordacappella.com
+Host: https://acappella.stanford.edu
 
 # Sitemaps
-Sitemap: https://www.stanfordacappella.com/sitemap.xml
+Sitemap: https://acappella.stanford.edu/sitemap.xml
