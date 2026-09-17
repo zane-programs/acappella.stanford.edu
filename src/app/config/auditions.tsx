@@ -137,6 +137,20 @@ export const AUDITION_COHORTS = {
       closesAt: new Date("2026-09-21T23:59:59-07:00"),
       location: "Old Union 120",
     },
+    "raagapella": {
+      links: [
+        {
+          href: "https://calendly.com/raagauditions/round1?month=2026-09",
+        },
+      ],
+    },
+    "talisman": {
+      links: [
+        {
+          href: "https://calendly.com/gabriellafishpedrosa/15min?month=2026-09",
+        },
+      ],
+    },
   },
 } satisfies Record<number, AuditionCohort>;
 
