@@ -192,7 +192,7 @@ const GROUP_DEFINITIONS = {
   testimony: {
     name: "Testimony",
     voiceParts: VoicePart.SATB,
-    tagline: "Stanford's Christian co-ed a cappella group",
+    tagline: "Stanford's Christian a cappella group",
     description: <Testimony />,
     imgUrl: "/assets/img/testimony_2026.webp",
     siteLink: "https://testimonyacappella.weebly.com/",
