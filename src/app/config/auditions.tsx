@@ -151,6 +151,13 @@ export const AUDITION_COHORTS = {
         },
       ],
     },
+    mendicants: {
+      links: [
+        {
+          href: "https://calendly.com/stanfordmendicants/mendicants-auditions",
+        },
+      ],
+    },
   },
 } satisfies Record<number, AuditionCohort>;
 
