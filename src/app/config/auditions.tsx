@@ -164,7 +164,14 @@ export const AUDITION_COHORTS = {
           href: "https://calendly.com/egoldin-stanford/kol-etz-auditions",
         },
       ],
-    }
+    },
+    "o-tone": {
+      links: [
+        {
+          href: "https://stanfordotone.com/auditions",
+        },
+      ],
+    },
   },
 } satisfies Record<number, AuditionCohort>;
 
