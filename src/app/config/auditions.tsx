@@ -178,4 +178,4 @@ export const AUDITION_COHORTS = {
 export type AuditionCohortId = keyof typeof AUDITION_COHORTS;
 
 /** The cohort currently shown on the site. Set to `null` to hide all audition UI. */
-export const ACTIVE_AUDITION_COHORT_ID: AuditionCohortId | null = 2026;
+export const ACTIVE_AUDITION_COHORT_ID: AuditionCohortId | null = null;
