@@ -20,7 +20,7 @@ export function ListenSection({ group }: { group: ACappellaGroup }) {
         </Heading>
       </div>
       <div className="mt-6 max-w-[640px]">
-        {spotify ? <SpotifyEmbed url={spotify} /> : <YoutubeEmbed group={group} url={youtube!} />}
+        {spotify ? <SpotifyEmbed url={spotify} name={group.name} /> : <YoutubeEmbed group={group} url={youtube!} />}
       </div>
     </section>
   );
@@ -40,14 +40,14 @@ function resolveEmbedSource(group: ACappellaGroup): {
   return { spotify, youtube };
 }
 
-function SpotifyEmbed({ url }: { url: string }) {
+function SpotifyEmbed({ url, name }: { url: string; name: string }) {
   return (
     <iframe
       className="block h-[152px] w-full rounded-md ring-1 ring-black-10"
       src={"https://open.spotify.com/embed" + new URL(url).pathname}
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       loading="lazy"
-      title="Spotify music player"
+      title={`Spotify player for ${name}`}
     />
   );
 }

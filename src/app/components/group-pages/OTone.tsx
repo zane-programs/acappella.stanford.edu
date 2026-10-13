@@ -49,7 +49,7 @@ export default function OTone() {
         <iframe
           className="h-full w-full"
           src="https://www.youtube-nocookie.com/embed/uBBtHxh3PfY"
-          title="YouTube video player"
+          title="O-Tone performance on YouTube"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           loading="lazy"

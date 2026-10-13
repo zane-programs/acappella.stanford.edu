@@ -8,7 +8,7 @@ export function AboutTeaser({ groupCount }: { groupCount: number }) {
   return (
     <Section tone="fog" aria-labelledby="about-teaser-heading">
       <div data-reveal className="max-w-[52rem]">
-        <Eyebrow id="about-teaser-heading">Since 1963</Eyebrow>
+        <Eyebrow tone="cardinal" id="about-teaser-heading">Since 1963</Eyebrow>
         <p className="type-h2 mt-4 text-balance">
           Stanford&apos;s a cappella tradition began in 1963 with the founding of the
           Mendicants. Six decades later, {numberWord(groupCount)} groups carry it forward.

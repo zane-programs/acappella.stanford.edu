@@ -85,6 +85,7 @@ function AnnouncementItem({ notification: n }: { notification: Notification }) {
       });
     }
     remember();
+    document.getElementById("main-content")?.focus({ preventScroll: true });
     const el = wrapRef.current;
     if (!el || prefersReducedMotion()) {
       setVisible(false);
@@ -130,7 +131,7 @@ function AnnouncementItem({ notification: n }: { notification: Notification }) {
                     remember();
                     n.action?.onClick?.();
                   }}
-                  className="font-semibold text-digital-red underline decoration-1 underline-offset-[3px] hover:text-digital-red-light focus-ring rounded-sm"
+                  className="font-semibold text-digital-red underline decoration-1 underline-offset-[3px] hover:text-cardinal-dark focus-ring rounded-sm"
                 >
                   {n.action.label}
                 </TransitionLink>
@@ -138,7 +139,7 @@ function AnnouncementItem({ notification: n }: { notification: Notification }) {
               {n.calendarEvent && calendarLinks.length > 0 && (
                 <Menu>
                   <MenuTrigger
-                    className="inline-flex items-center gap-0.5 font-semibold text-digital-red underline decoration-1 underline-offset-[3px] hover:text-digital-red-light focus-ring rounded-sm"
+                    className="inline-flex items-center gap-0.5 font-semibold text-digital-red underline decoration-1 underline-offset-[3px] hover:text-cardinal-dark focus-ring rounded-sm"
                     aria-label={`Add to calendar: ${n.calendarEvent.title}`}
                   >
                     Add to calendar

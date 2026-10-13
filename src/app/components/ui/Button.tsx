@@ -36,7 +36,7 @@ const VARIANT: Record<ButtonVariant, string> = {
   secondary:
     "border border-black-30 bg-transparent text-black hover:border-black hover:bg-fog-light active:bg-fog",
   ghost:
-    "bg-transparent text-digital-red underline underline-offset-[3px] decoration-1 hover:text-digital-red-light px-0",
+    "bg-transparent text-digital-red underline underline-offset-[3px] decoration-1 hover:text-cardinal-dark px-0",
   "on-cardinal":
     "bg-white text-cardinal hover:bg-fog-light active:bg-fog",
   "on-cardinal-outline":

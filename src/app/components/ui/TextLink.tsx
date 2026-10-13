@@ -18,7 +18,7 @@ export interface TextLinkProps extends ComponentPropsWithoutRef<"a"> {
 }
 
 const TONE: Record<TextLinkTone, string> = {
-  red: "text-digital-red hover:text-digital-red-light",
+  red: "text-digital-red hover:text-cardinal-dark",
   black: "text-black hover:text-digital-red",
   white: "text-white hover:text-white/80",
 };

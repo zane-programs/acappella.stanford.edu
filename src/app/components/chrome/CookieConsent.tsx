@@ -34,7 +34,7 @@ export function CookieConsent() {
 
   return (
     <div
-      role="dialog"
+      role="region"
       aria-label="Cookie notice"
       className="fixed bottom-4 left-4 right-4 z-[70] max-w-[22rem] rounded-md bg-white p-5 text-black ring-1 ring-black-10 shadow-elevated sm:right-auto"
     >
@@ -52,6 +52,7 @@ export function CookieConsent() {
             /* storage unavailable */
           }
           window.gtag?.("event", "cookieConsent");
+          document.getElementById("main-content")?.focus({ preventScroll: true });
           setConsented(true);
         }}
       >
