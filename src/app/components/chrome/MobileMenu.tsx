@@ -42,6 +42,7 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
   const lineBottomRef = useRef<HTMLSpanElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const pathname = usePathname();
+  const navigatingRef = useRef(false);
 
   const setPhaseBoth = useCallback((next: Phase) => {
     phaseRef.current = next;
@@ -56,6 +57,7 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
   const open = useCallback(() => {
     if (phaseRef.current === "opening" || phaseRef.current === "open") return;
     tlRef.current?.kill();
+    navigatingRef.current = false;
     setPhaseBoth("opening"); // Radix mounts the panel; the effect below animates it.
   }, [setPhaseBoth]);
 
@@ -120,7 +122,7 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
     const overlay = overlayRef.current;
     const finish = () => {
       setPhaseBoth("closed"); // Radix unmounts, unlocks scroll, restores focus.
-      triggerRef.current?.focus({ preventScroll: true });
+      if (!navigatingRef.current) triggerRef.current?.focus({ preventScroll: true });
     };
     if (!panel || !overlay || prefersReducedMotion()) {
       gsap.set(lines(), { clearProps: "transform" });
@@ -138,6 +140,11 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
     tl.to(lines(), { y: 0, rotate: 0, duration: DURATION.base, ease: EASE.outExpo }, 0);
     tlRef.current = tl;
   }, [lines, setPhaseBoth]);
+
+  const closeForNavigation = () => {
+    navigatingRef.current = true;
+    close();
+  };
 
   // Route changed (a menu link, or Back): the wipe is covering, slide away.
   useEffect(() => {
@@ -189,6 +196,9 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
         <Dialog.Content
           ref={panelRef}
           aria-describedby={undefined}
+          onCloseAutoFocus={(event) => {
+            if (navigatingRef.current) event.preventDefault();
+          }}
           onEscapeKeyDown={(e) => {
             e.preventDefault();
             close();
@@ -203,12 +213,11 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
           style={entering ? { transform: "translateX(100%)" } : undefined}
         >
           <div className="flex h-[var(--header-h)] shrink-0 items-center justify-between px-5 sm:px-8">
-            <Dialog.Title asChild>
-              <TransitionLink href="/" className="focus-ring rounded-sm" onClick={close}>
+            <Dialog.Title className="sr-only">Site navigation</Dialog.Title>
+              <TransitionLink href="/" className="focus-ring rounded-sm" onClick={closeForNavigation}>
                 <Wordmark tone="white" size="sm" />
                 <span className="sr-only">Home</span>
               </TransitionLink>
-            </Dialog.Title>
             <Dialog.Close asChild>
               <IconButton label="Close menu" tone="white">
                 <MdClose />
@@ -222,8 +231,8 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
                 <li key={item.href} data-menu-link>
                   <TransitionLink
                     href={item.href}
-                    onClick={close}
-                    aria-current={pathname === item.href ? "page" : undefined}
+                    onClick={closeForNavigation}
+                    aria-current={(item.href === "/#groups" ? pathname === "/" : pathname === item.href) ? "page" : undefined}
                     className={cn(
                       "type-h1 block py-2.5 text-white transition-opacity duration-150 hover:opacity-80 focus-ring rounded-sm",
                       pathname === item.href && "underline decoration-white/60 decoration-2 underline-offset-8"
@@ -246,7 +255,7 @@ export function MobileMenu({ nav, groups, onOverlay }: MobileMenuProps) {
                 <li key={g.slug}>
                   <TransitionLink
                     href={`/${g.slug}`}
-                    onClick={close}
+                    onClick={closeForNavigation}
                     className="type-small block py-1 font-semibold text-white/90 hover:text-white focus-ring rounded-sm"
                   >
                     {g.name}

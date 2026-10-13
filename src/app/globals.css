@@ -113,7 +113,8 @@
 /* Shared focus ring, used by every interactive primitive. */
 @utility focus-ring {
   &:focus-visible {
-    outline: 2px solid var(--color-digital-red);
+    outline: 2px solid currentColor;
+    box-shadow: 0 0 0 2px var(--color-white);
     outline-offset: 2px;
   }
 }
@@ -199,8 +200,12 @@
     html {
       scroll-behavior: auto;
     }
+    [data-intro] {
+      display: none !important;
+    }
     html.js [data-reveal] {
-      opacity: 1;
+      opacity: 1 !important;
+      transform: none !important;
     }
     *,
     *::before,
@@ -208,6 +213,8 @@
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
+      animation-delay: 0ms !important;
+      transition-delay: 0ms !important;
     }
   }
 }
@@ -261,5 +268,23 @@
      own <AnnouncementBar inline /> below the hero instead. */
   body:has(#hero-sentinel) .announcement-slot {
     display: none;
+  }
+}
+
+/* Keyboard focus must stay visible before scroll reveals run. */
+html.js [data-reveal]:focus-within {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover img {
+    transform: none !important;
+  }
+}
+@media (forced-colors: active) {
+  .focus-ring:focus-visible {
+    outline: 2px solid Highlight;
+  }
+  [role="menuitem"][data-highlighted] {
+    outline: 2px solid Highlight;
   }
 }

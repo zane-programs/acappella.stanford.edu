@@ -14,6 +14,15 @@ export const HERO_EASE = "hero";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, Flip, CustomEase);
+  // Finish active sequences immediately when the OS/browser preference changes.
+  // Completing (rather than killing) them preserves navigation and cleanup callbacks.
+  window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (event) => {
+    if (!event.matches) return;
+    document.documentElement.classList.remove("js");
+    gsap.globalTimeline.getChildren(false, true, true).forEach((animation) => {
+      animation.totalProgress(1);
+    });
+  });
   // Slow in, decisive middle, long settle: the image reads as "placed", not thrown.
   if (!CustomEase.get(HERO_EASE)) {
     CustomEase.create(HERO_EASE, "M0,0 C0.7,0 0.2,1 1,1");

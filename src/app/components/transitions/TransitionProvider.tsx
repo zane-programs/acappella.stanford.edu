@@ -94,6 +94,16 @@ function hashTargetOf(href: string): HTMLElement | null {
   }
 }
 
+function focusDestination(target: HTMLElement | null) {
+  if (!target) return;
+  const temporary = !target.hasAttribute("tabindex");
+  if (temporary) {
+    target.setAttribute("tabindex", "-1");
+    target.addEventListener("blur", () => target.removeAttribute("tabindex"), { once: true });
+  }
+  target.focus({ preventScroll: true });
+}
+
 function scrollInstant(top: number) {
   window.scrollTo({ top, left: 0, behavior: "instant" });
 }
@@ -266,6 +276,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const pendingRef = useRef<Pending | null>(null);
   const currentUrlRef = useRef<string>("");
   const firstRunRef = useRef(true);
+  const focusAfterNavigationRef = useRef(false);
   const batchTriggersRef = useRef<ScrollTrigger[]>([]);
   const navTimeoutRef = useRef<number | null>(null);
 
@@ -289,7 +300,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       );
       if (els.length === 0) return;
 
-      if (!document.documentElement.classList.contains("js") || !opts.animate) {
+      if (!document.documentElement.classList.contains("js") || !opts.animate || prefersReducedMotion()) {
         gsap.set(els, { opacity: 1, clearProps: "transform" });
         return;
       }
@@ -347,6 +358,10 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   /* ---------- bookkeeping ---------- */
 
   const settle = useCallback(() => {
+    if (focusAfterNavigationRef.current) {
+      focusAfterNavigationRef.current = false;
+      focusDestination(hashTargetOf(window.location.href) ?? document.getElementById("main-content"));
+    }
     pendingRef.current = null;
     setIsTransitioning(false);
     if (navTimeoutRef.current) {
@@ -390,8 +405,9 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   const finishInstant = useCallback(
     (scrollY: number | null) => {
       const main = document.getElementById("main-content");
-      if (scrollY !== null) scrollInstant(scrollY);
-      else scrollInstant(0);
+      const target = hashTargetOf(window.location.href);
+      if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+      else scrollInstant(scrollY ?? 0);
       if (main) gsap.set(main, { clearProps: "opacity,transform" });
       revealPage({ animate: false });
       settle();
@@ -403,6 +419,11 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     async (pending: Extract<Pending, { mode: "wipe" }>) => {
       await pending.covered;
       await nextPaint();
+      if (prefersReducedMotion()) {
+        hardReset();
+        finishInstant(null);
+        return;
+      }
       const main = document.getElementById("main-content");
       const hashTarget = hashTargetOf(pending.href);
       if (hashTarget) hashTarget.scrollIntoView({ behavior: "instant", block: "start" });
@@ -422,12 +443,17 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       // Start revealing as the wipe clears the top third of the viewport.
       tl.call(() => revealPage({ animate: true }), [], 0.22);
     },
-    [revealPage, settle]
+    [revealPage, settle, hardReset, finishInstant]
   );
 
   const finishHistory = useCallback(
     async (pending: Extract<Pending, { mode: "history" }>) => {
       await nextPaint();
+      if (prefersReducedMotion()) {
+        hardReset();
+        finishInstant(pending.scrollY);
+        return;
+      }
       const main = document.getElementById("main-content");
       const before = headerTop();
       scrollInstant(pending.scrollY);
@@ -449,7 +475,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         },
       });
     },
-    [revealPage, settle]
+    [revealPage, settle, hardReset, finishInstant]
   );
 
   /** Wait (briefly) for an element with `data-shared-image={slug}` to exist and have a size. */
@@ -492,6 +518,11 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       await nextPaint();
       const main = document.getElementById("main-content")!;
       const target = await awaitSharedImage(pending.slug);
+      if (prefersReducedMotion()) {
+        hardReset();
+        finishInstant(null);
+        return;
+      }
       if (!target) {
         fallbackFromMorph(pending.clone, pending.snap, 0);
         return;
@@ -553,7 +584,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         DURATION.flight + 0.05
       );
     },
-    [awaitSharedImage, fallbackFromMorph, revealPage, settle]
+    [awaitSharedImage, fallbackFromMorph, revealPage, settle, hardReset, finishInstant]
   );
 
   const finishReverse = useCallback(
@@ -565,6 +596,11 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
 
       scrollInstant(pending.scrollY);
       const target = await awaitSharedImage(pending.slug);
+      if (prefersReducedMotion()) {
+        hardReset();
+        finishInstant(pending.scrollY);
+        return;
+      }
       if (!target || !inViewport(target)) {
         gsap.to(band, { autoAlpha: 0, duration: DURATION.base, clearProps: "transform" });
         fallbackFromMorph(pending.clone, pending.snap, pending.scrollY);
@@ -634,7 +670,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         DURATION.flight
       );
     },
-    [awaitSharedImage, fallbackFromMorph, revealPage, settle]
+    [awaitSharedImage, fallbackFromMorph, revealPage, settle, hardReset, finishInstant]
   );
 
   /* ---------- route-change observer ---------- */
@@ -704,6 +740,29 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   }, [pathname, finishWipe, finishMorph, finishReverse, finishHistory, finishInstant, revealPage]);
 
   useEffect(() => () => killBatches(), [killBatches]);
+
+  useEffect(() => {
+    const onFocus = (event: FocusEvent) => {
+      let target = event.target instanceof Element ? event.target : null;
+      while (target) {
+        if (target.hasAttribute("data-reveal")) {
+          gsap.killTweensOf(target);
+          gsap.set(target, { opacity: 1, clearProps: "transform" });
+        }
+        target = target.parentElement;
+      }
+    };
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onMotionChange = () => {
+      if (media.matches) revealPage({ animate: false });
+    };
+    document.addEventListener("focusin", onFocus);
+    media.addEventListener("change", onMotionChange);
+    return () => {
+      document.removeEventListener("focusin", onFocus);
+      media.removeEventListener("change", onMotionChange);
+    };
+  }, [revealPage]);
 
   /* ---------- start sequences ---------- */
 
@@ -876,6 +935,7 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       const toUrl = urlKey();
       if (fromUrl === toUrl) return; // hash-only change: nothing to transition
       if (pendingRef.current) hardReset();
+      focusAfterNavigationRef.current = true;
       scrollMemory.set(fromUrl, window.scrollY);
       const saved = scrollMemory.get(toUrl) ?? 0;
       armTimeout();
@@ -931,11 +991,18 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
         // Same page: only scroll (to the hash, or the top).
         router.push(url.pathname + url.search + url.hash, { scroll: false });
         const hashTarget = hashTargetOf(url.href);
-        if (hashTarget) hashTarget.scrollIntoView({ behavior: "smooth", block: "start" });
-        else if (!url.hash) window.scrollTo({ top: 0, behavior: "smooth" });
+        const behavior = prefersReducedMotion() ? "instant" : "smooth";
+        if (hashTarget) {
+          hashTarget.scrollIntoView({ behavior, block: "start" });
+          focusDestination(hashTarget);
+        } else if (!url.hash) {
+          window.scrollTo({ top: 0, behavior });
+          focusDestination(document.getElementById("main-content"));
+        }
         return;
       }
 
+      focusAfterNavigationRef.current = true;
       armTimeout();
       scrollMemory.set(urlKey(), window.scrollY);
 

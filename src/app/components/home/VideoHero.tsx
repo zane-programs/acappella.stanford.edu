@@ -11,7 +11,7 @@ import { Heading } from "@/app/components/ui/Heading";
 import { IconButton } from "@/app/components/ui/IconButton";
 import { Menu, MenuContent, MenuItem, MenuLabel, MenuTrigger } from "@/app/components/ui/Menu";
 import { Wordmark } from "@/app/components/ui/Wordmark";
-import { DURATION, EASE, gsap } from "@/app/components/transitions/gsap";
+import { DURATION, EASE, gsap, prefersReducedMotion } from "@/app/components/transitions/gsap";
 import { markIntroDone, markIntroPending, navState } from "@/app/components/transitions/intro";
 import { numberWordCapitalized } from "@/app/lib/words";
 
@@ -135,6 +135,11 @@ export function VideoHero({
     const wait = Math.max(0, INTRO_MIN_MS - elapsed);
 
     window.setTimeout(() => {
+      if (!introActiveRef.current || prefersReducedMotion()) {
+        markIntroDone();
+        setIntro("done");
+        return;
+      }
       videoRef.current?.play().catch(() => {});
       const card = introCardRef.current;
       const edge = introEdgeRef.current;
@@ -168,6 +173,23 @@ export function VideoHero({
       // Let the page underneath start revealing as the card clears the top third.
       tl.call(markIntroDone, [], at + 0.34);
     }, wait);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const stopMotion = () => {
+      if (!media.matches) return;
+      videoRef.current?.pause();
+      setVariant(null);
+      setPlaying(false);
+      introActiveRef.current = false;
+      introBarTweenRef.current?.kill();
+      markIntroDone();
+      setIntro("done");
+    };
+    stopMotion();
+    media.addEventListener("change", stopMotion);
+    return () => media.removeEventListener("change", stopMotion);
   }, []);
 
   useEffect(() => {
@@ -273,7 +295,7 @@ export function VideoHero({
     const UNLOCK_EVENTS = ["pointerup", "touchend", "click", "keydown"] as const;
     let armed = false;
     function onGesture(event: Event) {
-      if (userPausedRef.current) return disarm();
+      if (userPausedRef.current || prefersReducedMotion()) return disarm();
       if (toggleRef.current?.contains(event.target as Node | null)) return;
       video!.play().then(disarm, () => {});
     }
@@ -291,6 +313,7 @@ export function VideoHero({
     }
 
     const attemptPlay = () => {
+      if (prefersReducedMotion() || userPausedRef.current) return;
       video.play().then(disarm, (err: unknown) => {
         const name = err instanceof DOMException ? err.name : "";
         // A load() or pause() interrupted this call; the next one will do.
@@ -494,7 +517,6 @@ export function VideoHero({
                 ref={toggleRef}
                 tone="white"
                 label={paused ? "Play background video" : "Pause background video"}
-                aria-pressed={paused}
                 onClick={toggle}
                 className="bg-black/20 hover:bg-black/35"
               >
