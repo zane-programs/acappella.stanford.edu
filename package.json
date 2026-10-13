@@ -8,7 +8,8 @@
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
-    "hero-video": "python3 tools/hero-video/build.py"
+    "hero-video": "python3 tools/hero-video/build.py",
+    "test:a11y": "playwright test"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.23",
@@ -29,8 +30,10 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/gtag.js": "^0.0.13",
+    "axe-core": "^4.14.0",
     "tailwindcss": "^4.3.3"
   },
   "overrides": {

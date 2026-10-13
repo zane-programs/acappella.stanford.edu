@@ -251,6 +251,12 @@ function flyClone(clone: HTMLElement, target: HTMLElement): gsap.core.Tween {
 
 /** Cross-fades a flown clone into the real image and removes the clone. */
 function landClone(clone: HTMLElement, target: HTMLElement, onDone: () => void) {
+  if (prefersReducedMotion()) {
+    gsap.set(target, { clearProps: "opacity" });
+    clone.remove();
+    onDone();
+    return;
+  }
   gsap.to(target, { opacity: 1, duration: DURATION.base, clearProps: "opacity" });
   gsap.to(clone, {
     opacity: 0,
